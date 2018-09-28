@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController extends WebMvcAutoConfiguration {
     @RequestMapping("/greeting")
     public String greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return "hello";
+        return "home";
     }
     @RequestMapping("/")
     public String hello() {
-        return "hello";
+        return "home";
     }
 }
