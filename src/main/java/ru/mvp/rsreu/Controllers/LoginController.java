@@ -11,4 +11,8 @@ public class LoginController extends WebMvcAutoConfiguration {
     public String greeting(@RequestParam(value="name", defaultValue="World") String name) {
         return "hello";
     }
+    @RequestMapping("/")
+    public String hello() {
+        return "hello";
+    }
 }
