@@ -28,7 +28,7 @@
 <a th:href="@{#}" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 <header>
 
-    <ul id="nav-mobile" class="sidenav sidenav-fixed" style="transform: translateX(0%);">
+    <ul id="nav-mobile" class="sidenav sidenav-fixed grey" style="transform: translateX(0%);">
         <li><div class="user-view">
 
             <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
@@ -45,14 +45,18 @@
 <main>
     <div class="container">
         <div class="row">
-
             <div class="col s12 m8 offset-m1 xl7 offset-xl1">
-
+                <a class="btn-floating btn-large waves-effect waves-light blue-grey right"><i class="material-icons">add</i></a>
                 <div id="structure" class="section scrollspy">
-
-                    <table class="striped">
+                    <table class="bordered striped centered highlight responsive-table">
                         <thead>
                         <tr>
+                            <th>Name</th>
+                            <th>Item Name</th>
+                            <th>Item Price</th>
+                            <th>Name</th>
+                            <th>Item Name</th>
+                            <th>Item Price</th>
                             <th>Name</th>
                             <th>Item Name</th>
                             <th>Item Price</th>
@@ -64,16 +68,179 @@
                             <td>Alvin</td>
                             <td>Eclair</td>
                             <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td><a class="waves-effect waves-light btn-small">Button</a></td>
+                            <td><a class="waves-effect waves-light btn-small"><i class="material-icons left">cloud</i>button</a></td>
+                            <td><a class="waves-effect waves-light btn-small"><i class="material-icons right">cloud</i>button</a></td>
                         </tr>
                         <tr>
-                            <td>Alan</td>
-                            <td>Jellybean</td>
-                            <td>$3.76</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td><a class="waves-effect waves-light btn-small">Button</a></td>
+                            <td><a class="waves-effect waves-light btn-small"><i class="material-icons left">cloud</i>button</a></td>
+                            <td><a class="waves-effect waves-light btn-small"><i class="material-icons right">cloud</i>button</a></td>
                         </tr>
                         <tr>
-                            <td>Jonathan</td>
-                            <td>Lollipop</td>
-                            <td>$7.00</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td><a class="btn-large disabled">Button</a></td>
+                            <td><a class="btn disabled">Button</a></td>
+                            <td><a class="btn-flat disabled">Button</a></td>
+                            <td><a class="btn-floating disabled"><i class="material-icons">add</i></a></td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td><a class="waves-effect waves-light btn-large">Button</a></td>
+                            <td><a class="waves-effect waves-light btn-large"><i class="material-icons left">cloud</i>button</a></td>
+                            <td><a class="waves-effect waves-light btn-large"><i class="material-icons right">cloud</i>button</a></td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td><button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                                <i class="material-icons right">send</i>
+                            </button></td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                        </tr>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
                         </tr>
                         </tbody>
                     </table>
