@@ -1,4 +1,4 @@
-package ru.mvp.rsreu.Controllers;
+package ru.mvp.rsreu.сontrollers;
 
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.stereotype.Controller;

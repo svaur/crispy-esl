@@ -32,8 +32,11 @@
         <li><div class="user-view">
 
             <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
-            <a th:href="@{#name}"><span class="white-text name">менеджер Василий Пупкин</span></a>
+            <a th:href="@{#name}"><span class="white-text name">менеджер [[${#httpServletRequest.remoteUser}]]</span></a>
             <a th:href="@{#email}"><span class="white-text email">pupkin@gmail.com</span></a>
+            <form th:action="@{/logout}" method="post">
+                <input class="waves-effect waves-light btn-small" type="submit" value="Sign Out"/>
+            </form>
         </div></li>
         <li class="bold"><a th:href="@{#}" class="waves-effect waves-teal">MENU</a></li>
         <li class="bold"><a th:href="@{#}" class="waves-effect waves-teal">MENU</a></li>
