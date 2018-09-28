@@ -7,12 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController extends WebMvcAutoConfiguration {
-    @RequestMapping("/greeting")
-    public String greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return "home";
-    }
     @RequestMapping("/")
-    public String hello() {
-        return "home";
+    public String index() {
+        return "index";
     }
 }
