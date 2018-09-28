@@ -17,84 +17,70 @@
 <script th:src="@{/js/init.js}"></script>
 
 <nav>
-    <div class="nav-wrapper">
+    <div class="nav-wrapper blue-grey">
         <a th:href="@{#}" class="brand-logo center">MVP Test</a>
-        <ul class="left hide-on-med-and-down">
-
+        <ul class="right">
             <li><a th:href="@{#}">MENU1</a></li>
             <li class="active"><a th:href="@{#}">MENU2</a></li>
         </ul>
     </div>
 </nav>
+<header>
+    <a th:href="@{#}" data-target="nav-mobile" class="top-nav sidenav-trigger full hide-on-large-only"><i class="material-icons">menu</i></a>
+    <ul id="nav-mobile" class="sidenav sidenav-fixed" style="transform: translateX(0%);">
+        <li><div class="user-view">
 
-<ul id="nav-mobile" class="sidenav sidenav-fixed" style="transform: translateX(0%);">
-    <li><div class="user-view">
+            <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
+            <a th:href="@{#name}"><span class="white-text name">менеджер Василий Пупкин</span></a>
+            <a th:href="@{#email}"><span class="white-text email">pupkin@gmail.com</span></a>
+        </div></li>
+        <li class="bold"><a th:href="@{#}" class="waves-effect waves-teal">MENU</a></li>
+        <li class="bold"><a th:href="@{#}" class="waves-effect waves-teal">MENU</a></li>
+        <li class="bold"><a th:href="@{#}" class="waves-effect waves-teal">MENU</a></li>
+        <li class="bold"><a th:href="@{#}" class="waves-effect waves-teal">MENU</a></li>
+    </ul>
+</header>
+<main>
+    <div class="container">
+        <div class="row">
 
-        <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
-        <a th:href="@{#name}"><span class="white-text name">менеджер Василий Пупкин</span></a>
-        <a th:href="@{#email}"><span class="white-text email">pupkin@gmail.com</span></a>
-    </div></li>
-    <li class="bold"><a th:href="@{#}" class="waves-effect waves-teal">MENU</a></li>
-    <li class="bold"><a th:href="@{#}" class="waves-effect waves-teal">MENU</a></li>
-    <li class="bold"><a th:href="@{#}" class="waves-effect waves-teal">MENU</a></li>
-    <li class="bold"><a th:href="@{#}" class="waves-effect waves-teal">MENU</a></li>
-</ul>
-<a th:href="@{#}" data-target="nav-mobile" class="top-nav sidenav-trigger full hide-on-large-only"><i class="material-icons">menu</i></a>
-<ul id="slide-out" class="sidenav blue-grey">
-    <li><div class="user-view">
-        <!--<div class="background">-->
-            <!--<img src="images/office.jpg">-->
-        <!--</div>-->
-        <!--<a th:href="@{#user}"><img class="circle" src="images/yuna.jpg"></a>-->
-        <a th:href="@{#name}"><span class="white-text name">John Doe</span></a>
-        <a th:href="@{#email}"><span class="white-text email">jdandturk@gmail.com</span></a>
-    </div></li>
-    <li><a th:href="@{#}"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a th:href="@{#}">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" th:href="@{#}">Third Link With Waves</a></li>
-</ul>
-<div class="container">
-    <div class="row">
+            <div class="col s12 m8 offset-m1 xl7 offset-xl1">
 
-        <div class="col s12 m8 offset-m1 xl7 offset-xl1">
+                <div id="structure" class="section scrollspy">
 
-            <div id="structure" class="section scrollspy">
+                    <table class="striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Item Name</th>
+                            <th>Item Price</th>
+                        </tr>
+                        </thead>
 
-                <table class="striped">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Item Name</th>
-                        <th>Item Price</th>
-                    </tr>
-                    </thead>
+                        <tbody>
+                        <tr>
+                            <td>Alvin</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                        </tr>
+                        <tr>
+                            <td>Alan</td>
+                            <td>Jellybean</td>
+                            <td>$3.76</td>
+                        </tr>
+                        <tr>
+                            <td>Jonathan</td>
+                            <td>Lollipop</td>
+                            <td>$7.00</td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-                    <tbody>
-                    <tr>
-                        <td>Alvin</td>
-                        <td>Eclair</td>
-                        <td>$0.87</td>
-                    </tr>
-                    <tr>
-                        <td>Alan</td>
-                        <td>Jellybean</td>
-                        <td>$3.76</td>
-                    </tr>
-                    <tr>
-                        <td>Jonathan</td>
-                        <td>Lollipop</td>
-                        <td>$7.00</td>
-                    </tr>
-                    </tbody>
-                </table>
-
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+</main>
 
 <footer class="page-footer teal">
     <div class="container">
