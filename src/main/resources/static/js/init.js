@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    $('.sidenav').sidenav();
     $('.dropdown-trigger').dropdown();
     downloadTable('#menu1', '/api/getTableData');
     $('#menu1').click(function(){
