@@ -30,4 +30,16 @@ public class RestApiController {
         Gson g = new Gson();
         return g.toJson(test);
     }
+    @RequestMapping("/api/getRandStr")
+    public String getRandStr() {
+        Gson g = new Gson();
+        return g.toJson("Не удается получить доступ к сайту\n" +
+                "Превышено время ожидания ответа от сайта material-ui.com.\n" +
+                "Попробуйте сделать следующее:\n" +
+                "\n" +
+                "Проверьте подключение к Интернету.\n" +
+                "Проверьте настройки прокси-сервера и брандмауэра.\n" +
+                "Выполните диагностику сети в Windows\n" +
+                "ERR_CONNECTION_TIMED_OUT");
+    }
 }
