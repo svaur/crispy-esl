@@ -15,16 +15,36 @@ public class RestApiController {
         List<HashMap<String, String>> test = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("key1","Random value sfdsdfsdfsdf"+i);
-            hashMap.put("key2","Random value sfdsdfsdfsdf"+i);
-            hashMap.put("key3","Random value sfdsdfsdfsdf"+i);
-            hashMap.put("key4","Random value sfdsdfsdfsdf"+i);
-            hashMap.put("key5","Random value sfdsdfsdfsdf"+i);
-            hashMap.put("key6","Random value sfdsdfsdfsdf"+i);
-            hashMap.put("key7","Random value sfdsdfsdfsdf"+i);
-            hashMap.put("key8","Random value sfdsdfsdfsdf"+i);
-            hashMap.put("key9","Random value sfdsdfsdfsdf"+i);
-            hashMap.put("key0","Random value sfdsdfsdfsdf"+i);
+            hashMap.put("key0","какая то строка номер "+i);
+            hashMap.put("key1","какая то строка номер "+i);
+            hashMap.put("key2","какая то строка номер "+i);
+            hashMap.put("key3","какая то строка номер "+i);
+            hashMap.put("key4","какая то строка номер "+i);
+            hashMap.put("key5","какая то строка номер "+i);
+            hashMap.put("key6","какая то строка номер "+i);
+            hashMap.put("key7","какая то строка номер "+i);
+            hashMap.put("key8","какая то строка номер "+i);
+            hashMap.put("key9","какая то строка номер "+i);
+            test.add(hashMap);
+        }
+        Gson g = new Gson();
+        return g.toJson(test);
+    }
+    @RequestMapping("/api/getAnotherTableData")
+    public String getAnotherTableData() {
+        List<HashMap<String, String>> test = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("key0", i+"тест тест тест тест "+i);
+            hashMap.put("key1", i+"тест тест тест тест "+i);
+            hashMap.put("key2", i+"тест тест тест тест "+i);
+            hashMap.put("key3", i+"тест тест тест тест "+i);
+            hashMap.put("key4", i+"тест тест тест тест "+i);
+            hashMap.put("key5", i+"тест тест тест тест "+i);
+            hashMap.put("key6", i+"тест тест тест тест "+i);
+            hashMap.put("key7", i+"тест тест тест тест "+i);
+            hashMap.put("key8", i+"тест тест тест тест "+i);
+            hashMap.put("key9", i+"тест тест тест тест "+i);
             test.add(hashMap);
         }
         Gson g = new Gson();

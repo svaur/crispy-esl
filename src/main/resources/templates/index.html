@@ -61,11 +61,11 @@
             <a th:href="@{#name}"><span class="white-text name">менеджер [[${#httpServletRequest.remoteUser}]]</span></a>
             <a th:href="@{#email}"><span class="white-text email">pupkin@gmail.com</span></a>
             <form th:action="@{/logout}" method="post">
-                <input class="waves-effect waves-light blue-grey darken-2 btn btn-flat" type="submit" value="выйти"/>
+                <input class="waves-effect waves-light btn-flat" type="submit" value="выйти"/>
             </form>
         </div></li>
         <li id ="menu1" class="bold"><a class="waves-effect waves-teal">табличка</a></li>
-        <li id ="menu2" class="bold"><a class="waves-effect waves-teal">пустая табличка</a></li>
+        <li id ="menu2" class="bold"><a class="waves-effect waves-teal">другая табличка</a></li>
         <li id ="menu3" class="bold"><a class="waves-effect waves-teal">строка с сервера</a></li>
         <li id ="menu4" class="bold"><a class="waves-effect waves-teal">просто строка</a></li>
     </ul>
@@ -76,7 +76,7 @@
     <div class="container">
         <div class="row">
             <div class="col s12 m8 offset-m1 xl7 offset-xl1">
-                <a class="blue-grey darken-2 btn btn-floating btn-large waves-effect waves-light blue-grey right"><i class="material-icons">add</i></a>
+                <a class="btn btn-floating btn-large waves-effect waves-light right"><i class="material-icons">add</i></a>
                 <div id="workSpace" class="section scrollspy">
                 </div>
             </div>
