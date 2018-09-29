@@ -1,7 +1,7 @@
 $(document).ready(function(){
+    $('.dropdown-trigger').dropdown();
     downloadTable();
     $('#menu1').click(function(){
-        setActive('#menu1');
         downloadTable();
     });
     $('#menu2').click(function(){
@@ -12,7 +12,6 @@ $(document).ready(function(){
                 .append("<table class=\"bordered striped centered highlight responsive-table\">")
                 .append("<thead><tr><th>colum1</th><th>colum2</th><th>colum3</th><th>colum4</th><th>colum5</th><th>colum6</th><th>colum7</th><th>colum8</th><th>colum9</th></tr></thead>")
                 .append("<tbody>")
-
                 .append("</tbody>")
                 .append("</table>")
         });
@@ -32,6 +31,7 @@ $(document).ready(function(){
     })
 });
 function downloadTable() {
+    setActive('#menu1');
     $.getJSON('/api/getTableData', {}, function(data){
         var tableData = $.parseJSON(JSON.stringify(data));
         $('#workSpace').html('')
