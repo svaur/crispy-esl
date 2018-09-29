@@ -32,7 +32,7 @@ function downloadTable(menu, url) {
             .append("<tbody>");
         for ( var i=0; i<tableData.length; i++) {
             $('#workSpace').append("<tr><td>" + tableData[i].key1 + "</td><td>" + tableData[i].key2 + "</td><td>" + tableData[i].key3 + "</td><td>" + tableData[i].key4 + "</td><td>" + tableData[i].key5 + "</td><td>" + tableData[i].key6 + "</td><td>" + tableData[i].key7 + "</td><td>" + tableData[i].key8 + "</td>" +
-                "<td><a class=\"waves-effect waves-light btn-small\">Button</a></td></tr>");
+                "<td><a class=\"waves-effect waves-light btn-small blue-grey lighten-3\">Button</a></td></tr>");
         }
         $('#workSpace')
             .append("</tbody>")
