@@ -1,9 +1,11 @@
 $(document).ready(function(){
     downloadTable();
     $('#menu1').click(function(){
+        setActive('#menu1');
         downloadTable();
     });
     $('#menu2').click(function(){
+        setActive('#menu2');
         $.getJSON('/api/getTableData', {}, function(data){
             var tableData = $.parseJSON(JSON.stringify(data));
             $('#workSpace').html('')
@@ -16,6 +18,7 @@ $(document).ready(function(){
         });
     });
     $('#menu3').click(function(){
+        setActive('#menu3');
         $.getJSON('/api/getRandStr', {}, function(data){
             $('#workSpace').html('')
                 .append("<h5>"+data+"</h5>")
@@ -23,6 +26,7 @@ $(document).ready(function(){
         });
     });
     $('#menu4').click(function(){
+        setActive('#menu4');
             $('#workSpace').html('')
                 .append("<h5>sdfsdfsdfsdfsdfsdf</h5>")
     })
@@ -45,4 +49,11 @@ function downloadTable() {
             .append("</tbody>")
             .append("</table>")
     });
+}
+function setActive(nameClassToActive) {
+    $('#menu1').removeClass("active");
+    $('#menu2').removeClass("active");
+    $('#menu3').removeClass("active");
+    $('#menu4').removeClass("active");
+    $(nameClassToActive).addClass("active");
 }
