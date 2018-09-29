@@ -18,17 +18,20 @@
 
 <nav>
     <div class="nav-wrapper blue-grey">
-        <a th:href="@{#}" class="brand-logo center">MVP Test</a>
-        <ul class="right">
-            <li><a th:href="@{#}">MENU1</a></li>
-            <li class="active"><a th:href="@{#}">MENU2</a></li>
-        </ul>
+        <div class="row">
+            <div class="col s12 m10 offset-m1">
+                <a th:href="@{#}" class="brand-logo center">MVP Test</a>
+                <ul class="right">
+                    <li><a th:href="@{#}">MENU1</a></li>
+                    <li class="active"><a th:href="@{#}">MENU2</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </nav>
-<a th:href="@{#}" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 <header>
-
-    <ul id="nav-mobile" class="sidenav sidenav-fixed grey" style="transform: translateX(0%);">
+    <a th:href="@{#}" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey" style="transform: translateX(0%);">
         <li><div class="user-view">
 
             <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
