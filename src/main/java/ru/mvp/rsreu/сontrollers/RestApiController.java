@@ -3,6 +3,10 @@ package ru.mvp.rsreu.сontrollers;
 import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.mvp.rsreu.db.dao.MerchandiseDao;
+import ru.mvp.rsreu.db.entity.Sensors;
+import ru.mvp.rsreu.db.service.MerchandiseService;
+import ru.mvp.rsreu.db.service.SensorsService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,20 +17,19 @@ public class RestApiController {
     @RequestMapping("/api/getTableData")
     public String getTableData() {
         List<HashMap<String, String>> test = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        SensorsService sensorsService = new SensorsService();
+        List<Sensors> list = sensorsService.getAll();
+        list.stream().forEach(e ->{
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("key0","какая то строка номер "+i);
-            hashMap.put("key1","какая то строка номер "+i);
-            hashMap.put("key2","какая то строка номер "+i);
-            hashMap.put("key3","какая то строка номер "+i);
-            hashMap.put("key4","какая то строка номер "+i);
-            hashMap.put("key5","какая то строка номер "+i);
-            hashMap.put("key6","какая то строка номер "+i);
-            hashMap.put("key7","какая то строка номер "+i);
-            hashMap.put("key8","какая то строка номер "+i);
-            hashMap.put("key9","какая то строка номер "+i);
-            test.add(hashMap);
-        }
+            hashMap.put("key1", String.valueOf(e.getNumber()));
+            hashMap.put("key2", e.getLocation());
+            hashMap.put("key3", String.valueOf(e.isStatus()));//todo геттер
+            hashMap.put("key4", String.valueOf(e.getBattery()));
+            hashMap.put("key5", e.getMerchandise().getArticleNumber());
+            hashMap.put("key6", e.getMerchandise().getName());
+            hashMap.put("key7", String.valueOf(e.getMerchandise().getQuantity()));
+           test.add(hashMap);
+        });
         Gson g = new Gson();
         return g.toJson(test);
     }
