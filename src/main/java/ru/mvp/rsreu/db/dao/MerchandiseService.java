@@ -1,4 +1,4 @@
-package ru.mvp.rsreu.db.service;
+package ru.mvp.rsreu.db.dao;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,7 +19,6 @@ public class MerchandiseService implements MerchandiseDao {
     @Override
     public List<Merchandise> getAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
         String sql = "SELECT * FROM MERCHANDISE";
         Query query = session.createNativeQuery(sql).addEntity(Merchandise.class);
         List<Merchandise> merchandiseList = query.list();

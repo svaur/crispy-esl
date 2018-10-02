@@ -1,4 +1,4 @@
-package ru.mvp.rsreu.db.service;
+package ru.mvp.rsreu.db.dao;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -16,7 +16,6 @@ public class SensorsService implements SensorsDao {
     @Override
     public List<Sensors> getAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
         String sql = "SELECT * FROM SENSORS";
         Query query = session.createNativeQuery(sql).addEntity(Sensors.class);
         List<Sensors> sensorsList = query.list();

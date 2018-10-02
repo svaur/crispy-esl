@@ -3,10 +3,8 @@ package ru.mvp.rsreu.сontrollers;
 import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.mvp.rsreu.db.dao.MerchandiseDao;
 import ru.mvp.rsreu.db.entity.Sensors;
-import ru.mvp.rsreu.db.service.MerchandiseService;
-import ru.mvp.rsreu.db.service.SensorsService;
+import ru.mvp.rsreu.db.dao.SensorsService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
