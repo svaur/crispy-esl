@@ -1,14 +1,14 @@
 package ru.mvp.rsreu.db.dao;
 
-import ru.mvp.rsreu.db.entity.Sensors;
+import ru.mvp.rsreu.db.entity.ESL;
 
 import java.util.List;
 
 /**
  * Created by Art on 30.09.2018.
  */
-public interface SensorsDao {
+public interface ESLDao {
 
-    List<Sensors> getAll();
+    List<ESL> getAll();
 
 }

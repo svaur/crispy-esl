@@ -3,8 +3,9 @@ package ru.mvp.rsreu.сontrollers;
 import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.mvp.rsreu.db.entity.Sensors;
-import ru.mvp.rsreu.db.dao.SensorsService;
+import ru.mvp.rsreu.db.dao.ESLDao;
+import ru.mvp.rsreu.db.dao.ESLService;
+import ru.mvp.rsreu.db.entity.ESL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,17 +16,17 @@ public class RestApiController {
     @RequestMapping("/api/getTableData")
     public String getTableData() {
         List<HashMap<String, String>> test = new ArrayList<>();
-        SensorsService sensorsService = new SensorsService();
-        List<Sensors> list = sensorsService.getAll();
+        ESLDao eslDao = new ESLService();
+        List<ESL> list = eslDao.getAll();
         list.stream().forEach(e ->{
             HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("key1", String.valueOf(e.getNumber()));
-            hashMap.put("key2", e.getLocation());
+//            hashMap.put("key1", String.valueOf(e.getNumber()));
+//            hashMap.put("key2", e.getLocation());
             hashMap.put("key3", String.valueOf(e.isStatus()));//todo геттер
-            hashMap.put("key4", String.valueOf(e.getBattery()));
-            hashMap.put("key5", e.getMerchandise().getArticleNumber());
-            hashMap.put("key6", e.getMerchandise().getName());
-            hashMap.put("key7", String.valueOf(e.getMerchandise().getQuantity()));
+//            hashMap.put("key4", String.valueOf(e.getBattery()));
+//            hashMap.put("key5", e.getMerchandise().getArticleNumber());
+//            hashMap.put("key6", e.getMerchandise().getName());
+//            hashMap.put("key7", String.valueOf(e.getMerchandise().getQuantity()));
            test.add(hashMap);
         });
         Gson g = new Gson();
