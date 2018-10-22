@@ -14,7 +14,7 @@ public class ItemService implements ItemDao {
     @Override
     public List<Item> getAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "SELECT * FROM Item";
+        String sql = "SELECT * FROM Items";
         Query query = session.createNativeQuery(sql).addEntity(Item.class);
         List<Item> itemList = query.list();
         session.close();

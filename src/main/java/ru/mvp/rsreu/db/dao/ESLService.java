@@ -14,7 +14,7 @@ public class ESLService implements ESLDao {
     @Override
     public List<ESL> getAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "SELECT * FROM ESL";
+        String sql = "SELECT * FROM ESLS";
         Query query = session.createNativeQuery(sql).addEntity(ESL.class);
         List<ESL> eslList = query.list();
         session.close();
