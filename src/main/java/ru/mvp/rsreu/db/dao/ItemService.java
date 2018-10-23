@@ -20,4 +20,15 @@ public class ItemService implements ItemDao {
         session.close();
         return itemList;
     }
+
+    @Override
+    public Item getByESLCode(int eslId) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT * FROM Items WHERE items.esl_elscode = :eslCode";
+        Query query = session.createNativeQuery(sql).addEntity(Item.class);
+        query.setParameter("eslCode", eslId);
+        Item item = (Item) query.getSingleResult();
+        session.close();
+        return item;
+    }
 }
