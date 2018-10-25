@@ -10,5 +10,4 @@ import java.util.List;
 public interface ItemDao {
     /* Минимум для показухи */
     List<Item> getAll();
-    Item getByESLCode(int eslId);
 }
