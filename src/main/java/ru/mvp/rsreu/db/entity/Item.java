@@ -8,11 +8,11 @@ import java.sql.Date;
  */
 @Entity
 @Table(name = "ITEMS")
-public class Item {
+ public class Item {
 
     @Id
     @Column(name = "ItemCode")
-    private int itemCode;
+    private String itemCode;
 
     @Column(name = "ItemName", length = 256, nullable = false)
     private String itemName;
@@ -32,17 +32,17 @@ public class Item {
     @Column(name = "StorageUnit", nullable = false)
     private String storageUnit;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "item")
     private ESL esl;
 
     public Item() {
     }
 
-    public int getItemCode() {
+    public String getItemCode() {
         return itemCode;
     }
 
-    public void setItemCode(int itemCode) {
+    public void setItemCode(String itemCode) {
         this.itemCode = itemCode;
     }
 
@@ -109,10 +109,10 @@ public class Item {
 
         Item item = (Item) o;
 
-        if (itemCode != item.itemCode) return false;
         if (quantity != item.quantity) return false;
         if (Double.compare(item.price, price) != 0) return false;
         if (Double.compare(item.promotionPrice, promotionPrice) != 0) return false;
+        if (itemCode != null ? !itemCode.equals(item.itemCode) : item.itemCode != null) return false;
         if (itemName != null ? !itemName.equals(item.itemName) : item.itemName != null) return false;
         if (lastUpdated != null ? !lastUpdated.equals(item.lastUpdated) : item.lastUpdated != null) return false;
         if (storageUnit != null ? !storageUnit.equals(item.storageUnit) : item.storageUnit != null) return false;
@@ -123,7 +123,7 @@ public class Item {
     public int hashCode() {
         int result;
         long temp;
-        result = itemCode;
+        result = itemCode != null ? itemCode.hashCode() : 0;
         result = 31 * result + (itemName != null ? itemName.hashCode() : 0);
         result = 31 * result + quantity;
         temp = Double.doubleToLongBits(price);

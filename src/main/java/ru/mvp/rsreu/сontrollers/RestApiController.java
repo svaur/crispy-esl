@@ -20,14 +20,13 @@ public class RestApiController {
     public String getTableData() {
         List<HashMap<String, String>> test = new ArrayList<>();
         ESLDao eslDao = new ESLService();
-        ItemDao itemDao = new ItemService();
         List<ESL> list = eslDao.getAll();
         list.stream().forEach(e ->{
             HashMap<String, String> hashMap = new HashMap<>();
-            Item item = itemDao.getByESLCode(e.getElsCode());
-            hashMap.put("key1", String.valueOf(e.getElsCode()));
+            Item item = e.getItem();
+            hashMap.put("key1", e.getElsCode());
             hashMap.put("key2", e.getElsType());
-            hashMap.put("key3", String.valueOf(item.getItemCode()));
+            hashMap.put("key3", item.getItemCode());
             hashMap.put("key4", item.getItemName());
             hashMap.put("key5", String.valueOf(item.getPrice()));
             hashMap.put("key6", String.valueOf(e.getLastUpdate()));

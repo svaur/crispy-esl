@@ -3,8 +3,10 @@ package ru.mvp.rsreu.db.dao;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import ru.mvp.rsreu.db.entity.ESL;
+import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.db.util.HibernateUtil;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -19,5 +21,21 @@ public class ESLService implements ESLDao {
         List<ESL> eslList = query.list();
         session.close();
         return eslList;
+    }
+
+    @Override
+    public List<ESL> searchByESLCodeOrTypeOrItemCodeOrItemName(String value) {
+        List<ESL> tempResult = getAll();
+        Iterator<ESL> iterator = tempResult.iterator();
+        while (iterator.hasNext()){
+            ESL temp = iterator.next();
+            Item item = temp.getItem();
+            if(!value.equals(temp.getElsCode()) || !value.equals(temp.getElsType()) ||
+                    !value.equals(item.getItemCode()) ||
+                    !value.equals(item.getItemName())){
+                iterator.remove();
+            }
+        }
+        return tempResult;
     }
 }
