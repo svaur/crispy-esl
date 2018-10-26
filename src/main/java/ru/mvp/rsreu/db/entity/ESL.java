@@ -13,7 +13,7 @@ public class ESL {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ELSCode")
-    private int elsCode;
+    private String elsCode;
 
     @Column(name = "ELSType", nullable = false)
     private String elsType;
@@ -42,13 +42,17 @@ public class ESL {
     @Column(name = "LastUpdate", nullable = false)
     private Date lastUpdate;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="ItemCode")
+    private Item item;
+
     public ESL(){}
 
-    public int getElsCode() {
+    public String getElsCode() {
         return elsCode;
     }
 
-    public void setElsCode(int elsCode) {
+    public void setElsCode(String elsCode) {
         this.elsCode = elsCode;
     }
 
@@ -124,6 +128,14 @@ public class ESL {
         this.lastUpdate = lastUpdate;
     }
 
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -131,9 +143,9 @@ public class ESL {
 
         ESL esl = (ESL) o;
 
-        if (elsCode != esl.elsCode) return false;
         if (connectivity != esl.connectivity) return false;
         if (status != esl.status) return false;
+        if (elsCode != null ? !elsCode.equals(esl.elsCode) : esl.elsCode != null) return false;
         if (elsType != null ? !elsType.equals(esl.elsType) : esl.elsType != null) return false;
         if (batteryLevel != null ? !batteryLevel.equals(esl.batteryLevel) : esl.batteryLevel != null) return false;
         if (firmWare != null ? !firmWare.equals(esl.firmWare) : esl.firmWare != null) return false;
@@ -141,12 +153,13 @@ public class ESL {
             return false;
         if (startDate != null ? !startDate.equals(esl.startDate) : esl.startDate != null) return false;
         if (eslPattern != null ? !eslPattern.equals(esl.eslPattern) : esl.eslPattern != null) return false;
-        return lastUpdate != null ? lastUpdate.equals(esl.lastUpdate) : esl.lastUpdate == null;
+        if (lastUpdate != null ? !lastUpdate.equals(esl.lastUpdate) : esl.lastUpdate != null) return false;
+        return item != null ? item.equals(esl.item) : esl.item == null;
     }
 
     @Override
     public int hashCode() {
-        int result = elsCode;
+        int result = elsCode != null ? elsCode.hashCode() : 0;
         result = 31 * result + (elsType != null ? elsType.hashCode() : 0);
         result = 31 * result + (connectivity ? 1 : 0);
         result = 31 * result + (status ? 1 : 0);
@@ -156,6 +169,7 @@ public class ESL {
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         result = 31 * result + (eslPattern != null ? eslPattern.hashCode() : 0);
         result = 31 * result + (lastUpdate != null ? lastUpdate.hashCode() : 0);
+        result = 31 * result + (item != null ? item.hashCode() : 0);
         return result;
     }
 }
