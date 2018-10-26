@@ -36,22 +36,53 @@ function getEslList(url) {
     $.getJSON(url, {}, function (data) {
         var tableData = $.parseJSON(JSON.stringify(data));
         $('#workSpace').html('')
-            .append("<table class=\"bordered striped centered highlight responsive-table\">")//frame=\"border\"
-            .append("<thead><tr><th>ESL code</th><th>ESL type</th><th>Item code</th><th>Item name</th><th>Price</th>" +
-                "<th>Updated date</th><th>Connectivity</th><th>Battery level</th><th>Status</th><th>Action</th></tr></thead>")
-            .append("<tbody>");
+            .append("<span class='flow-text'>ESLs list</span>" +
+                    "<div class=\"divider\"></div>")
+            .append("<div class=\"row\">" +
+                        "<div class=\"col s1\">" +
+                            "<span>Show by</span>" + //todo надо выровнять
+                        "</div>" +
+                        "<div class=\"input-field col s1\">" +
+                            "<select class='browser-default'>" +
+                                "<option value=\"\" disabled selected>10</option>" +
+                                "<option value=\"1\">25</option>" +
+                                "<option value=\"2\">50</option>" +
+                                "<option value=\"3\">80</option>" +
+                            "</select>" +
+                        "</div>" +
+                    "</div>")
+            .append("<table class=\"centered striped\" id=\"eslTable\"></table>");//frame=\"border\"
+        $('#eslTable').html('')
+            .append("<thead>" +
+                        "<tr>" +
+                            "<th>ESL code</th>" +
+                            "<th>ESL type</th>" +
+                            "<th>Item code</th>" +
+                            "<th>Item name</th>" +
+                            "<th>Price</th>" +
+                            "<th>Updated date</th>" +
+                            "<th>Connectivity</th>" +
+                            "<th>Battery level</th>" +
+                            "<th>Status</th>" +
+                            "<th>Action</th>" +
+                        "</tr>" +
+                    "</thead>")
+            .append("<tbody id=\"eslTBody\"></tbody>");
         for (var i = 0; i < tableData.length; i++) {
-            $('#workSpace').append("<tr><td>" + tableData[i].key1 + "</td><td>" + tableData[i].key2 + "</td><td>"
-                + tableData[i].key3 + "</td><td>" + tableData[i].key4 + "</td><td>"
-                + tableData[i].key5 + "</td><td>" + tableData[i].key6 + "</td><td>"
-                + tableData[i].key7 + "</td><td>" + tableData[i].key8 + "</td><td>"
-                + tableData[i].key9 + "</td><td>экшн кнопка</td>"
-                + "</tr>");
-
+            $('#eslTBody').append("<tr>" +
+                                    "<td>" + tableData[i].key1 + "</td>" +
+                                    "<td>" + tableData[i].key2 + "</td>" +
+                                    "<td>" + tableData[i].key3 + "</td>" +
+                                    "<td>" + tableData[i].key4 + "</td>" +
+                                    "<td>" + tableData[i].key5 + "</td>" +
+                                    "<td>" + tableData[i].key6 + "</td>" +
+                                    "<td>" + tableData[i].key7 + "</td>" +
+                                    "<td>" + tableData[i].key8 + "</td>" +
+                                    "<td>" + tableData[i].key9 + "</td>" +
+                                    "<td>экшн кнопка</td>" +
+                                  "</tr>");
         }
-        $('#workSpace')
-            .append("</tbody>")
-            .append("</table>")
+        $('select').formSelect();
     });
 }
 function setActive(nameClassToActive) {
