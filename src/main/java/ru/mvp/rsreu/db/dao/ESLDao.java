@@ -10,7 +10,6 @@ import java.util.List;
 public interface ESLDao {
 
     List<ESL> getAll();
-    /* Длинно неказисто, зато понятно) */
     List<ESL> searchByValue(String value);
 
 }
