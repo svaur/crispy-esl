@@ -11,6 +11,6 @@ public interface ESLDao {
 
     List<ESL> getAll();
     /* Длинно неказисто, зато понятно) */
-    List<ESL> searchByESLCodeOrTypeOrItemCodeOrItemName(String value);
+    List<ESL> searchByValue(String value);
 
 }

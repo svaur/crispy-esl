@@ -24,7 +24,7 @@ public class ESLService implements ESLDao {
     }
 
     @Override
-    public List<ESL> searchByESLCodeOrTypeOrItemCodeOrItemName(String value) {
+    public List<ESL> searchByValue(String value) {
         List<ESL> tempResult = getAll();
         Iterator<ESL> iterator = tempResult.iterator();
         while (iterator.hasNext()){
