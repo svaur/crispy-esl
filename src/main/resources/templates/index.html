@@ -49,7 +49,8 @@
                                     </li>
                                 </ul>
 
-                            <li><a th:href="@{#}"><a class="dropdown-trigger btn btn-flat" th:href="@{#}" data-target="dropdown1">MENU</a></a></li>
+                            <li><a th:href="@{#}"><a class="dropdown-trigger btn btn-flat" th:href="@{#}"
+                                                     data-target="dropdown1">MENU</a></a></li>
                         </ul>
                     </div>
                 </div>
@@ -57,16 +58,19 @@
         </div>
     </nav>
     <ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey darken-3" style="transform: translateX(0%);">
-        <li><div class="user-view">
+        <li>
+            <div class="user-view">
 
-            <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
-            <a th:href="@{#name}"><span class="white-text name">менеджер [[${#httpServletRequest.remoteUser}]]</span></a>
-            <a th:href="@{#email}"><span class="white-text email">pupkin@gmail.com</span></a>
-        </div></li>
-        <li id ="menu1" class="bold"><a class="waves-effect waves-teal">табличка</a></li>
-        <li id ="menu2" class="bold"><a class="waves-effect waves-teal">другая табличка</a></li>
-        <li id ="menu3" class="bold"><a class="waves-effect waves-teal">строка с сервера</a></li>
-        <li id ="menu4" class="bold"><a class="waves-effect waves-teal">просто строка</a></li>
+                <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
+                <a th:href="@{#name}"><span
+                        class="white-text name">менеджер [[${#httpServletRequest.remoteUser}]]</span></a>
+                <a th:href="@{#email}"><span class="white-text email">pupkin@gmail.com</span></a>
+            </div>
+        </li>
+        <li id="menu1" class="bold"><a class="waves-effect waves-teal">ESL</a></li>
+        <li id="menu2" class="bold"><a class="waves-effect waves-teal">другая табличка</a></li>
+        <li id="menu3" class="bold"><a class="waves-effect waves-teal">строка с сервера</a></li>
+        <li id="menu4" class="bold"><a class="waves-effect waves-teal">просто строка</a></li>
         <li>
             <form th:action="@{/logout}" method="post">
                 <input class="waves-effect waves-light btn-flat" type="submit" value="выйти"/>
@@ -79,20 +83,22 @@
 </a>
 
 <main class="grey lighten-5">
-    <div class="container blue-grey lighten-5 z-depth-2">
-            <div class="col s12 m8 offset-m1 xl7 offset-xl1">
-                <a class="btn btn-floating waves-effect waves-light right blue-grey lighten-3"><i class="material-icons">add</i></a>
-                <div id="workSpace" class="section scrollspy">
-                </div>
+    <div class="container z-depth-2">
+        <div class="col s12 m8 offset-m1 xl7 offset-xl1">
+            <div id="workSpace" class="section scrollspy">
             </div>
+        </div>
+    </div>
     </div>
 </main>
 
 <footer class="page-footer teal blue-grey lighten-4">
     <div class="footer-copyright blue-grey lighten-3">
         <div class="container">
-            <span>Copyright © 2015 <a class="grey-text text-lighten-4" th:href="@{https://vk.com/svaur}" target="_blank">test</a> All rights reserved.</span>
-            <span class="right"> Design and Developed by <a class="grey-text text-lighten-4" th:href="@{https://vk.com/svaur}">test</a></span>
+            <span>Copyright © 2015 <a class="grey-text text-lighten-4" th:href="@{https://vk.com/svaur}"
+                                      target="_blank">test</a> All rights reserved.</span>
+            <span class="right"> Design and Developed by <a class="grey-text text-lighten-4"
+                                                            th:href="@{https://vk.com/svaur}">test</a></span>
         </div>
     </div>
 </footer>

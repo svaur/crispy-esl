@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mvp.rsreu.db.dao.ESLDao;
 import ru.mvp.rsreu.db.dao.ESLService;
+import ru.mvp.rsreu.db.dao.ItemDao;
+import ru.mvp.rsreu.db.dao.ItemService;
 import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.templates.BaseTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
@@ -30,13 +32,16 @@ public class RestApiController {
         List<ESL> list = eslDao.getAll();
         list.stream().forEach(e -> {
             HashMap<String, String> hashMap = new HashMap<>();
-//            hashMap.put("key1", String.valueOf(e.getNumber()));
-//            hashMap.put("key2", e.getLocation());
-            hashMap.put("key3", String.valueOf(e.isStatus()));//todo геттер
-//            hashMap.put("key4", String.valueOf(e.getBattery()));
-//            hashMap.put("key5", e.getMerchandise().getArticleNumber());
-//            hashMap.put("key6", e.getMerchandise().getName());
-//            hashMap.put("key7", String.valueOf(e.getMerchandise().getQuantity()));
+            Item item = e.getItem();
+            hashMap.put("key1", e.getElsCode());
+            hashMap.put("key2", e.getElsType());
+            hashMap.put("key3", item.getItemCode());
+            hashMap.put("key4", item.getItemName());
+            hashMap.put("key5", String.valueOf(item.getPrice()));
+            hashMap.put("key6", String.valueOf(e.getLastUpdate()));
+            hashMap.put("key7", String.valueOf(e.isConnectivity()));
+            hashMap.put("key8", String.valueOf(e.getBatteryLevel()));
+            hashMap.put("key9", String.valueOf(e.isStatus())); //todo поменять тип
             test.add(hashMap);
         });
         Gson g = new Gson();
