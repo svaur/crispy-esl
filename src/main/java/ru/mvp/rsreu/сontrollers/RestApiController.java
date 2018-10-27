@@ -10,6 +10,7 @@ import ru.mvp.rsreu.db.dao.ESLService;
 import ru.mvp.rsreu.db.dao.ItemDao;
 import ru.mvp.rsreu.db.dao.ItemService;
 import ru.mvp.rsreu.db.entity.ESL;
+import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.templates.BaseTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
 
@@ -33,15 +34,15 @@ public class RestApiController {
         list.stream().forEach(e -> {
             HashMap<String, String> hashMap = new HashMap<>();
             Item item = e.getItem();
-            hashMap.put("key1", e.getElsCode());
-            hashMap.put("key2", e.getElsType());
-            hashMap.put("key3", item.getItemCode());
-            hashMap.put("key4", item.getItemName());
-            hashMap.put("key5", String.valueOf(item.getPrice()));
-            hashMap.put("key6", String.valueOf(e.getLastUpdate()));
-            hashMap.put("key7", String.valueOf(e.isConnectivity()));
-            hashMap.put("key8", String.valueOf(e.getBatteryLevel()));
-            hashMap.put("key9", String.valueOf(e.isStatus())); //todo поменять тип
+            hashMap.put("elsCode", e.getElsCode());
+            hashMap.put("elsType", e.getElsType());
+            hashMap.put("itemCode", item.getItemCode());
+            hashMap.put("itemName", item.getItemName());
+            hashMap.put("price", String.valueOf(item.getPromotionPrice()));
+            hashMap.put("lastUpdate", String.valueOf(e.getLastUpdate()));
+            hashMap.put("connectivity", String.valueOf(e.isConnectivity()));
+            hashMap.put("batteryLevel", String.valueOf(e.getBatteryLevel()));
+            hashMap.put("status", String.valueOf(e.isStatus())); //todo поменять тип
             test.add(hashMap);
         });
         Gson g = new Gson();
@@ -79,15 +80,17 @@ public class RestApiController {
     BaseTemplate baseTemplate;
 
     @RequestMapping("/api/getImage")
-    public String getImage(@RequestParam("eslId") String eslId) throws IOException {
+    public String getImage(@RequestParam("elsCode") String elsCode) throws IOException {
         int width = 200;
         int height = 200;
-        EslInfoTemplate eslInfoTemplate = new EslInfoTemplate("мужские перчатки",
-                "из натуральной кожи"+eslId,
-                "2 400",
-                "1 678",
+        ESLDao eslDao = new ESLService();
+        Item selectedGood = eslDao.searchByESLCode(elsCode).getItem();
+        EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(selectedGood.getItemName(),
+                selectedGood.getItemName(),
+                String.valueOf(selectedGood.getPrice()),
+                String.valueOf(selectedGood.getPromotionPrice()),
                 "рублей",
-                "2343254234523452345");
+                selectedGood.getItemCode());
         BufferedImage image = baseTemplate.drawEsl(eslInfoTemplate, width, height);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

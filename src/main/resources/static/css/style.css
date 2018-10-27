@@ -45,6 +45,6 @@ body {
 main {
     flex: 1 0 auto;
 }
-#main-table td:hover {
+#esl-table td:hover {
     cursor: pointer;
 }

@@ -13,7 +13,7 @@ $(document).ready(function () {
         setActive('#menu3');
         $.getJSON('/api/getImage', {eslId:1}, function (data) {
             $('#workSpace').html('')
-                .append(data)
+                .append("<img id='esl-image' src='" + data + "'>")
         });
     });
     $('#menu4').click(function () {
@@ -50,8 +50,8 @@ function getEslList(url) {
                             "</select>" +
                         "</div>" +
                     "</div>")
-            .append("<table class=\"centered striped\" id=\"eslTable\"></table>");//frame=\"border\"
-        $('#eslTable').html('')
+            .append("<table class=\"centered striped\" id=\"esl-table\"></table>");//frame=\"border\"
+        $('#esl-table').html('')
             .append("<thead>" +
                         "<tr>" +
                             "<th>ESL code</th>" +
@@ -63,22 +63,20 @@ function getEslList(url) {
                             "<th>Connectivity</th>" +
                             "<th>Battery level</th>" +
                             "<th>Status</th>" +
-                            "<th>Action</th>" +
                         "</tr>" +
                     "</thead>")
             .append("<tbody id=\"eslTBody\"></tbody>");
         for (var i = 0; i < tableData.length; i++) {
-            $('#eslTBody').append("<tr>" +
-                                    "<td>" + tableData[i].key1 + "</td>" +
-                                    "<td>" + tableData[i].key2 + "</td>" +
-                                    "<td>" + tableData[i].key3 + "</td>" +
-                                    "<td>" + tableData[i].key4 + "</td>" +
-                                    "<td>" + tableData[i].key5 + "</td>" +
-                                    "<td>" + tableData[i].key6 + "</td>" +
-                                    "<td>" + tableData[i].key7 + "</td>" +
-                                    "<td>" + tableData[i].key8 + "</td>" +
-                                    "<td>" + tableData[i].key9 + "</td>" +
-                                    "<td>экшн кнопка</td>" +
+            $('#eslTBody').append("<tr onclick='showImage("+tableData[i].elsCode+")'>" +
+                                    "<td>" + tableData[i].elsCode + "</td>" +
+                                    "<td>" + tableData[i].elsType + "</td>" +
+                                    "<td>" + tableData[i].itemCode + "</td>" +
+                                    "<td>" + tableData[i].itemName + "</td>" +
+                                    "<td>" + tableData[i].price + "</td>" +
+                                    "<td>" + tableData[i].lastUpdate + "</td>" +
+                                    "<td>" + tableData[i].connectivity + "</td>" +
+                                    "<td>" + tableData[i].batteryLevel + "</td>" +
+                                    "<td>" + tableData[i].status + "</td>" +
                                   "</tr>");
         }
         $('select').formSelect();
@@ -91,7 +89,13 @@ function setActive(nameClassToActive) {
     $('#menu4').removeClass("active");
     $(nameClassToActive).addClass("active");
 }
-function showImage(data) {
+function showImage(elsCode) {
     var w = window.open();
-    $(w.document.body).html("<img id='esl-image' src='" + data + "'>");
+    $.getJSON("/api/getImage", {elsCode:elsCode}, function (data) {
+        $(w.document.body).html(
+            "<style>.shadow {" +
+            "box-shadow: 0 0 10px rgba(0,0,0,0.5);" +
+            "padding: 10px;}</style>" +
+            "<img class=\"shadow\" id='esl-image' src='" + data + "'>");
+    });
 }

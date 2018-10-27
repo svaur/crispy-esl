@@ -33,32 +33,38 @@ public class BaseTemplate {
                 eslInfoTemplate.getGoodName(),
                 g2d,
                 width,
-                10);
+                10,
+                false);
         fontEditor.drawString(new Font("TimesRoman", Font.PLAIN, 12),
                 eslInfoTemplate.getGoodSecondName(),
                 g2d,
                 width,
-                20);
+                20,
+                false);
         fontEditor.drawString(new Font("TimesRoman", Font.PLAIN, 22),
                 eslInfoTemplate.getOldCost(),
                 g2d,
                 width,
-                60);
+                60,
+                true);
         fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 30),
                 eslInfoTemplate.getNewCost(),
                 g2d,
                 width,
-                120);
+                120,
+                false);
         fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 10),
                 eslInfoTemplate.getCurrency(),
                 g2d,
                 width,
-                160);
+                160,
+                false);
         fontEditor.drawString(new Font("TimesRoman", Font.PLAIN, 10),
                 eslInfoTemplate.getVendorCode(),
                 g2d,
                 width,
-                190);
+                190,
+                false);
         // Disposes of this graphics context and releases any system resources that it is using.
         g2d.dispose();
         return image;
