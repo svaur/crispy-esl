@@ -27,20 +27,12 @@ function downloadTable(menu, url) {
     $.getJSON(url, {}, function (data) {
         var tableData = $.parseJSON(JSON.stringify(data));
         $('#workSpace').html('')
-            .append("<table class=\"bordered striped centered highlight responsive-table\">"
+            .append("<table id='main-table' class=\"bordered striped centered highlight responsive-table\">"
             +"<thead><tr><th>sensorId</th><th>location</th><th>status</th><th>batteryLvl</th><th>article</th><th>name</th><th>quantity</th></tr></thead>"
             +"<tbody>");
         for (var i = 0; i < tableData.length; i++) {
-            $('#workSpace').append("<tr><td>" + tableData[i].key1 + "</td><td>" + tableData[i].key2 + "</td><td>" + tableData[i].key3 + "</td><td>" + tableData[i].key4 + "</td><td>" + tableData[i].key5 + "</td><td>" + tableData[i].key6 + "</td><td>" + tableData[i].key7 + "</td>" +
-                "<td><a id=\"esl-image-show\" class=\"waves-effect waves-light btn-small blue-grey lighten-3 \">Button</a></td></tr>");
-
-            $('#esl-image-show').click(function () {
-                var index = $(this).index();
-                $.getJSON('/api/getImage', {eslId:index}, function (data) {
-                    $('#esl-image-show').html('')
-                        .append(data)
-                });
-            })
+            $('#workSpace').append("<tr onclick='showImage("+data+")' id=\"esl-image-button\"><td>" + tableData[i].key1 + "</td><td>" + tableData[i].key2 + "</td><td>" + tableData[i].key3 + "</td><td>" + tableData[i].key4 + "</td><td>" + tableData[i].key5 + "</td><td>" + tableData[i].key6 + "</td><td>" + tableData[i].key7 + "</td>" +
+                "<td/>");
         }
         $('#workSpace')
             .append("</tbody>")
@@ -53,4 +45,8 @@ function setActive(nameClassToActive) {
     $('#menu3').removeClass("active");
     $('#menu4').removeClass("active");
     $(nameClassToActive).addClass("active");
+}
+function showImage(data) {
+    var w = window.open();
+    $(w.document.body).html("<img id='esl-image' src='" + data + "'>");
 }

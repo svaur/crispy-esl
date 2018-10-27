@@ -90,10 +90,7 @@ public class RestApiController {
 
         String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
         String imageString = "data:image/png;base64," + data;
-        String outImage = "<img src='" + imageString + "'>";
         Gson gson = new Gson();
-        return gson.toJson(outImage);
+        return gson.toJson(imageString);
     }
-
-
 }
