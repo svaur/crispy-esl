@@ -1,17 +1,16 @@
 package ru.mvp.rsreu.сontrollers;
 
 import com.google.gson.Gson;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mvp.rsreu.db.dao.ESLDao;
 import ru.mvp.rsreu.db.dao.ESLService;
-import ru.mvp.rsreu.db.dao.ItemDao;
-import ru.mvp.rsreu.db.dao.ItemService;
 import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.fontedit.FontEditor;
+
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 import java.awt.*;
@@ -28,26 +27,32 @@ public class RestApiController {
     FontEditor fontEditor;
 
     @RequestMapping("/api/getTableData")
-    public String getTableData() {
-        List<HashMap<String, String>> test = new ArrayList<>();
-        ESLDao eslDao = new ESLService();
-        List<ESL> list = eslDao.getAll();
-        list.stream().forEach(e -> {
-            HashMap<String, String> hashMap = new HashMap<>();
-            Item item = e.getItem();
-            hashMap.put("key1", e.getElsCode());
-            hashMap.put("key2", e.getElsType());
-            hashMap.put("key3", item.getItemCode());
-            hashMap.put("key4", item.getItemName());
-            hashMap.put("key5", String.valueOf(item.getPrice()));
-            hashMap.put("key6", String.valueOf(e.getLastUpdate()));
-            hashMap.put("key7", String.valueOf(e.isConnectivity()));
-            hashMap.put("key8", String.valueOf(e.getBatteryLevel()));
-            hashMap.put("key9", String.valueOf(e.isStatus())); //todo поменять тип
-            test.add(hashMap);
-        });
-        Gson g = new Gson();
-        return g.toJson(test);
+    public String getTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size) {//todo получать мапу? не станет ли избыточным?
+//        int showSize = Integer.valueOf(size);
+        long start = System.nanoTime();
+        try {
+            List<HashMap<String, String>> test = new ArrayList<>();
+            ESLDao eslDao = new ESLService();
+            List<ESL> list = eslDao.getAll();
+            list.stream().forEach(e -> {
+                HashMap<String, String> hashMap = new HashMap<>();
+                Item item = e.getItem();
+                hashMap.put("key1", e.getElsCode());
+                hashMap.put("key2", e.getElsType());
+                hashMap.put("key3", item.getItemCode());
+                hashMap.put("key4", item.getItemName());
+                hashMap.put("key5", String.valueOf(item.getPrice()));
+                hashMap.put("key6", String.valueOf(e.getLastUpdate()));
+                hashMap.put("key7", String.valueOf(e.isConnectivity()));
+                hashMap.put("key8", String.valueOf(e.getBatteryLevel()));
+                hashMap.put("key9", String.valueOf(e.isStatus())); //todo поменять тип
+                test.add(hashMap);
+            });
+            Gson g = new Gson();
+            return g.toJson(test);
+        }finally {
+            System.out.println((System.nanoTime() - start)/1000000);
+        }
     }
 
     @RequestMapping("/api/getAnotherTableData")
