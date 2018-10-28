@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mvp.rsreu.db.dao.ESLDao;
 import ru.mvp.rsreu.db.dao.ESLService;
-import ru.mvp.rsreu.db.dao.ItemDao;
-import ru.mvp.rsreu.db.dao.ItemService;
 import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.db.entity.Item;
-import ru.mvp.rsreu.templates.BaseTemplate;
+import ru.mvp.rsreu.templates.BaseSaleTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
 
 import javax.imageio.ImageIO;
@@ -77,12 +75,12 @@ public class RestApiController {
     }
 
     @Autowired
-    BaseTemplate baseTemplate;
+    BaseSaleTemplate baseSaleTemplate;
 
     @RequestMapping("/api/getImage")
     public String getImage(@RequestParam("elsCode") String elsCode) throws IOException {
-        int width = 200;
-        int height = 200;
+        int width = 152;
+        int height = 152;
         ESLDao eslDao = new ESLService();
         Item selectedGood = eslDao.searchByESLCode(elsCode).getItem();
         EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(selectedGood.getItemName(),
@@ -91,7 +89,7 @@ public class RestApiController {
                 String.valueOf(selectedGood.getPromotionPrice()),
                 "рублей",
                 selectedGood.getItemCode());
-        BufferedImage image = baseTemplate.drawEsl(eslInfoTemplate, width, height);
+        BufferedImage image = baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(image, "png", baos);

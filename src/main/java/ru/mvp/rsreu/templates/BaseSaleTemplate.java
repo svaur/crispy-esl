@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  * информация о стандартном шаблоне
  */
 @Component
-public class BaseTemplate {
+public class BaseSaleTemplate {
     @Autowired
     FontEditor fontEditor;
     /**
@@ -24,48 +24,53 @@ public class BaseTemplate {
         BufferedImage image = new BufferedImage(
                 width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
-        g2d.setColor(Color.white);
+        g2d.setColor(Color.WHITE);
         g2d.fillRect(0, 0, width, height);
-        // create a string with yellow
         g2d.setColor(Color.BLACK);
-
-        fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 12),
+        g2d.fillRect(0, 0, width, 12);
+        fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 14),
                 eslInfoTemplate.getGoodName(),
                 g2d,
                 width,
-                10,
+                23,
                 false);
-        fontEditor.drawString(new Font("TimesRoman", Font.PLAIN, 12),
+        fontEditor.drawString(new Font("TimesRoman", Font.PLAIN, 14),
                 eslInfoTemplate.getGoodSecondName(),
                 g2d,
                 width,
-                20,
+                38,
                 false);
         fontEditor.drawString(new Font("TimesRoman", Font.PLAIN, 22),
                 eslInfoTemplate.getOldCost(),
                 g2d,
                 width,
-                60,
+                65,
                 true);
-        fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 30),
+        fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 34),
                 eslInfoTemplate.getNewCost(),
                 g2d,
                 width,
-                120,
+                100,
                 false);
-        fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 10),
+        fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 12),
                 eslInfoTemplate.getCurrency(),
                 g2d,
                 width,
-                160,
+                135,
                 false);
-        fontEditor.drawString(new Font("TimesRoman", Font.PLAIN, 10),
+        fontEditor.drawString(new Font("TimesRoman", Font.PLAIN, 12),
                 eslInfoTemplate.getVendorCode(),
                 g2d,
                 width,
-                190,
+                150,
                 false);
-        // Disposes of this graphics context and releases any system resources that it is using.
+        g2d.setColor(Color.WHITE);
+        fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 10),
+                "АКЦИЯ",
+                g2d,
+                width,
+                10,
+                false);
         g2d.dispose();
         return image;
     }
