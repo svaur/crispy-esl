@@ -36,10 +36,7 @@ $(document).ready(function () {
 function downloadTable(menu, url) {
     setActive();
     if (menu === "#menu1") {
-        var d = new Date();
-        var start = d.getMilliseconds();
         getEslList(url);
-        console.log(new Date().getMilliseconds() - start);
     }
     else {
         alert("пока не готово");
@@ -57,10 +54,10 @@ function getEslList(url, headers) {
                         "</div>" +
                         "<div class=\"input-field col s1\">" +
                             "<select class='browser-default'>" +
-                                "<option value=\"\" disabled selected>10</option>" +
-                                "<option value=\"1\">25</option>" +
-                                "<option value=\"2\">50</option>" +
-                                "<option value=\"3\">80</option>" +
+                                "<option value=\"10\" disabled selected>10</option>" +
+                                "<option value=\"25\">25</option>" +
+                                "<option value=\"50\">50</option>" +
+                                "<option value=\"80\">80</option>" +
                             "</select>" +
                         "</div>" +
                     "</div>")
@@ -93,7 +90,7 @@ function getEslList(url, headers) {
                                     "<td>" + tableData[i].batteryLevel + "</td>" +
                                     "<td>" + tableData[i].status + "</td>" +
                                     "<td>" +
-                                        "<a class=\"waves-effect waves-light btn-small\" onclick='showImage(" + tableData[i].elsCode + "'>" +
+                                        "<a class=\"waves-effect waves-light btn-small\" onclick='showImage(" + tableData[i].elsCode + ")'>" +
                                             "<i class=\"material-icons\">photo</i>" +
                                         "</a>" +
                                     "<a class=\"waves-effect waves-light btn-small\"><i class=\"material-icons\">edit</i></a>" +
