@@ -63,11 +63,12 @@ function getEslList(url) {
                             "<th>Connectivity</th>" +
                             "<th>Battery level</th>" +
                             "<th>Status</th>" +
+                            "<th>action</th>" +
                         "</tr>" +
                     "</thead>")
             .append("<tbody id=\"eslTBody\"></tbody>");
         for (var i = 0; i < tableData.length; i++) {
-            $('#eslTBody').append("<tr onclick='showImage("+tableData[i].elsCode+")'>" +
+            $('#eslTBody').append("<tr>" +
                                     "<td>" + tableData[i].elsCode + "</td>" +
                                     "<td>" + tableData[i].elsType + "</td>" +
                                     "<td>" + tableData[i].itemCode + "</td>" +
@@ -77,6 +78,11 @@ function getEslList(url) {
                                     "<td>" + tableData[i].connectivity + "</td>" +
                                     "<td>" + tableData[i].batteryLevel + "</td>" +
                                     "<td>" + tableData[i].status + "</td>" +
+                                    "<td>" +
+                                    "<a class=\"waves-effect waves-light btn-small\" onclick='showImage("+tableData[i].elsCode+")'><i class=\"material-icons\">photo</i></a>" +
+                                    "<a class=\"waves-effect waves-light btn-small\"><i class=\"material-icons\">edit</i></a>" +
+                                    "<a class=\"waves-effect waves-light btn-small\"><i class=\"material-icons\">update</i></a>" +
+                                    "</td>" +
                                   "</tr>");
         }
         $('select').formSelect();
