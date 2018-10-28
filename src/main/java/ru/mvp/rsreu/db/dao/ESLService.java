@@ -24,6 +24,16 @@ public class ESLService implements ESLDao {
     }
 
     @Override
+    public ESL searchByESLCode(String eslCode) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT * FROM ESLS WHERE elscode = "+eslCode;
+        Query query = session.createNativeQuery(sql).addEntity(ESL.class);
+        ESL eslList = (ESL)query.list().get(0);
+        session.close();
+        return eslList;
+    }
+
+    @Override
     public List<ESL> searchByValue(String value) {
         List<ESL> tempResult = getAll();
         Iterator<ESL> iterator = tempResult.iterator();

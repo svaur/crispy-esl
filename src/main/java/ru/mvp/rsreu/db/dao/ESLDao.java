@@ -10,6 +10,9 @@ import java.util.List;
 public interface ESLDao {
 
     List<ESL> getAll();
+
+    /* Поиск по колонкам: EslCode, EslType, ItemCode, ItemType */
     List<ESL> searchByValue(String value);
 
+    ESL searchByESLCode(String eslCode);
 }
