@@ -110,13 +110,13 @@ function displayEslData(url, headers) {
                                     "<td>" + tableData[i].status + "</td>" +
                                     "<td>" +
                                         "<a class=\"waves-effect waves-light btn-small\" onclick='showImage(" + tableData[i].elsCode + ")'>" +
-                                            "<i class=\"tiny material-icons\">photo</i>" +
+                                            "<i class=\"material-icons\">photo</i>" +
                                         "</a>" +
                                         "<a class=\"waves-effect waves-light btn-small\">" +
-                                            "<i class=\"tiny material-icons\">edit</i>" +
+                                            "<i class=\"material-icons\">edit</i>" +
                                         "</a>" +
                                         "<a class=\"waves-effect waves-light btn-small\">" +
-                                            "<i class=\"large material-icons\">update</i>" +
+                                            "<i class=\"material-icons\">update</i>" +
                                         "</a>" +
                                     "</td>" +
                                   "</tr>");
