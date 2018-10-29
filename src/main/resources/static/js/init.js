@@ -41,9 +41,6 @@ function displayWorkSpace(menu, url) {
                         "<div class=\"col s2\">" +
                             "<span class='flow-text'>ESLs list</span>" +
                     "</div>" +
-                // "<div class=\"col s2 offset-s8\">" +
-                // "<span class='flow-text'>ESLs count</span>" +                        //todo все равно пока не достаем кол-во
-                // "</div>" +
                     "</div>" +
                     "<div class=\"divider\"></div>" +
                     "<div class=\"row\">" +
@@ -115,19 +112,16 @@ function displayEslData(url, headers) {
                                         "<a class=\"waves-effect waves-light btn-small\" onclick='showImage(" + tableData[i].elsCode + ")'>" +
                                             "<i class=\"tiny material-icons\">photo</i>" +
                                         "</a>" +
-                                    "<a class=\"waves-effect waves-light btn-small\">" +
-                                        "<i class=\"tiny material-icons\">edit</i>" +
-                                    "</a>" +
-                                    "<a class=\"waves-effect waves-light btn-small\">" +
-                                        "<i class=\"large material-icons\">update</i>" +
-                                    "</a>" +
+                                        "<a class=\"waves-effect waves-light btn-small\">" +
+                                            "<i class=\"tiny material-icons\">edit</i>" +
+                                        "</a>" +
+                                        "<a class=\"waves-effect waves-light btn-small\">" +
+                                            "<i class=\"large material-icons\">update</i>" +
+                                        "</a>" +
                                     "</td>" +
                                   "</tr>");
         }
     });
-}
-function displayEslTable() {
-    
 }
 function setActive(nameClassToActive) {
     $('#menu1').removeClass("active");
