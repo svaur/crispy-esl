@@ -69,8 +69,6 @@ public class RestApiController {
             hashMap.put("status", String.valueOf(e.isStatus())); //todo поменять тип
             tableData.add(hashMap);
         });
-
-        System.out.println("---------------------------------");
         Gson g = new Gson();
         return g.toJson(tableData);
     }
