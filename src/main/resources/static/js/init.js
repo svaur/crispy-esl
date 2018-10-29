@@ -1,13 +1,13 @@
 $(document).ready(function () {
     $('.sidenav').sidenav();
     $('.dropdown-trigger').dropdown();
-    downloadTable('#menu1', '/api/getTableData');
+    displayWorkSpace('#menu1', '/api/getTableData');
     $('#menu1').click(function () {
-        downloadTable('#menu1', '/api/getTableData');
+        displayWorkSpace('#menu1', '/api/getTableData');
     });
     $('#menu2').click(function () {
         setActive('#menu2');
-        downloadTable('#menu2', '/api/getAnotherTableData');
+        displayWorkSpace('#menu2', '/api/getAnotherTableData');
     });
     $('#menu3').click(function () {
         setActive('#menu3');
@@ -33,35 +33,57 @@ $(document).ready(function () {
     });
 });
 
-function downloadTable(menu, url) {
+function displayWorkSpace(menu, url) {
     setActive();
     if (menu === "#menu1") {
-        getEslList(url);
-    }
-    else {
-        alert("пока не готово");
-    }
-}
-function getEslList(url, headers) {
-    $.getJSON(url, headers, function (data) {
-        var tableData = $.parseJSON(JSON.stringify(data));
-        $('#workSpace').html('')
-            .append("<span class='flow-text'>ESLs list</span>" +
-                "<div class=\"divider\"></div>")
+        $('#workSpace').html('')                                        //todo в отдельную функцию, опять же нет времени на чистый код
             .append("<div class=\"row\">" +
-                        "<div class=\"col s1\">" +
-                            "<span>Show by</span>" + //todo надо выровнять
-                        "</div>" +
-                        "<div class=\"input-field col s1\">" +
-                            "<select class='browser-default'>" +
-                                "<option value=\"10\" disabled selected>10</option>" +
+                        "<div class=\"col s2\">" +
+                            "<span class='flow-text'>ESLs list</span>" +
+                    "</div>" +
+                // "<div class=\"col s2 offset-s8\">" +
+                // "<span class='flow-text'>ESLs count</span>" +                        //todo все равно пока не достаем кол-во
+                // "</div>" +
+                    "</div>" +
+                    "<div class=\"divider\"></div>" +
+                    "<div class=\"row\">" +
+                        "<div class=\"input-field col l1\">" +
+                            "<select>" +
+                                "<option value=\"10\">10</option>" +
                                 "<option value=\"25\">25</option>" +
                                 "<option value=\"50\">50</option>" +
                                 "<option value=\"80\">80</option>" +
                             "</select>" +
                         "</div>" +
-                    "</div>")
-            .append("<table class=\"centered striped\" id=\"esl-table\"></table>");//frame=\"border\"
+                        "<div class=\"input-field col l4 offset-l3\">" +
+                            "<input id=\"search\" type=\"search\" placeholder=\"Search\">" +
+                        "</div>" +
+                        "<div id=\"uploadBtn\" class=\"col l1 offset-l3\">" +
+                            "<a class=\"dropdown-trigger btn\" href=\"#\" data-target=\"upload\">" +
+                                "<i class=\"tiny material-icons\">file_upload</i>" +
+                            "</a>" +
+                            "<ul id=\"upload\" class=\"dropdown-content\">" +
+                                "<li>" +
+                                    "<a href=\"#!\">CSV</a>" +
+                                "</li>"+
+                                "<li>" +
+                                    "<a href=\"#!\">Excel</a>" +
+                                "</li>" +
+                            "</ul>" +
+                        "</div>" +
+                    "</div>" +
+                    "<div class=\"divider\"></div>" +
+                    "<table class=\"centered striped\" id=\"esl-table\"></table>");//frame=\"border\"
+        activateActions();
+        displayEslData(url);
+    }
+    else {
+        alert("пока не готово");
+    }
+}
+function displayEslData(url, headers) {
+    $.getJSON(url, headers, function (data) {
+        var tableData = $.parseJSON(JSON.stringify(data));
         $('#esl-table').html('')
             .append("<thead>" +
                         "<tr>" +
@@ -91,15 +113,21 @@ function getEslList(url, headers) {
                                     "<td>" + tableData[i].status + "</td>" +
                                     "<td>" +
                                         "<a class=\"waves-effect waves-light btn-small\" onclick='showImage(" + tableData[i].elsCode + ")'>" +
-                                            "<i class=\"material-icons\">photo</i>" +
+                                            "<i class=\"tiny material-icons\">photo</i>" +
                                         "</a>" +
-                                    "<a class=\"waves-effect waves-light btn-small\"><i class=\"material-icons\">edit</i></a>" +
-                                    "<a class=\"waves-effect waves-light btn-small\"><i class=\"material-icons\">update</i></a>" +
+                                    "<a class=\"waves-effect waves-light btn-small\">" +
+                                        "<i class=\"tiny material-icons\">edit</i>" +
+                                    "</a>" +
+                                    "<a class=\"waves-effect waves-light btn-small\">" +
+                                        "<i class=\"large material-icons\">update</i>" +
+                                    "</a>" +
                                     "</td>" +
                                   "</tr>");
         }
-        prepareSelect()
     });
+}
+function displayEslTable() {
+    
 }
 function setActive(nameClassToActive) {
     $('#menu1').removeClass("active");
@@ -108,12 +136,16 @@ function setActive(nameClassToActive) {
     $('#menu4').removeClass("active");
     $(nameClassToActive).addClass("active");
 }
-function prepareSelect() {
+function activateActions() {
     $('select').formSelect().on('change', function () {
         var headers = {"size": $('select').val()};
-        console.log("-------" + headers);
-        getEslList("/api/getTableData", headers)//todo
+        displayEslData("/api/getTableData", headers);
     });
+    $('#search').on('input', function() {
+        var headers = {"size": $('select').val(), "searchValue": $('#search').val()};
+        displayEslData("/api/searchData", headers);
+    });
+    $('.dropdown-trigger').dropdown();
 }
 function showImage(elsCode) {
     var w = window.open();
