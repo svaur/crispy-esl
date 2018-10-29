@@ -38,9 +38,9 @@ public class ESLService implements ESLDao {
     @Override
     public ESL searchByESLCode(String eslCode) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "SELECT * FROM ESLS WHERE elscode = :eslCode";
+        String sql = "SELECT * FROM ESLS WHERE elscode = :elscode";
         Query query = session.createNativeQuery(sql).addEntity(ESL.class);
-        query.setParameter("eslCode", eslCode);
+        query.setParameter("elscode", Integer.valueOf(eslCode));//todo разобраться что за ссанина с типом переменной
         ESL eslList = (ESL) query.list().get(0);
         session.close();
         return eslList;
