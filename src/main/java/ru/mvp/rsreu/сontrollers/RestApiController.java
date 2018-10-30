@@ -25,10 +25,11 @@ import java.util.List;
 public class RestApiController {
 
     @RequestMapping("/api/getTableData")
-    public String getTableData() {
-        List<HashMap<String, String>> test = new ArrayList<>();
+    public String getTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size) {//todo получать мапу? не станет ли избыточным?
+        int showSize = Integer.valueOf(size);
+        List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
         ESLDao eslDao = new ESLService();
-        List<ESL> list = eslDao.getAll();
+        List<ESL> list = eslDao.getAll(showSize);
         list.stream().forEach(e -> {
             HashMap<String, String> hashMap = new HashMap<>();
             Item item = e.getItem();
@@ -41,10 +42,35 @@ public class RestApiController {
             hashMap.put("connectivity", String.valueOf(e.isConnectivity()));
             hashMap.put("batteryLevel", String.valueOf(e.getBatteryLevel()));
             hashMap.put("status", String.valueOf(e.isStatus())); //todo поменять тип
-            test.add(hashMap);
+            tableData.add(hashMap);
         });
         Gson g = new Gson();
-        return g.toJson(test);
+        return g.toJson(tableData);
+    }
+
+    @RequestMapping("/api/searchData")
+    public String getTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size,    //todo для показа конечно и так сойдет, но уж дюже похоже на предыдущий метод, фабрика ESLDao
+                               @RequestParam(value = "searchValue") String searchValue) {                           //todo получать мапу? не станет ли избыточным?
+        int showSize = Integer.valueOf(size);
+        List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
+        ESLDao eslDao = new ESLService();
+        List<ESL> list = eslDao.searchByValue(searchValue, showSize);
+        list.stream().forEach(e -> {
+            HashMap<String, String> hashMap = new HashMap<>();
+            Item item = e.getItem();
+            hashMap.put("elsCode", e.getElsCode());
+            hashMap.put("elsType", e.getElsType());
+            hashMap.put("itemCode", item.getItemCode());
+            hashMap.put("itemName", item.getItemName());
+            hashMap.put("price", String.valueOf(item.getPromotionPrice()));
+            hashMap.put("lastUpdate", String.valueOf(e.getLastUpdate()));
+            hashMap.put("connectivity", String.valueOf(e.isConnectivity()));
+            hashMap.put("batteryLevel", String.valueOf(e.getBatteryLevel()));
+            hashMap.put("status", String.valueOf(e.isStatus())); //todo поменять тип
+            tableData.add(hashMap);
+        });
+        Gson g = new Gson();
+        return g.toJson(tableData);
     }
 
     @RequestMapping("/api/getAnotherTableData")

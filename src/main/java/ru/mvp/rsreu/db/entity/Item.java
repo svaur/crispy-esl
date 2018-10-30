@@ -17,9 +17,6 @@ import java.sql.Date;
     @Column(name = "ItemName", length = 256, nullable = false)
     private String itemName;
 
-    @Column(name = "Quantity", nullable = false)
-    private int quantity;
-
     @Column(name = "Price", nullable = false)
     private double price;
 
@@ -52,14 +49,6 @@ import java.sql.Date;
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public double getPrice() {
@@ -109,7 +98,6 @@ import java.sql.Date;
 
         Item item = (Item) o;
 
-        if (quantity != item.quantity) return false;
         if (Double.compare(item.price, price) != 0) return false;
         if (Double.compare(item.promotionPrice, promotionPrice) != 0) return false;
         if (itemCode != null ? !itemCode.equals(item.itemCode) : item.itemCode != null) return false;
@@ -125,7 +113,6 @@ import java.sql.Date;
         long temp;
         result = itemCode != null ? itemCode.hashCode() : 0;
         result = 31 * result + (itemName != null ? itemName.hashCode() : 0);
-        result = 31 * result + quantity;
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(promotionPrice);
