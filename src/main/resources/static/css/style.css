@@ -69,4 +69,9 @@ main {
     margin-bottom: 1rem;
 }
 
-
+.container {
+    width: 90%;
+}
+.sidenav{
+    width: 200px;
+}
