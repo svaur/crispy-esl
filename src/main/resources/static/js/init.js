@@ -109,18 +109,35 @@ function displayEslData(url, headers) {
                                     "<td>" + tableData[i].batteryLevel + "</td>" +
                                     "<td>" + tableData[i].status + "</td>" +
                                     "<td>" +
-                                        "<a class=\"waves-effect waves-light btn-small\" onclick='showImage(" + tableData[i].elsCode + ")'>" +
-                                            "<i class=\"material-icons\">photo</i>" +
+                                        "<a class=\"dropdown-trigger btn-small\" href=\"#\" data-autoTrigger='false' data-target=\"dropdown" + i + "\">" +
+                                            "<i class=\"material-icons\">menu</i>" +
                                         "</a>" +
-                                        "<a class=\"waves-effect waves-light btn-small\">" +
-                                            "<i class=\"material-icons\">edit</i>" +
-                                        "</a>" +
-                                        "<a class=\"waves-effect waves-light btn-small\">" +
-                                            "<i class=\"material-icons\">update</i>" +
-                                        "</a>" +
+                                        "<ul id=\"dropdown" + i + "\" class=\"dropdown-content\">" +
+                                            "<li>" +
+                                                "<a class=\"waves-effect waves-light\" onclick='showImage(" + tableData[i].elsCode + ")'>" +
+                                                    "<i class=\"material-icons\">photo</i>" +
+                                                "</a>" +
+                                            "</li>" +
+                                            "<li>" +
+                                                "<a class=\"waves-effect waves-light\">" +
+                                                    "<i class=\"material-icons\">edit</i>" +
+                                                "</a>" +
+                                            "</li>" +
+                                            "<li>" +
+                                                "<a class=\"waves-effect waves-light\">" +
+                                                    "<i class=\"material-icons Tiny\">update</i>" +
+                                                "</a>" +
+                                            "</li>" +
+                                            "<li>" +
+                                                "<a class=\"waves-effect waves-light\">" +
+                                                    "<i class=\"material-icons Small\">delete</i>" +
+                                                "</a>" +
+                                            "</li>" +
+                                        "</ul>" +
                                     "</td>" +
                                   "</tr>");
         }
+        $('.dropdown-trigger').dropdown();
     });
 }
 function setActive(nameClassToActive) {

@@ -41,9 +41,9 @@ public class ESLService implements ESLDao {
         String sql = "SELECT * FROM ESLS WHERE elscode = :elscode";
         Query query = session.createNativeQuery(sql).addEntity(ESL.class);
         query.setParameter("elscode", Integer.valueOf(eslCode));//todo разобраться что за ссанина с типом переменной
-        ESL eslList = (ESL) query.list().get(0);
+        ESL esl = (ESL) query.getSingleResult();
         session.close();
-        return eslList;
+        return esl;
     }
 
     @Override
