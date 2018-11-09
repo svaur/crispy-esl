@@ -37,14 +37,12 @@ function displayWorkSpace(menu, url) {
     setActive();
     if (menu === "#menu1") {
         $('#workSpace').html('')                                        //todo в отдельную функцию, опять же нет времени на чистый код
-            .append("<div class=\"row\">" +
-                        "<div class=\"col s2\">" +
-                            "<span class='flow-text'>ESLs list</span>" +
-                    "</div>" +
-                    "</div>" +
-                    "<div class=\"divider\"></div>" +
+            .append("<div class=\"divider\"></div>" +
                     "<div class=\"row\">" +
-                        "<div class=\"input-field col l1\">" +
+                        "<div class=\"col s12 m6 l3\">" +
+                            "<span class='flow-text'>ESLs list</span>" +
+                        "</div>" +
+                        "<div class=\"input-field col s12 m6 l3\">" +
                             "<select>" +
                                 "<option value=\"10\">10</option>" +
                                 "<option value=\"25\">25</option>" +
@@ -52,10 +50,10 @@ function displayWorkSpace(menu, url) {
                                 "<option value=\"80\">80</option>" +
                             "</select>" +
                         "</div>" +
-                        "<div class=\"input-field col l4 offset-l3\">" +
+                        "<div class=\"input-field col s12 m6 l3\">" +
                             "<input id=\"search\" type=\"search\" placeholder=\"Search\">" +
                         "</div>" +
-                        "<div id=\"uploadBtn\" class=\"col l1 offset-l3\">" +
+                        "<div id=\"uploadBtn\" class=\"col s12 m6 l1\">" +
                             "<a class=\"dropdown-trigger btn\" href=\"#\" data-target=\"upload\">" +
                                 "<i class=\"tiny material-icons\">file_upload</i>" +
                             "</a>" +
