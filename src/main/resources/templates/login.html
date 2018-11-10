@@ -1,36 +1,61 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Log In</title>
+    <style>
+        body {
+            background-color: #eceff1;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        form {border: 3px solid #f1f1f1;}
+
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #90a4ae;
+            color: white;
+            padding: 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .login-page {
+            margin: auto;
+            width: 300px;
+            padding: 16px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-
-        <div class="col s6 offset-s3 z-depth-1" id="panell">
-            <h5 id="title">Login Form</h5>
-            <form>
-
-                <div class="input-field" id="username">
-                    <input  type="text" class="validate">
-                    <label for="username">Username</label>
-                </div>
-                <div class="input-field" id="password">
-                    <input  type="password" class="validate">
-                    <label for="password">Password</label>
-                </div>
-                <p>
-                    <input type="checkbox" id="remember"/>
-                    <label for="remember" id="checkbox" >Remember me</label>
-                </p>
-                <a class="waves-effect waves-light btn" id="loginbtn">Login</a>
-
-            </form>
-
-        </div>
-    </div>
-
+<div class="login-page" align="center">
+    <form name="f" th:action="@{/login}" method="post" class="grey blue-grey lighten-5">
+        <legend><b>Please Login</b></legend>
+        <br/>
+            <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username"/>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password"/>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn">Log in</button>
+            </div>
+    </form>
 </div>
-
+</div>
 </body>
 </html>

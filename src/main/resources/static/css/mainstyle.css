@@ -59,15 +59,6 @@ main {
     margin-right: auto;
     margin-bottom: 1px;
 }
-#uploadBtn{
-    float: left;
-    box-sizing: border-box;
-    padding: 0 0.75rem;
-    min-height: 1px;
-    margin-left: 230px;
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-}
 
 .container {
     width: 90%;
@@ -75,3 +66,7 @@ main {
 .sidenav{
     width: 200px;
 }
+nav {
+     height: 30px;
+     line-height: 30px;
+ }

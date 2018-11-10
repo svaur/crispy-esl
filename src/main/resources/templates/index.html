@@ -6,9 +6,9 @@
     <title>test design</title>
 
     <!-- CSS  -->
-    <link th:href="@{/css/default/materialIcon.css}" rel="stylesheet">
-    <link th:href="@{/css/default/materialize.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link th:href="@{/css/style.css}" type="text/css" rel="stylesheet"/>
+    <link th:href="@{/css/materialIcon.css}" rel="stylesheet">
+    <link th:href="@{/css/materialize.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/css/mainstyle.css}" type="text/css" rel="stylesheet"/>
     <!--  Scripts-->
     <script th:src="@{/js/default/jquery-2.1.1.min.js}"></script>
     <script th:src="@{/js/default/materialize.js}"></script>
@@ -18,87 +18,68 @@
 
 
 <header class="grey blue-grey lighten-5">
-    <!--<nav class="top-nav blue-grey lighten-3">-->
-        <!--<div class=" container">-->
-            <!--<div class="nav-wrapper">-->
-                <!--<div class="row">-->
-                    <!--<div class="col s12 m10 offset-m1">-->
-                        <!--<a th:href="@{#}" class="brand-logo center black-text">MVP Test</a>-->
-                        <!--<ul class="right">-->
-                            <!--<li>-->
-                                <!--<a class="dropdown-trigger btn btn-flat" th:href="@{#}" data-target="dropdown1">MENU</a>-->
-                                <!--&lt;!&ndash; Dropdown Structure &ndash;&gt;-->
-                                <!--<ul id="dropdown1" class="dropdown-content" tabindex="0" style="">-->
-                                    <!--<li tabindex="0">-->
-                                        <!--<a th:href="@{#}">one</a>-->
-                                    <!--</li>-->
-                                    <!--<li tabindex="0">-->
-                                        <!--<a th:href="@{#}">two</a>-->
-                                    <!--</li>-->
-                                    <!--<li class="divider" tabindex="-1"></li>-->
-                                    <!--<li tabindex="0">-->
-                                        <!--<a th:href="@{#}">three</a>-->
-                                    <!--</li>-->
-                                    <!--<li tabindex="0">-->
-                                        <!--<a th:href="@{#}">-->
-                                            <!--<i class="material-icons">view_module</i>four</a>-->
-                                    <!--</li>-->
-                                    <!--<li tabindex="0">-->
-                                        <!--<a th:href="@{#}">-->
-                                            <!--<i class="material-icons">cloud</i>five</a>-->
-                                    <!--</li>-->
-                                <!--</ul>-->
-
-                            <!--<li><a th:href="@{#}"><a class="dropdown-trigger btn btn-flat" th:href="@{#}"-->
-                                                     <!--data-target="dropdown1">MENU</a></a></li>-->
-                        <!--</ul>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</nav>-->
-    <ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey darken-3" style="transform: translateX(0%);">
-        <li>
-            <div class="user-view">
-
-                <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
-                <a th:href="@{#name}"><span
-                        class="white-text name">менеджер [[${#httpServletRequest.remoteUser}]]</span></a>
-                <a th:href="@{#email}"><span class="white-text email">pupkin@gmail.com</span></a>
+    <nav class="top-nav blue-grey lighten-3">
+        <div class=" container">
+            <div class="nav-wrapper">
+                <div class="row">
+                    <div class="col s8 m2 offset-m1">
+                        <ul class="left">
+                            <li>
+                                <a th:href="@{#}" data-target="nav-mobile"
+                                   class="top-nav sidenav-trigger full hide-on-large-only">
+                                    <i class="material-icons">menu</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </li>
-        <li id="menu1" class="bold"><a class="waves-effect waves-teal">ESL</a></li>
-        <li id="menu2" class="bold"><a class="waves-effect waves-teal">другая табличка</a></li>
-        <li id="menu3" class="bold"><a class="waves-effect waves-teal">строка с сервера</a></li>
-        <li id="menu4" class="bold"><a class="waves-effect waves-teal">просто строка</a></li>
-        <li>
-            <form th:action="@{/logout}" method="post">
-                <input class="waves-effect waves-light btn-flat" type="submit" value="выйти"/>
-            </form>
-        </li>
-    </ul>
+        </div>
+    </nav>
+
 </header>
-<a th:href="@{#}" data-target="nav-mobile" class="top-nav sidenav-trigger full hide-on-large-only">
-    <i class="material-icons">menu</i>
-</a>
+
 
 <main class="grey lighten-5">
-    <div class="container">
-        <!--<div class="col s12 m8 offset-m1 xl7 offset-xl1">-->
-            <div id="workSpace" class="section scrollspy"/>
-        <!--</div>-->
+    <div class="row">
+        <div class="col s12 m4 l1">
+            <ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey darken-3">
+            <li>
+                <div class="user-view">
+
+                    <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
+                    <a th:href="@{#name}"><span
+                            class="white-text name">менеджер [[${#httpServletRequest.remoteUser}]]</span></a>
+                    <a th:href="@{#email}"><span class="white-text email">user@gmail.com</span></a>
+                </div>
+            </li>
+            <li id="menu1" class="bold"><a class="waves-effect waves-teal">ESLs</a></li>
+            <li id="menu2" class="bold"><a class="waves-effect waves-teal">Items</a></li>
+            <li id="menu3" class="bold"><a class="waves-effect waves-teal">Associate</a></li>
+            <li id="menu4" class="bold"><a class="waves-effect waves-teal">Tasks</a></li>
+            <li>
+                <form th:action="@{/logout}" method="post">
+                    <input class="waves-effect waves-light btn-flat" type="submit" value="выйти"/>
+                </form>
+            </li>
+        </ul>
+        </div>
+        <div id="workSpace" class="section scrollspy col s12 m8 l9">
+
+        </div>
+    </div>
     </div>
 </main>
 
 <!--<footer class="page-footer teal blue-grey lighten-4">-->
-    <!--<div class="footer-copyright blue-grey lighten-3">-->
-        <!--<div class="container">-->
-            <!--<span>Copyright © 2015 <a class="grey-text text-lighten-4" th:href="@{https://vk.com/svaur}"-->
-                                      <!--target="_blank">test</a> All rights reserved.</span>-->
-            <!--<span class="right"> Design and Developed by <a class="grey-text text-lighten-4"-->
-                                                            <!--th:href="@{https://vk.com/svaur}">test</a></span>-->
-        <!--</div>-->
-    <!--</div>-->
+<!--<div class="footer-copyright blue-grey lighten-3">-->
+<!--<div class="container">-->
+<!--<span>Copyright © 2015 <a class="grey-text text-lighten-4" th:href="@{https://vk.com/svaur}"-->
+<!--target="_blank">test</a> All rights reserved.</span>-->
+<!--<span class="right"> Design and Developed by <a class="grey-text text-lighten-4"-->
+<!--th:href="@{https://vk.com/svaur}">test</a></span>-->
+<!--</div>-->
+<!--</div>-->
 <!--</footer>-->
 </body>
 
