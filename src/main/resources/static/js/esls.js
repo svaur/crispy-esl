@@ -1,8 +1,7 @@
 function getEslsTemplate() {
-    return "<div class=\"row\">" +
-                "<div class=\"col s12 m6 l3\">" +
-                "<span class='flow-text'>ESLs list</span>" +
-                "</div>" +
+    return "<span class='flow-text'>Ценники</span>" +
+            "<div class=\"divider\"></div>"+
+            "<div class=\"row\">" +
                 "<div class=\"input-field col s12 m6 l3\">" +
                     "<select>" +
                         "<option value=\"10\">10</option>" +

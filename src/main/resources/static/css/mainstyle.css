@@ -70,3 +70,24 @@ nav {
      height: 30px;
      line-height: 30px;
  }
+.tabs .tab a{
+    color:black;
+}
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+    background-color: lightgray;
+    outline: none;
+}
+.tabs .tab a:hover,tabs .tab a:active,.tabs .tab a.active {
+    background-color:transparent;
+    color:dimgray;
+}
+.tabs .tab.disabled a,.tabs .tab.disabled a:hover {
+    color:transparent;
+}
+.tabs .indicator {
+    background-color:black;
+}
+
+.tabs .tab a {
+    color: darkgray;
+}
