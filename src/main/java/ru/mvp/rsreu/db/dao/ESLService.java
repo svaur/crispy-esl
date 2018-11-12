@@ -2,6 +2,7 @@ package ru.mvp.rsreu.db.dao;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.db.util.HibernateUtil;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by Art on 30.09.2018.
  */
+@Component
 public class ESLService implements ESLDao {
     @Override
     public List<ESL> getAll() {
@@ -44,6 +46,16 @@ public class ESLService implements ESLDao {
         ESL esl = (ESL) query.getSingleResult();
         session.close();
         return esl;
+    }
+    @Override
+    public Item searchByItemCode(String itemCode) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT * FROM ITEMS WHERE itemcode = :itemcode";
+        Query query = session.createNativeQuery(sql).addEntity(Item.class);
+        query.setParameter("itemcode", Integer.valueOf(itemCode));//todo разобраться что за ссанина с типом переменной
+        Item item = (Item) query.getSingleResult();
+        session.close();
+        return item;
     }
 
     @Override

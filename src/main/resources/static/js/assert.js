@@ -28,8 +28,27 @@ function getAssertTemplate() {
         "       </div>" +
         "       </div>"+
         "    </form>" +
-        "<a class=\"waves-effect waves-light btn-small\"><i class=\"material-icons left\">cancel</i>отменить</a>"+
-        "<a class=\"waves-effect waves-light btn-small\"><i class=\"material-icons left\">check</i>сохранить</a>"+
+        "<a class=\"waves-effect waves-light btn-small\" onclick='cancelBtn()'><i class=\"material-icons left\">cancel</i>отменить</a>"+
+        "<a class=\"waves-effect waves-light btn-small\" onclick='saveData()'><i class=\"material-icons left\">check</i>сохранить</a>"+
         "</div>" +
         "<div id=\"test-swipe-2\" class=\"col s12\">не готово</div>"
+}
+
+function saveData() {
+    if (document.getElementById("eslInput").value===""){
+        alert("введите данные для сохранения");
+    }else {
+        var dataToSave = {
+            "esl": document.getElementById("eslInput").value,
+            "template": document.getElementById("templateInput").value,
+            "item": document.getElementById("itemInput").value
+        };
+        $.getJSON("/api/assignEsl", dataToSave, function (data) {
+            alert(data);
+        });
+    }
+}
+function cancelBtn() {
+    document.getElementById("eslInput").value="";
+    document.getElementById("itemInput").value="";
 }

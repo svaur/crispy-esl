@@ -1,6 +1,11 @@
 package ru.mvp.rsreu.сontrollers;
 
 import com.google.gson.Gson;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,10 +14,12 @@ import ru.mvp.rsreu.db.dao.ESLDao;
 import ru.mvp.rsreu.db.dao.ESLService;
 import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.db.entity.Item;
+import ru.mvp.rsreu.db.util.HibernateUtil;
 import ru.mvp.rsreu.templates.BaseSaleTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
 
 import javax.imageio.ImageIO;
+import javax.persistence.EntityTransaction;
 import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -24,11 +31,17 @@ import java.util.List;
 @RestController
 public class RestApiController {
 
+    private ESLDao eslDao;
+
+    @Autowired
+    public RestApiController(ESLDao eslDao) {
+        this.eslDao=eslDao;
+    }
+
     @RequestMapping("/api/getTableData")
     public String getTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size) {//todo получать мапу? не станет ли избыточным?
         int showSize = Integer.valueOf(size);
         List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        ESLDao eslDao = new ESLService();
         List<ESL> list = eslDao.getAll(showSize);
         list.stream().forEach(e -> {
             HashMap<String, String> hashMap = new HashMap<>();
@@ -53,7 +66,6 @@ public class RestApiController {
                                @RequestParam(value = "searchValue") String searchValue) {                           //todo получать мапу? не станет ли избыточным?
         int showSize = Integer.valueOf(size);
         List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        ESLDao eslDao = new ESLService();
         List<ESL> list = eslDao.searchByValue(searchValue, showSize);
         list.stream().forEach(e -> {
             HashMap<String, String> hashMap = new HashMap<>();
@@ -100,14 +112,44 @@ public class RestApiController {
         return "kjlklk";
     }
 
-    @Autowired
+    @RequestMapping("/api/assignEsl")
+    public String assignEsl(@RequestParam("esl") String esl,
+                            @RequestParam("template") String template,
+                            @RequestParam("item") String item) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        EntityTransaction tx = session.getTransaction();
+        tx.begin();
+        try {
+            ESL eslElement = eslDao.searchByESLCode(esl);
+            Item itemElement = eslDao.searchByItemCode(item);
+            session.find(ESL.class, eslElement.getItem());
+            eslElement.setItem(itemElement);
+            session.close();
+            TransactionStatus result = ((Transaction) tx).getStatus();
+            tx.commit();
+            return result.isOneOf(TransactionStatus.COMMITTED) ? "ok" : "error";
+        } catch (HibernateException hibernateEx) {
+            try {
+                tx.rollback();
+            } catch (RuntimeException runtimeEx) {
+                System.err.printf("Couldn’t Roll Back Transaction", runtimeEx);
+            }
+            hibernateEx.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return "error while commit";
+    }
+
+        @Autowired
     BaseSaleTemplate baseSaleTemplate;
 
     @RequestMapping("/api/getImage")
     public String getImage(@RequestParam("elsCode") String elsCode) throws IOException {
         int width = 152;
         int height = 152;
-        ESLDao eslDao = new ESLService();
         Item selectedGood = eslDao.searchByESLCode(elsCode).getItem();
         EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(selectedGood.getItemName(),
                 selectedGood.getItemName(),
