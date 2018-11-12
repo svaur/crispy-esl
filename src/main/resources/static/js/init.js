@@ -36,39 +36,8 @@ $(document).ready(function () {
 function displayWorkSpace(menu, url) {
     setActive();
     if (menu === "#menu1") {
-        $('#workSpace').html('')                                        //todo в отдельную функцию, опять же нет времени на чистый код
-            .append("<div class=\"divider\"></div>" +
-                    "<div class=\"row\">" +
-                        "<div class=\"col s12 m6 l3\">" +
-                            "<span class='flow-text'>ESLs list</span>" +
-                        "</div>" +
-                        "<div class=\"input-field col s12 m6 l3\">" +
-                            "<select>" +
-                                "<option value=\"10\">10</option>" +
-                                "<option value=\"25\">25</option>" +
-                                "<option value=\"50\">50</option>" +
-                                "<option value=\"80\">80</option>" +
-                            "</select>" +
-                        "</div>" +
-                        "<div class=\"input-field col s12 m6 l3\">" +
-                            "<input id=\"search\" type=\"search\" placeholder=\"Search\">" +
-                        "</div>" +
-                        "<div id=\"uploadBtn\" class=\"col s12 m6 l1\">" +
-                            "<a class=\"dropdown-trigger btn\" href=\"#\" data-target=\"upload\">" +
-                                "<i class=\"tiny material-icons\">file_upload</i>" +
-                            "</a>" +
-                            "<ul id=\"upload\" class=\"dropdown-content\">" +
-                                "<li>" +
-                                    "<a href=\"#!\">CSV</a>" +
-                                "</li>"+
-                                "<li>" +
-                                    "<a href=\"#!\">Excel</a>" +
-                                "</li>" +
-                            "</ul>" +
-                        "</div>" +
-                    "</div>" +
-                    "<div class=\"divider\"></div>" +
-                    "<table class=\"centered striped\" id=\"esl-table\"></table>");//frame=\"border\"
+        $('#workSpace').html('')
+            .append(getEslsTemplate());//frame=\"border\"
         activateActions();
         displayEslData(url);
     }
@@ -76,68 +45,7 @@ function displayWorkSpace(menu, url) {
         alert("пока не готово");
     }
 }
-function displayEslData(url, headers) {
-    $.getJSON(url, headers, function (data) {
-        var tableData = $.parseJSON(JSON.stringify(data));
-        $('#esl-table').html('')
-            .append("<thead>" +
-                        "<tr>" +
-                            "<th>ESL code</th>" +
-                            "<th>ESL type</th>" +
-                            "<th>Item code</th>" +
-                            "<th>Item name</th>" +
-                            "<th>Price</th>" +
-                            "<th>Updated date</th>" +
-                            "<th>Connectivity</th>" +
-                            "<th>Battery level</th>" +
-                            "<th>Status</th>" +
-                            "<th>action</th>" +
-                        "</tr>" +
-                    "</thead>")
-            .append("<tbody id=\"eslTBody\"></tbody>");
-        for (var i = 0; i < tableData.length; i++) {
-            $('#eslTBody').append("<tr>" +
-                                    "<td>" + tableData[i].elsCode + "</td>" +
-                                    "<td>" + tableData[i].elsType + "</td>" +
-                                    "<td>" + tableData[i].itemCode + "</td>" +
-                                    "<td>" + tableData[i].itemName + "</td>" +
-                                    "<td>" + tableData[i].price + "</td>" +
-                                    "<td>" + tableData[i].lastUpdate + "</td>" +
-                                    "<td>" + tableData[i].connectivity + "</td>" +
-                                    "<td>" + tableData[i].batteryLevel + "</td>" +
-                                    "<td>" + tableData[i].status + "</td>" +
-                                    "<td>" +
-                                        "<a class=\"dropdown-trigger btn-small\" href=\"#\" data-autoTrigger='false' data-target=\"dropdown" + i + "\">" +
-                                            "<i class=\"material-icons\">menu</i>" +
-                                        "</a>" +
-                                        "<ul id=\"dropdown" + i + "\" class=\"dropdown-content\">" +
-                                            "<li>" +
-                                                "<a class=\"waves-effect waves-light\" onclick='showImage(" + tableData[i].elsCode + ")'>" +
-                                                    "<i class=\"material-icons\">photo</i>" +
-                                                "</a>" +
-                                            "</li>" +
-                                            "<li>" +
-                                                "<a class=\"waves-effect waves-light\">" +
-                                                    "<i class=\"material-icons\">edit</i>" +
-                                                "</a>" +
-                                            "</li>" +
-                                            "<li>" +
-                                                "<a class=\"waves-effect waves-light\">" +
-                                                    "<i class=\"material-icons Tiny\">update</i>" +
-                                                "</a>" +
-                                            "</li>" +
-                                            "<li>" +
-                                                "<a class=\"waves-effect waves-light\">" +
-                                                    "<i class=\"material-icons Small\">delete</i>" +
-                                                "</a>" +
-                                            "</li>" +
-                                        "</ul>" +
-                                    "</td>" +
-                                  "</tr>");
-        }
-        $('.dropdown-trigger').dropdown();
-    });
-}
+
 function setActive(nameClassToActive) {
     $('#menu1').removeClass("active");
     $('#menu2').removeClass("active");
@@ -156,9 +64,9 @@ function activateActions() {
     });
     $('.dropdown-trigger').dropdown();
 }
-function showImage(elsCode) {
+function showImage(code) {
     var w = window.open();
-    $.getJSON("/api/getImage", {elsCode:elsCode}, function (data) {
+    $.getJSON("/api/getImage", {elsCode:code}, function (data) {
         $(w.document.body).html(
             "<style>.shadow {" +
             "box-shadow: 0 0 10px rgba(0,0,0,0.5);" +
