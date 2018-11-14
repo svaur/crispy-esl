@@ -29,7 +29,7 @@ import java.sql.Date;
     @Column(name = "StorageUnit", nullable = false)
     private String storageUnit;
 
-    @OneToOne(mappedBy = "item")
+    @OneToOne(fetch = FetchType.LAZY)
     private ESL esl;
 
     public Item() {
