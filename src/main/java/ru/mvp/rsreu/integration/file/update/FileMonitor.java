@@ -1,4 +1,4 @@
-package ru.mvp.rsreu.integration.file;
+package ru.mvp.rsreu.integration.file.update;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +12,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.StreamSupport;
 
 /**
@@ -30,12 +28,17 @@ public class FileMonitor {
     private long checkInterval = 5000;
     private Map<String, FileInfo> fileInfoMap = new HashMap<>();
 
+
     @Scheduled(fixedDelay = 5000)
     public void task() throws InterruptedException {
+        Set<Path> currentFileList = new HashSet<>();
         try (DirectoryStream<Path> ds = Files.newDirectoryStream(Paths.get(directory))) {
             StreamSupport.stream(ds.spliterator(), false)
-                    .filter(e -> checkChangeFile(e))
-                    .forEach(e -> System.out.println(e));
+                    .filter(e -> {
+                        currentFileList.add(e);
+                        return checkChangeFile(e);})
+                    .forEach(e -> System.out.println());
+            currentFileList.stream().forEach(e -> System.out.println());
         } catch (IOException e) {
             LOGGER.error("Catch error: ", e);
         }
