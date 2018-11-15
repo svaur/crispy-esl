@@ -6,7 +6,7 @@ function getAssertTemplate() {
         "   <li class=\"tab col s3\"><a href=\"#test-swipe-2\">Конфигурация</a></li>" +
         "</ul>" +
         "<div id=\"test-swipe-1\" class=\"col s12\">" +
-            "<select id='selectAssertEsl'>" +
+            "<select id=\"selectAssertEsl\" class=\"validate\">" +
                 "<option value=\"add\">Привязка ценника</option>" +
                 "<option value=\"delete\">Отвязать ценник</option>" +
             "</select>" +
@@ -18,8 +18,6 @@ function getAssertTemplate() {
         "       </div>" +
         "       <div class=\"col s12 input-field\">" +
         "          <select id=\"templateInput\" class=\"validate\">" +
-        "              <option value=\"default\">по умолчанию</option>" +
-        "              <option value=\"default\">по умолчанию</option>" +
         "              <option value=\"default\">по умолчанию</option>" +
         "          </select>" +
         "           <label for=\"templateInput\">Шаблон</label>" +
@@ -33,7 +31,8 @@ function getAssertTemplate() {
         "<a class=\"waves-effect waves-light btn-small\" onclick='cancelBtn()'><i class=\"material-icons left\">cancel</i>отменить</a>"+
         "<a class=\"waves-effect waves-light btn-small\" onclick='saveData()'><i class=\"material-icons left\">check</i>сохранить</a>"+
         "</div>" +
-        "<div id=\"test-swipe-2\" class=\"col s12\">не готово</div>"
+        "<div id=\"test-swipe-2\" class=\"col s12\">не готово</div>";
+
 }
 
 function saveData() {

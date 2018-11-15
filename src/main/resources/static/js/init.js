@@ -43,6 +43,7 @@ function displayWorkSpace(menu, url) {
         default:
             alert("пока не готово");
     }
+    $('select').formSelect()//Для отображения селектов
 }
 
 function setActive(nameClassToActive) {
