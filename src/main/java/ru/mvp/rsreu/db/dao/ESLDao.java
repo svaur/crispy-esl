@@ -1,6 +1,7 @@
 package ru.mvp.rsreu.db.dao;
 
 import ru.mvp.rsreu.db.entity.ESL;
+import ru.mvp.rsreu.db.entity.Item;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface ESLDao {
     /* Поиск по колонкам: EslCode, EslType, ItemCode, ItemType */
     List<ESL> searchByValue(String value, int showSize);
     ESL searchByESLCode(String eslCode);
+    Item searchByItemCode(String itemCode);
 }
