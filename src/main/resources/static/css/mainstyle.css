@@ -66,10 +66,6 @@ main {
 .sidenav{
     width: 200px;
 }
-nav {
-     height: 30px;
-     line-height: 30px;
- }
 .tabs .tab a{
     color:black;
 }

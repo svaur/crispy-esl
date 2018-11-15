@@ -20,6 +20,7 @@ import ru.mvp.rsreu.templates.EslInfoTemplate;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -115,7 +116,9 @@ public class RestApiController {
     @RequestMapping("/api/assignEsl")
     public String assignEsl(@RequestParam("esl") String esl,
                             @RequestParam("template") String template,
-                            @RequestParam("item") String item) {
+                            @RequestParam("item") String item,
+                            @RequestParam("type") String type) {
+        System.out.println(type);
         Session session = HibernateUtil.getSessionFactory().openSession();
         EntityTransaction tx = session.getTransaction();
         tx.begin();
@@ -128,14 +131,14 @@ public class RestApiController {
             TransactionStatus result = ((Transaction) tx).getStatus();
             tx.commit();
             return result.isOneOf(TransactionStatus.COMMITTED) ? "ok" : "error";
-        } catch (HibernateException hibernateEx) {
+        } catch (HibernateException|NoResultException hibernateEx) {
             try {
                 tx.rollback();
             } catch (RuntimeException runtimeEx) {
                 System.err.printf("Couldn’t Roll Back Transaction", runtimeEx);
             }
             hibernateEx.printStackTrace();
-        } finally {
+        }finally {
             if (session != null) {
                 session.close();
             }

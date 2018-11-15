@@ -53,12 +53,12 @@ function setActive(nameClassToActive) {
     $(nameClassToActive).addClass("active");
 }
 function activateActions() {
-    $('select').formSelect().on('change', function () {
-        var headers = {"size": $('select').val()};
+    $('#eslTableCounter').formSelect().on('change', function () {
+        var headers = {"size": $('#eslTableCounter').val()};
         displayEslData("/api/getTableData", headers);
     });
     $('#search').on('input', function() {
-        var headers = {"size": $('select').val(), "searchValue": $('#search').val()};
+        var headers = {"size": $('#eslTableCounter').val(), "searchValue": $('#search').val()};
         displayEslData("/api/searchData", headers);
     });
     $('.dropdown-trigger').dropdown();
@@ -71,5 +71,7 @@ function showImage(code) {
             "box-shadow: 0 0 10px rgba(0,0,0,0.5);" +
             "padding: 0px;}</style>" +
             "<img class=\"shadow\" id='esl-image' src='" + data + "'>");
+    }).error(function(jqXHR) {
+        alert(jqXHR.responseText);
     });
 }

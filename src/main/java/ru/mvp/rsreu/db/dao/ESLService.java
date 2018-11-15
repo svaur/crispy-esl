@@ -43,7 +43,7 @@ public class ESLService implements ESLDao {
         String sql = "SELECT * FROM ESLS WHERE elscode = :elscode";
         Query query = session.createNativeQuery(sql).addEntity(ESL.class);
         query.setParameter("elscode", Integer.valueOf(eslCode));//todo разобраться что за ссанина с типом переменной
-        ESL esl = (ESL) query.getSingleResult();
+        ESL esl = (ESL) query.uniqueResult();
         session.close();
         return esl;
     }
@@ -53,7 +53,7 @@ public class ESLService implements ESLDao {
         String sql = "SELECT * FROM ITEMS WHERE itemcode = :itemcode";
         Query query = session.createNativeQuery(sql).addEntity(Item.class);
         query.setParameter("itemcode", Integer.valueOf(itemCode));//todo разобраться что за ссанина с типом переменной
-        Item item = (Item) query.getSingleResult();
+        Item item = (Item) query.uniqueResult();
         session.close();
         return item;
     }

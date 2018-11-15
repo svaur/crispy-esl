@@ -6,7 +6,7 @@ function getAssertTemplate() {
         "   <li class=\"tab col s3\"><a href=\"#test-swipe-2\">Конфигурация</a></li>" +
         "</ul>" +
         "<div id=\"test-swipe-1\" class=\"col s12\">" +
-            "<select>" +
+            "<select id='selectAssertEsl'>" +
                 "<option value=\"add\">Привязка ценника</option>" +
                 "<option value=\"delete\">Отвязать ценник</option>" +
             "</select>" +
@@ -18,6 +18,8 @@ function getAssertTemplate() {
         "       </div>" +
         "       <div class=\"col s12 input-field\">" +
         "          <select id=\"templateInput\" class=\"validate\">" +
+        "              <option value=\"default\">по умолчанию</option>" +
+        "              <option value=\"default\">по умолчанию</option>" +
         "              <option value=\"default\">по умолчанию</option>" +
         "          </select>" +
         "           <label for=\"templateInput\">Шаблон</label>" +
@@ -39,12 +41,15 @@ function saveData() {
         alert("введите данные для сохранения");
     }else {
         var dataToSave = {
+            "type": document.getElementById("selectAssertEsl").value,
             "esl": document.getElementById("eslInput").value,
             "template": document.getElementById("templateInput").value,
             "item": document.getElementById("itemInput").value
         };
         $.getJSON("/api/assignEsl", dataToSave, function (data) {
             alert(data);
+        }).error(function(jqXHR) {
+           alert(jqXHR.responseText);
         });
     }
 }

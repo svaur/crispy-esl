@@ -3,7 +3,7 @@ function getEslsTemplate() {
             "<div class=\"divider\"></div>"+
             "<div class=\"row\">" +
                 "<div class=\"input-field col s12 m6 l3\">" +
-                    "<select>" +
+                    "<select id='eslTableCounter'>" +
                         "<option value=\"10\">10</option>" +
                         "<option value=\"25\">25</option>" +
                         "<option value=\"50\">50</option>" +
@@ -90,5 +90,7 @@ function displayEslData(url, headers) {
                 "</tr>");
         }
         $('.dropdown-trigger').dropdown();
+    }).error(function(jqXHR) {
+        alert(jqXHR.responseText);
     });
 }
