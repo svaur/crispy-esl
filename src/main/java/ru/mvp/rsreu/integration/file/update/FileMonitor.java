@@ -7,7 +7,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.mvp.rsreu.db.dao.ItemDao;
-import ru.mvp.rsreu.integration.file.parsers.ItemParser;
+import ru.mvp.rsreu.integration.file.parsers.IParser;
+import ru.mvp.rsreu.integration.file.parsers.ParserFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class FileMonitor {
     @Autowired
     ItemDao itemService;
     @Autowired
-    ItemParser<Path> parser;
+    ParserFactory factory;
 
 
     @Scheduled(fixedDelay = CHECK_INTERVAL)
@@ -47,7 +48,10 @@ public class FileMonitor {
                         File file = e.toFile();
                         currentFileSet.add(file.getName());
                         return checkChangeFile(file);})
-                    .forEach(e -> itemService.insertOrUpdateItems(parser.parse(e)));
+                    .forEach(e -> {
+                        IParser parser = factory.getParser(e);
+                        itemService.insertOrUpdateItems(parser.parse(e));
+                    });
             //удаляем из мапы старые файлы(нужно если файлы из папки будут удаляться)
             cleanOldEntry(currentFileSet);
         } catch (IOException e) {

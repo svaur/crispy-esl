@@ -7,9 +7,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import ru.mvp.rsreu.db.entity.Item;
-import ru.mvp.rsreu.integration.file.parsers.ItemParser;
+import ru.mvp.rsreu.integration.file.parsers.IParser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,8 +21,7 @@ import java.util.stream.StreamSupport;
 /**
  * Created by Art on 16.11.2018.
  */
-@Component
-public class ExcelParser implements ItemParser<Path> {
+public class ExcelParser implements IParser {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ExcelParser.class);
 
