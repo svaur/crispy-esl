@@ -2,6 +2,7 @@ package ru.mvp.rsreu.db.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by Art on 30.09.2018.
@@ -24,7 +25,7 @@ import java.sql.Date;
     private double promotionPrice;
 
     @Column(name = "LastUpdated", nullable = false)
-    private Date lastUpdated;
+    private LocalDateTime lastUpdated;
 
     @Column(name = "StorageUnit", nullable = false)
     private String storageUnit;
@@ -37,11 +38,11 @@ import java.sql.Date;
 
     @PrePersist
     protected void onCreate() {
-        lastUpdated = new Date(System.currentTimeMillis());
+        lastUpdated = LocalDateTime.now();
     }
     @PreUpdate
     protected void onUpdate() {
-        lastUpdated = new Date(System.currentTimeMillis());
+        lastUpdated = LocalDateTime.now();
     }
 
     public String getItemCode() {
@@ -76,11 +77,11 @@ import java.sql.Date;
         this.promotionPrice = promotionPrice;
     }
 
-    public Date getLastUpdated() {
+    public LocalDateTime getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
+    public void setLastUpdated(LocalDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
