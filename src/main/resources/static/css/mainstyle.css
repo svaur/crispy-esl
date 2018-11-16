@@ -1,14 +1,18 @@
 table th, table td {
     padding: 10px;
 }
-header, main, footer {
-  padding-left: 150px;
+
+main, footer {
+    padding-left: 200px;
 }
 
 @media only screen and (max-width : 992px) {
-  header, main, footer {
-	padding-left: 0;
-  }
+    main, footer {
+        padding-left: 0;
+    }
+}
+.sidenav{
+    width: 180px;
 }
 #panell{
     margin-top: 100px;
@@ -63,9 +67,6 @@ main {
 .container {
     width: 90%;
 }
-.sidenav{
-    width: 200px;
-}
 .tabs .tab a{
     color:black;
 }
@@ -86,4 +87,7 @@ main {
 
 .tabs .tab a {
     color: darkgray;
+}
+#welcomeContainer {
+    margin: 1rem;
 }

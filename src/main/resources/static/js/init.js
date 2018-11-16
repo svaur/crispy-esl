@@ -1,20 +1,25 @@
 $(document).ready(function () {
     $('.sidenav').sidenav();
     $('.dropdown-trigger').dropdown();
-    displayWorkSpace('#menu1', '/api/getTableData');
-    $('#menu1').click(function () {
-        displayWorkSpace('#menu1', '/api/getTableData');
+    displayWorkSpace('#welcomeWorkSpace', '');
+    $('#welcomeWorkSpace').click(function () {
+        setActive('#welcomeWorkSpace');
+        displayWorkSpace('#welcomeWorkSpace', '');
     });
-    $('#menu2').click(function () {
-        setActive('#menu2');
-        displayWorkSpace('#menu2', '/api/getAnotherTableData');
+    $('#eslsWorkSpace').click(function () {
+        setActive('#eslsWorkSpace');
+        displayWorkSpace('#eslsWorkSpace', '/api/getTableData');
     });
-    $('#menu3').click(function () {
-        setActive('#menu3');
-        displayWorkSpace('#menu3', '/api/getAnotherTableData');
+    $('#itemsWorkSpace').click(function () {
+        setActive('#itemsWorkSpace');
+        displayWorkSpace('#itemsWorkSpace', '/api/getAnotherTableData');
     });
-    $('#menu4').click(function () {
-        setActive('#menu4');
+    $('#associateWorkSpace').click(function () {
+        setActive('#associateWorkSpace');
+        displayWorkSpace('#associateWorkSpace', '/api/getAnotherTableData');
+    });
+    $('#schedulerWorkSpace').click(function () {
+        setActive('#schedulerWorkSpace');
         $('#workSpace').html('')
             .append("<h5>sdfsdfsdfsdfsdfsdf</h5>")
     });
@@ -23,17 +28,23 @@ $(document).ready(function () {
 function displayWorkSpace(menu, url) {
     setActive();
     switch(menu) {
-        case "#menu1":
+        case "#welcomeWorkSpace":
+            $('#workSpace').html('')
+                .append(getWelcomeTemplate());
+            testChart("myChart1");
+            activateActions();
+            break;
+        case "#eslsWorkSpace":
             $('#workSpace').html('')
                 .append(getEslsTemplate());
             activateActions();
             displayEslData(url);
             break;
-        case "#menu2":
+        case "#itemsWorkSpace":
             $('#workSpace').html('')
                 .append(getTestTemplate());
             break;
-        case "#menu3":
+        case "#associateWorkSpace":
             $('#workSpace').html('')
                 .append(getAssociateTemplate());
             $('.tabs').tabs();
@@ -47,10 +58,10 @@ function displayWorkSpace(menu, url) {
 }
 
 function setActive(nameClassToActive) {
-    $('#menu1').removeClass("active");
-    $('#menu2').removeClass("active");
-    $('#menu3').removeClass("active");
-    $('#menu4').removeClass("active");
+    $('#eslsWorkSpace').removeClass("active");
+    $('#itemsWorkSpace').removeClass("active");
+    $('#associateWorkSpace').removeClass("active");
+    $('#schedulerWorkSpace').removeClass("active");
     $(nameClassToActive).addClass("active");
 }
 function activateActions() {
