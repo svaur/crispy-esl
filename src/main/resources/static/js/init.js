@@ -35,7 +35,7 @@ function displayWorkSpace(menu, url) {
             break;
         case "#menu3":
             $('#workSpace').html('')
-                .append(getAssertTemplate());
+                .append(getAssociateTemplate());
             $('.tabs').tabs();
             activateActions();
             displayEslData(url);

@@ -1,4 +1,4 @@
-function getAssertTemplate() {
+function getAssociateTemplate() {
     return "<span class='flow-text'>Привязка ценников</span>" +
         "<div class=\"divider\"></div>"+
         "<ul id=\"tabs-swipe-demo\" class=\"tabs tabs-fixed-width grey lighten-5\">" +
