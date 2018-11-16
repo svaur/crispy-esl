@@ -46,6 +46,16 @@ public class ESL {
 
     public ESL(){}
 
+    @PrePersist
+    protected void onCreate() {
+        lastUpdate = new Date(System.currentTimeMillis());    //todo в зависимости от реализации в образце потребует изменений
+
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        lastUpdate = new Date(System.currentTimeMillis());    //todo в зависимости от реализации в образце потребует изменений
+    }
+
     public String getEslCode() {
         return eslCode;
     }

@@ -35,6 +35,15 @@ import java.sql.Date;
     public Item() {
     }
 
+    @PrePersist
+    protected void onCreate() {
+        lastUpdated = new Date(System.currentTimeMillis());
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        lastUpdated = new Date(System.currentTimeMillis());
+    }
+
     public String getItemCode() {
         return itemCode;
     }
