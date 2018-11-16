@@ -55,8 +55,8 @@ function getWelcomeTemplate() {
         // "       </div>" +
         "       </div>" +
         // "   </div>"+
-        "</div>"+
-        "<canvas id=\"myChart1\" width=\"225\" height=\"225\"></canvas>"
+        "</div>"
+        // "<canvas id=\"myChart1\" width=\"225\" height=\"225\"></canvas>"
         // "<div class=\"row\">" +
         // "   <canvas id=\"myChart1\" class=\"col s3\" width=\"200\" height=\"100\"></canvas>"+
         // "</div>"
