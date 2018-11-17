@@ -2,6 +2,7 @@ package ru.mvp.rsreu.db.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by Art on 30.09.2018.
@@ -11,7 +12,6 @@ import java.sql.Date;
 public class ESL {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ESLCode")
     private String eslCode;
 
@@ -31,28 +31,37 @@ public class ESL {
     private String firmWare;
 
     @Column(name = "RegistrationDate", nullable = false)
-    private Date registrationDate;
+    private LocalDateTime registrationDate;
 
     @Column(name = "StartDate")
-    private Date startDate;
+    private LocalDateTime startDate;
 
     @Column(name = "ESLPattern", nullable = false)
     private String eslPattern;
 
     @Column(name = "LastUpdate", nullable = false)
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="ItemCode")
     private Item item;
 
     public ESL(){}
 
-    public String getElsCode() {
+    @PrePersist
+    protected void onCreate() {
+        lastUpdate = LocalDateTime.now();    //todo в зависимости от реализации в образце потребует изменений
+
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        lastUpdate = LocalDateTime.now();    //todo в зависимости от реализации в образце потребует изменений
+    }
+
+    public String getEslCode() {
         return eslCode;
     }
 
-    public void setElsCode(String eslCode) {
+    public void setEslCode(String eslCode) {
         this.eslCode = eslCode;
     }
 
@@ -60,7 +69,7 @@ public class ESL {
         return eslType;
     }
 
-    public void setElsType(String eslType) {
+    public void setEslType(String eslType) {
         this.eslType = eslType;
     }
 
@@ -96,19 +105,19 @@ public class ESL {
         this.firmWare = firmWare;
     }
 
-    public Date getRegistrationDate() {
+    public LocalDateTime getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
@@ -120,11 +129,11 @@ public class ESL {
         this.eslPattern = eslPattern;
     }
 
-    public Date getLastUpdate() {
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

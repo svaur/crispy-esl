@@ -42,8 +42,8 @@ public class ESLService implements ESLDao {
         Session session = HibernateUtil.getSessionFactory().openSession();
         String sql = "SELECT * FROM ESLS WHERE eslcode = :eslcode";
         Query query = session.createNativeQuery(sql).addEntity(ESL.class);
-        query.setParameter("eslcode", Integer.valueOf(eslCode));//todo разобраться что за ссанина с типом переменной
-        ESL esl = (ESL) query.uniqueResult();
+        query.setParameter("eslcode", eslCode);
+        ESL esl = (ESL) query.getSingleResult();
         session.close();
         return esl;
     }
@@ -57,7 +57,7 @@ public class ESLService implements ESLDao {
         while (iterator.hasNext() && i < showSize) {
             ESL tempEsl = iterator.next();
             Item item = tempEsl.getItem();
-            if (tempEsl.getElsCode().contains(value) || tempEsl.getEslType().toLowerCase().contains(value.toLowerCase()) ||
+            if (tempEsl.getEslCode().contains(value) || tempEsl.getEslType().toLowerCase().contains(value.toLowerCase()) ||
                     item.getItemCode().contains(value) ||
                     item.getItemName().toLowerCase().contains(value.toLowerCase())) {
                 resultList.add(tempEsl);
