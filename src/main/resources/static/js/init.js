@@ -31,10 +31,9 @@ function displayWorkSpace(menu, url) {
         case "#welcomeWorkSpace":
             $('#workSpace').html('')
                 .append(getWelcomeTemplate());
-            testChart("myChart1");
-            testChart("myChart2");
-            testChart("myChart3");
-            testChart("myChart4");
+            testChart("myChart1", 'Статистика обновления ценников');
+            testChart("myChart2", ' ');
+            testChart("myChart3", ' ');
             activateActions();
             break;
         case "#eslsWorkSpace":
