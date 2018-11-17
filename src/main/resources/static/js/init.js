@@ -2,6 +2,7 @@ $(document).ready(function () {
     $('.sidenav').sidenav();
     $('.dropdown-trigger').dropdown();
     displayWorkSpace('#welcomeWorkSpace', '');
+    setActive('#welcomeWorkSpace');
     $('#welcomeWorkSpace').click(function () {
         setActive('#welcomeWorkSpace');
         displayWorkSpace('#welcomeWorkSpace', '');
@@ -44,7 +45,7 @@ function displayWorkSpace(menu, url) {
             break;
         case "#itemsWorkSpace":
             $('#workSpace').html('')
-                .append(getTestTemplate());
+            //     .append(getTestTemplate());
             break;
         case "#associateWorkSpace":
             $('#workSpace').html('')
@@ -60,6 +61,7 @@ function displayWorkSpace(menu, url) {
 }
 
 function setActive(nameClassToActive) {
+    $('#welcomeWorkSpace').removeClass("active");
     $('#eslsWorkSpace').removeClass("active");
     $('#itemsWorkSpace').removeClass("active");
     $('#associateWorkSpace').removeClass("active");
