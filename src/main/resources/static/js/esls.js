@@ -1,10 +1,9 @@
 function getEslsTemplate() {
-    return "<div class=\"row\">" +
-                "<div class=\"col s12 m6 l3\">" +
-                "<span class='flow-text'>ESLs list</span>" +
-                "</div>" +
+    return "<span class='flow-text'>Ценники</span>" +
+            "<div class=\"divider\"></div>"+
+            "<div class=\"row\">" +
                 "<div class=\"input-field col s12 m6 l3\">" +
-                    "<select>" +
+                    "<select id='eslTableCounter'>" +
                         "<option value=\"10\">10</option>" +
                         "<option value=\"25\">25</option>" +
                         "<option value=\"50\">50</option>" +
@@ -91,5 +90,7 @@ function displayEslData(url, headers) {
                 "</tr>");
         }
         $('.dropdown-trigger').dropdown();
+    }).error(function(jqXHR) {
+        alert(jqXHR.responseText);
     });
 }
