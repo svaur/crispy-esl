@@ -26,6 +26,5 @@ function getTableTemplate(suffixForTable) {
                 "</ul>" +
             "</div>" +
         "</div>" +
-        "<div class=\"divider\"></div>" +
         "<table class=\"centered striped z-depth-2\" id=\"" + suffixForTable + "Table\"></table>";
 }

@@ -32,7 +32,7 @@ function displayItemData(url, headers) {
         $('.dropdown-trigger').dropdown();
         display.style.visibility='hidden'
     }).error(function(jqXHR) {
-        display.style.visibility='hidden'
+        display.style.visibility='hidden';
         alert(jqXHR.responseText);
     });
 }
