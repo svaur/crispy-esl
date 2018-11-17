@@ -56,7 +56,7 @@ public class ESL {
         this.eslCode = eslCode;
     }
 
-    public String getElsType() {
+    public String getEslType() {
         return eslType;
     }
 

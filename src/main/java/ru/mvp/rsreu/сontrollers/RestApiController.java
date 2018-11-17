@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.mvp.rsreu.db.dao.ESLDao;
 import ru.mvp.rsreu.db.dao.ESLService;
 import ru.mvp.rsreu.db.dao.ItemDao;
+import ru.mvp.rsreu.db.dao.TaskDao;
 import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.db.entity.Item;
+import ru.mvp.rsreu.db.entity.Task;
 import ru.mvp.rsreu.db.util.HibernateUtil;
 import ru.mvp.rsreu.templates.BaseSaleTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
@@ -35,12 +37,14 @@ public class RestApiController {
 
     private ESLDao eslDao;
     private ItemDao itemDao;
+    private TaskDao taskDao;
     private BaseSaleTemplate baseSaleTemplate;
 
     @Autowired
-    public RestApiController(ESLDao eslDao, ItemDao itemDao, BaseSaleTemplate baseSaleTemplate) {
+    public RestApiController(ESLDao eslDao, ItemDao itemDao, TaskDao taskDao, BaseSaleTemplate baseSaleTemplate) {
         this.eslDao = eslDao;
         this.itemDao = itemDao;
+        this.taskDao = taskDao;
         this.baseSaleTemplate = baseSaleTemplate;
     }
 
@@ -51,6 +55,18 @@ public class RestApiController {
         List<ESL> list = eslDao.getAll(showSize);
         list.forEach(e -> {
             HashMap<String, String> hashMap = fillEslData(e);
+            tableData.add(hashMap);
+        });
+        Gson g = new Gson();
+        return g.toJson(tableData);
+    }
+    @RequestMapping("/api/getTaskTableData")
+    public String getTaskTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size) {//todo получать мапу? не станет ли избыточным?
+        int showSize = Integer.valueOf(size);
+        List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
+        List<Task> list = taskDao.getAll(showSize);
+        list.forEach(e -> {
+            HashMap<String, String> hashMap = fillTaskData(e);
             tableData.add(hashMap);
         });
         Gson g = new Gson();
@@ -70,7 +86,7 @@ public class RestApiController {
     }
 
     @RequestMapping("/api/searchEslData")
-    public String getEslTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size,    //todo для показа конечно и так сойдет, но уж дюже похоже на предыдущий метод, фабрика ESLDao
+    public String searchEslData(@RequestParam(value = "size", required = false, defaultValue = "10") String size,    //todo для показа конечно и так сойдет, но уж дюже похоже на предыдущий метод, фабрика ESLDao
                                @RequestParam(value = "searchValue") String searchValue) {                           //todo получать мапу? не станет ли избыточным?
         int showSize = Integer.valueOf(size);
         List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
@@ -84,13 +100,27 @@ public class RestApiController {
     }
 
     @RequestMapping("/api/searchItemData")
-    public String getItemTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size,    //todo для показа конечно и так сойдет, но уж дюже похоже на предыдущий метод, фабрика ESLDao
+    public String searchItemData(@RequestParam(value = "size", required = false, defaultValue = "10") String size,    //todo для показа конечно и так сойдет, но уж дюже похоже на предыдущий метод, фабрика ESLDao
                                @RequestParam(value = "searchValue") String searchValue) {                           //todo получать мапу? не станет ли избыточным?
         int showSize = Integer.valueOf(size);
         List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
         List<Item> list = itemDao.searchByValue(searchValue, showSize);
         list.forEach(e -> {
             HashMap<String, String> hashMap = fillItemData(e);
+            tableData.add(hashMap);
+        });
+        Gson g = new Gson();
+        return g.toJson(tableData);
+    }
+
+    @RequestMapping("/api/searchTaskData")
+    public String searchTaskData(@RequestParam(value = "size", required = false, defaultValue = "10") String size,    //todo для показа конечно и так сойдет, но уж дюже похоже на предыдущий метод, фабрика ESLDao
+                               @RequestParam(value = "searchValue") String searchValue) {                           //todo получать мапу? не станет ли избыточным?
+        int showSize = Integer.valueOf(size);
+        List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
+        List<Task> list = taskDao.searchByValue(searchValue, showSize);
+        list.forEach(e -> {
+            HashMap<String, String> hashMap = fillTaskData(e);
             tableData.add(hashMap);
         });
         Gson g = new Gson();
@@ -155,7 +185,7 @@ public class RestApiController {
         HashMap<String, String> hashMap = new HashMap<>();
         Item item = e.getItem();
         hashMap.put("eslCode", e.getElsCode());
-        hashMap.put("eslType", e.getElsType());
+        hashMap.put("eslType", e.getEslType());
         hashMap.put("itemCode", item.getItemCode());
         hashMap.put("itemName", item.getItemName());
         hashMap.put("price", String.valueOf(item.getPromotionPrice()));
@@ -172,6 +202,15 @@ public class RestApiController {
         hashMap.put("price", String.valueOf(e.getPromotionPrice()));
         hashMap.put("lastUpdate", String.valueOf(e.getLastUpdated()));
         hashMap.put("active", "true");
+        return hashMap;
+    }
+    private HashMap<String, String> fillTaskData(Task e){
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("taskName", e.getTaskName());
+        hashMap.put("taskType", e.getTaskType());
+        hashMap.put("frequency", String.valueOf(e.getFrequency()));
+        hashMap.put("lastUpdate", String.valueOf(e.getLastUpdated()));
+        hashMap.put("nextShedule", String.valueOf(e.getNextSheduled()));
         return hashMap;
     }
 }

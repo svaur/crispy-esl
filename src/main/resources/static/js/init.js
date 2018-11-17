@@ -19,10 +19,9 @@ $(document).ready(function () {
         setActive('#associateWorkSpace');
         displayWorkSpace('#associateWorkSpace', ' ');
     });
-    $('#schedulerWorkSpace').click(function () {
-        setActive('#schedulerWorkSpace');
-        $('#workSpace').html('')
-            .append("<h5>sdfsdfsdfsdfsdfsdf</h5>")
+    $('#taskWorkSpace').click(function () {
+        setActive('#taskWorkSpace');
+        displayWorkSpace('#taskWorkSpace', '/api/getTaskTableData');
     });
 });
 
@@ -53,6 +52,12 @@ function displayWorkSpace(menu, url) {
                 .append(getAssociateTemplate());
             $('.tabs').tabs();
             break;
+        case "#taskWorkSpace":
+            $('#workSpace').html('')
+                .append(getTasksTemplate());
+            taskActivateActions();
+            displayTaskData(url);
+            break;
         default:
             alert("пока не готово");
     }
@@ -64,7 +69,7 @@ function setActive(nameClassToActive) {
     $('#eslsWorkSpace').removeClass("active");
     $('#itemsWorkSpace').removeClass("active");
     $('#associateWorkSpace').removeClass("active");
-    $('#schedulerWorkSpace').removeClass("active");
+    $('#taskWorkSpace').removeClass("active");
     $(nameClassToActive).addClass("active");
 }
 function showImage(code) {

@@ -13,6 +13,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         <mapping class="ru.mvp.rsreu.db.entity.Item"></mapping>
+        <mapping class="ru.mvp.rsreu.db.entity.Task"></mapping>
         <mapping class="ru.mvp.rsreu.db.entity.ESL"></mapping>
     </session-factory>
 </hibernate-configuration>
