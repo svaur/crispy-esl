@@ -70,6 +70,7 @@ public class ItemService implements ItemDao {
             }
         }
         return resultList;
+    }
     @Override
     public void insertOrUpdateItems(List<Item> itemList) {
         Session session = HibernateUtil.getSessionFactory().openSession();
