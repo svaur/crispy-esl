@@ -184,7 +184,7 @@ public class RestApiController {
     private HashMap<String, String> fillEslData(ESL e){
         HashMap<String, String> hashMap = new HashMap<>();
         Item item = e.getItem();
-        hashMap.put("eslCode", e.getElsCode());
+        hashMap.put("eslCode", e.getEslCode());
         hashMap.put("eslType", e.getEslType());
         hashMap.put("itemCode", item.getItemCode());
         hashMap.put("itemName", item.getItemName());
