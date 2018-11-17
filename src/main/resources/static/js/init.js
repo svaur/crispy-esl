@@ -32,6 +32,9 @@ function displayWorkSpace(menu, url) {
             $('#workSpace').html('')
                 .append(getWelcomeTemplate());
             testChart("myChart1");
+            testChart("myChart2");
+            testChart("myChart3");
+            testChart("myChart4");
             activateActions();
             break;
         case "#eslsWorkSpace":
