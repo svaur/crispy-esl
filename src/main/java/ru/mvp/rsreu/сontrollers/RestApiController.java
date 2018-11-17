@@ -47,8 +47,8 @@ public class RestApiController {
         list.stream().forEach(e -> {
             HashMap<String, String> hashMap = new HashMap<>();
             Item item = e.getItem();
-            hashMap.put("elsCode", e.getElsCode());
-            hashMap.put("elsType", e.getElsType());
+            hashMap.put("elsCode", e.getEslCode());
+            hashMap.put("elsType", e.getEslType());
             hashMap.put("itemCode", item.getItemCode());
             hashMap.put("itemName", item.getItemName());
             hashMap.put("price", String.valueOf(item.getPromotionPrice()));
@@ -71,8 +71,8 @@ public class RestApiController {
         list.stream().forEach(e -> {
             HashMap<String, String> hashMap = new HashMap<>();
             Item item = e.getItem();
-            hashMap.put("elsCode", e.getElsCode());
-            hashMap.put("elsType", e.getElsType());
+            hashMap.put("elsCode", e.getEslCode());
+            hashMap.put("elsType", e.getEslType());
             hashMap.put("itemCode", item.getItemCode());
             hashMap.put("itemName", item.getItemName());
             hashMap.put("price", String.valueOf(item.getPromotionPrice()));

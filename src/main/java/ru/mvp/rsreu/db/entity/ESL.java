@@ -2,6 +2,7 @@ package ru.mvp.rsreu.db.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by Art on 30.09.2018.
@@ -11,12 +12,11 @@ import java.sql.Date;
 public class ESL {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ELSCode")
-    private String elsCode;
+    @Column(name = "ESLCode")
+    private String eslCode;
 
-    @Column(name = "ELSType", nullable = false)
-    private String elsType;
+    @Column(name = "ESLType", nullable = false)
+    private String eslType;
 
     @Column(name = "Connectivity", nullable = false)
     private boolean connectivity;
@@ -31,37 +31,46 @@ public class ESL {
     private String firmWare;
 
     @Column(name = "RegistrationDate", nullable = false)
-    private Date registrationDate;
+    private LocalDateTime registrationDate;
 
     @Column(name = "StartDate")
-    private Date startDate;
+    private LocalDateTime startDate;
 
     @Column(name = "ESLPattern", nullable = false)
     private String eslPattern;
 
     @Column(name = "LastUpdate", nullable = false)
-    private Date lastUpdate;
+    private LocalDateTime lastUpdate;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="ItemCode")
     private Item item;
 
     public ESL(){}
 
-    public String getElsCode() {
-        return elsCode;
+    @PrePersist
+    protected void onCreate() {
+        lastUpdate = LocalDateTime.now();    //todo в зависимости от реализации в образце потребует изменений
+
+    }
+    @PreUpdate
+    protected void onUpdate() {
+        lastUpdate = LocalDateTime.now();    //todo в зависимости от реализации в образце потребует изменений
     }
 
-    public void setElsCode(String elsCode) {
-        this.elsCode = elsCode;
+    public String getEslCode() {
+        return eslCode;
     }
 
-    public String getElsType() {
-        return elsType;
+    public void setEslCode(String eslCode) {
+        this.eslCode = eslCode;
     }
 
-    public void setElsType(String elsType) {
-        this.elsType = elsType;
+    public String getEslType() {
+        return eslType;
+    }
+
+    public void setEslType(String eslType) {
+        this.eslType = eslType;
     }
 
     public boolean isConnectivity() {
@@ -96,19 +105,19 @@ public class ESL {
         this.firmWare = firmWare;
     }
 
-    public Date getRegistrationDate() {
+    public LocalDateTime getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
@@ -120,11 +129,11 @@ public class ESL {
         this.eslPattern = eslPattern;
     }
 
-    public Date getLastUpdate() {
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -145,8 +154,8 @@ public class ESL {
 
         if (connectivity != esl.connectivity) return false;
         if (status != esl.status) return false;
-        if (elsCode != null ? !elsCode.equals(esl.elsCode) : esl.elsCode != null) return false;
-        if (elsType != null ? !elsType.equals(esl.elsType) : esl.elsType != null) return false;
+        if (eslCode != null ? !eslCode.equals(esl.eslCode) : esl.eslCode != null) return false;
+        if (eslType != null ? !eslType.equals(esl.eslType) : esl.eslType != null) return false;
         if (batteryLevel != null ? !batteryLevel.equals(esl.batteryLevel) : esl.batteryLevel != null) return false;
         if (firmWare != null ? !firmWare.equals(esl.firmWare) : esl.firmWare != null) return false;
         if (registrationDate != null ? !registrationDate.equals(esl.registrationDate) : esl.registrationDate != null)
@@ -159,8 +168,8 @@ public class ESL {
 
     @Override
     public int hashCode() {
-        int result = elsCode != null ? elsCode.hashCode() : 0;
-        result = 31 * result + (elsType != null ? elsType.hashCode() : 0);
+        int result = eslCode != null ? eslCode.hashCode() : 0;
+        result = 31 * result + (eslType != null ? eslType.hashCode() : 0);
         result = 31 * result + (connectivity ? 1 : 0);
         result = 31 * result + (status ? 1 : 0);
         result = 31 * result + (batteryLevel != null ? batteryLevel.hashCode() : 0);
