@@ -1,39 +1,12 @@
 function getEslsTemplate() {
-    return "<span class='flow-text'>Ценники</span>" +
-            "<div class=\"divider\"></div>"+
-            "<div class=\"row\">" +
-                "<div class=\"input-field col s12 m6 l3\">" +
-                    "<select id='eslTableCounter'>" +
-                        "<option value=\"10\">10</option>" +
-                        "<option value=\"25\">25</option>" +
-                        "<option value=\"50\">50</option>" +
-                        "<option value=\"80\">80</option>" +
-                    "</select>" +
-                "</div>" +
-                "<div class=\"input-field col s12 m6 l3\">" +
-                    "<input id=\"search\" type=\"search\" placeholder=\"Search\">" +
-                "</div>" +
-                "<div id=\"uploadBtn\" class=\"col s12 m6 l1\">" +
-                    "<a class=\"dropdown-trigger btn\" href=\"#\" data-target=\"upload\">" +
-                        "<i class=\"tiny material-icons\">file_upload</i>" +
-                    "</a>" +
-                    "<ul id=\"upload\" class=\"dropdown-content\">" +
-                        "<li>" +
-                            "<a href=\"#!\">CSV</a>" +
-                        "</li>"+
-                        "<li>" +
-                            "<a href=\"#!\">Excel</a>" +
-                        "</li>" +
-                    "</ul>" +
-                "</div>" +
-        "</div>" +
-        "<div class=\"divider\"></div>" +
-        "<table class=\"centered striped\" id=\"esl-table\"></table>"
+    return "<span class='flow-text'>Ценники</span>" + getTableTemplate('esl')
 }
 function displayEslData(url, headers) {
+    var display = document.getElementById("mainProgress");
+    display.style.visibility='visible';
     $.getJSON(url, headers, function (data) {
         var tableData = $.parseJSON(JSON.stringify(data));
-        $('#esl-table').html('')
+        $('#eslTable').html('')
             .append("<thead>" +
                 "<tr>" +
                 "<th>ESL code</th>" +
@@ -51,8 +24,8 @@ function displayEslData(url, headers) {
             .append("<tbody id=\"eslTBody\"></tbody>");
         for (var i = 0; i < tableData.length; i++) {
             $('#eslTBody').append("<tr>" +
-                "<td>" + tableData[i].elsCode + "</td>" +
-                "<td>" + tableData[i].elsType + "</td>" +
+                "<td>" + tableData[i].eslCode + "</td>" +
+                "<td>" + tableData[i].eslType + "</td>" +
                 "<td>" + tableData[i].itemCode + "</td>" +
                 "<td>" + tableData[i].itemName + "</td>" +
                 "<td>" + tableData[i].price + "</td>" +
@@ -66,7 +39,7 @@ function displayEslData(url, headers) {
                 "</a>" +
                 "<ul id=\"dropdown" + i + "\" class=\"dropdown-content\">" +
                 "<li>" +
-                "<a class=\"waves-effect waves-light\" onclick='showImage(" + tableData[i].elsCode + ")'>" +
+                "<a class=\"waves-effect waves-light\" onclick='showImage(" + tableData[i].eslCode + ")'>" +
                 "<i class=\"material-icons\">photo</i>" +
                 "</a>" +
                 "</li>" +
@@ -90,7 +63,20 @@ function displayEslData(url, headers) {
                 "</tr>");
         }
         $('.dropdown-trigger').dropdown();
+        display.style.visibility='hidden'
     }).error(function(jqXHR) {
         alert(jqXHR.responseText);
+        display.style.visibility='hidden'
     });
+}
+function eslActivateActions() {
+    $('#eslTableCounter').formSelect().on('change', function () {
+        var headers = {"size": $('#eslTableCounter').val()};
+        displayEslData("/api/getEslTableData", headers);
+    });
+    $('#search').on('input', function() {
+        var headers = {"size": $('#eslTableCounter').val(), "searchValue": $('#search').val()};
+        displayEslData("/api/searchEslData", headers);
+    });
+    $('.dropdown-trigger').dropdown();
 }

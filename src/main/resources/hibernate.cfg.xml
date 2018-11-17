@@ -14,6 +14,7 @@
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         <property name="hibernate.jdbc.lob.non_contextual_creation">true</property>
         <mapping class="ru.mvp.rsreu.db.entity.Item"></mapping>
+        <mapping class="ru.mvp.rsreu.db.entity.Task"></mapping>
         <mapping class="ru.mvp.rsreu.db.entity.ESL"></mapping>
     </session-factory>
 </hibernate-configuration>
