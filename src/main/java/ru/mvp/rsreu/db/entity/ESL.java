@@ -12,11 +12,11 @@ public class ESL {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ELSCode")
-    private String elsCode;
+    @Column(name = "ESLCode")
+    private String eslCode;
 
-    @Column(name = "ELSType", nullable = false)
-    private String elsType;
+    @Column(name = "ESLType", nullable = false)
+    private String eslType;
 
     @Column(name = "Connectivity", nullable = false)
     private boolean connectivity;
@@ -49,19 +49,19 @@ public class ESL {
     public ESL(){}
 
     public String getElsCode() {
-        return elsCode;
+        return eslCode;
     }
 
-    public void setElsCode(String elsCode) {
-        this.elsCode = elsCode;
+    public void setElsCode(String eslCode) {
+        this.eslCode = eslCode;
     }
 
     public String getElsType() {
-        return elsType;
+        return eslType;
     }
 
-    public void setElsType(String elsType) {
-        this.elsType = elsType;
+    public void setElsType(String eslType) {
+        this.eslType = eslType;
     }
 
     public boolean isConnectivity() {
@@ -145,8 +145,8 @@ public class ESL {
 
         if (connectivity != esl.connectivity) return false;
         if (status != esl.status) return false;
-        if (elsCode != null ? !elsCode.equals(esl.elsCode) : esl.elsCode != null) return false;
-        if (elsType != null ? !elsType.equals(esl.elsType) : esl.elsType != null) return false;
+        if (eslCode != null ? !eslCode.equals(esl.eslCode) : esl.eslCode != null) return false;
+        if (eslType != null ? !eslType.equals(esl.eslType) : esl.eslType != null) return false;
         if (batteryLevel != null ? !batteryLevel.equals(esl.batteryLevel) : esl.batteryLevel != null) return false;
         if (firmWare != null ? !firmWare.equals(esl.firmWare) : esl.firmWare != null) return false;
         if (registrationDate != null ? !registrationDate.equals(esl.registrationDate) : esl.registrationDate != null)
@@ -159,8 +159,8 @@ public class ESL {
 
     @Override
     public int hashCode() {
-        int result = elsCode != null ? elsCode.hashCode() : 0;
-        result = 31 * result + (elsType != null ? elsType.hashCode() : 0);
+        int result = eslCode != null ? eslCode.hashCode() : 0;
+        result = 31 * result + (eslType != null ? eslType.hashCode() : 0);
         result = 31 * result + (connectivity ? 1 : 0);
         result = 31 * result + (status ? 1 : 0);
         result = 31 * result + (batteryLevel != null ? batteryLevel.hashCode() : 0);

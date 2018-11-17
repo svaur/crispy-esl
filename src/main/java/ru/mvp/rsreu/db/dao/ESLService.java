@@ -40,22 +40,12 @@ public class ESLService implements ESLDao {
     @Override
     public ESL searchByESLCode(String eslCode) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "SELECT * FROM ESLS WHERE elscode = :elscode";
+        String sql = "SELECT * FROM ESLS WHERE eslcode = :eslcode";
         Query query = session.createNativeQuery(sql).addEntity(ESL.class);
-        query.setParameter("elscode", Integer.valueOf(eslCode));//todo разобраться что за ссанина с типом переменной
+        query.setParameter("eslcode", Integer.valueOf(eslCode));//todo разобраться что за ссанина с типом переменной
         ESL esl = (ESL) query.uniqueResult();
         session.close();
         return esl;
-    }
-    @Override
-    public Item searchByItemCode(String itemCode) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "SELECT * FROM ITEMS WHERE itemcode = :itemcode";
-        Query query = session.createNativeQuery(sql).addEntity(Item.class);
-        query.setParameter("itemcode", Integer.valueOf(itemCode));//todo разобраться что за ссанина с типом переменной
-        Item item = (Item) query.uniqueResult();
-        session.close();
-        return item;
     }
 
     @Override

@@ -17,6 +17,8 @@
     <script th:src="@{/js/esls.js}"></script>
     <script th:src="@{/js/associate.js}"></script>
     <script th:src="@{/js/welcome.js}"></script>
+    <script th:src="@{/js/table.js}"></script>
+    <script th:src="@{/js/items.js}"></script>
 </head>
 <body>
 <!--<header>-->
@@ -62,7 +64,13 @@
     </li>
 </ul>
 <main class="grey lighten-5">
-    <div id="workSpace" class="section scrollspy col s10"/>
+    <div class="row">
+        <div id="mainProgress" class="progress" style="visibility: hidden; width: 99%">
+            <div class="indeterminate"></div>
+        </div>
+        <div id="workSpace" class="section scrollspy col s10">
+        </div>
+    </div>
 </main>
 
 <!--<footer class="page-footer teal blue-grey lighten-4">-->
