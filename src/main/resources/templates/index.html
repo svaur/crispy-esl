@@ -14,63 +14,55 @@
     <script th:src="@{/js/default/materialize.js}"></script>
     <script th:src="@{/js/init.js}"></script>
     <script th:src="@{/js/esls.js}"></script>
-    <script th:src="@{/js/assert.js}"></script>
+    <script th:src="@{/js/associate.js}"></script>
+    <script th:src="@{/js/welcome.js}"></script>
+    <script th:src="@{/js/Chart.min.js}"></script>
 </head>
 <body>
+<!--<header>-->
+    <!--<nav class="top-nav grey lighten-5">-->
+        <!--<div class="nav-wrapper">-->
+            <!--<div class="row">-->
+                <!--<ul class="left">-->
+                    <!--<li>-->
+                        <!--<a th:href="@{#}" data-target="nav-mobile"-->
+                           <!--class="blue-grey darken-3 top-nav sidenav-trigger full">-->
+                            <!--<i class="material-icons">menu</i>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</nav>-->
 
 
-<header class="grey blue-grey lighten-5">
-    <nav class="top-nav blue-grey lighten-3">
-        <div class=" container">
-            <div class="nav-wrapper">
-                <div class="row">
-                    <div class="col s8 m2 offset-m1">
-                        <ul class="left">
-                            <li>
-                                <a th:href="@{#}" data-target="nav-mobile"
-                                   class="top-nav sidenav-trigger full hide-on-large-only">
-                                    <i class="material-icons">menu</i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+<a th:href="@{#}" data-target="nav-mobile"
+   class="white top-nav sidenav-trigger full hide-on-large-only">
+    <i class="material-icons">menu</i>
+</a>
+<ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey darken-3 col s1 m2">
+    <li>
+        <div class="user-view">
+
+            <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
+            <a th:href="@{#name}"><span
+                    class="white-text name">менеджер [[${#httpServletRequest.remoteUser}]]</span></a>
+            <a th:href="@{#email}"><span class="white-text email">user@gmail.com</span></a>
         </div>
-    </nav>
-
-</header>
-
-
+    </li>
+    <li id="welcomeWorkSpace" class="bold"><a class="waves-effect waves-teal">Главная</a></li>
+    <li id="eslsWorkSpace" class="bold"><a class="waves-effect waves-teal">Ценники</a></li>
+    <li id="itemsWorkSpace" class="bold"><a class="waves-effect waves-teal">Товары</a></li>
+    <li id="associateWorkSpace" class="bold"><a class="waves-effect waves-teal">Привязка ценников</a></li>
+    <li id="schedulerWorkSpace" class="bold"><a class="waves-effect waves-teal">Задачи</a></li>
+    <li>
+        <form th:action="@{/logout}" method="post">
+            <input class="waves-effect waves-light btn-flat" type="submit" value="выйти"/>
+        </form>
+    </li>
+</ul>
 <main class="grey lighten-5">
-    <div class="row">
-        <div class="col s12 m4 l1">
-            <ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey darken-3">
-            <li>
-                <div class="user-view">
-
-                    <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
-                    <a th:href="@{#name}"><span
-                            class="white-text name">менеджер [[${#httpServletRequest.remoteUser}]]</span></a>
-                    <a th:href="@{#email}"><span class="white-text email">user@gmail.com</span></a>
-                </div>
-            </li>
-            <li id="menu1" class="bold"><a class="waves-effect waves-teal">ESLs</a></li>
-            <li id="menu2" class="bold"><a class="waves-effect waves-teal">Items</a></li>
-            <li id="menu3" class="bold"><a class="waves-effect waves-teal">Associate</a></li>
-            <li id="menu4" class="bold"><a class="waves-effect waves-teal">Tasks</a></li>
-            <li>
-                <form th:action="@{/logout}" method="post">
-                    <input class="waves-effect waves-light btn-flat" type="submit" value="выйти"/>
-                </form>
-            </li>
-        </ul>
-        </div>
-        <div id="workSpace" class="section scrollspy col s12 m8 l9">
-
-        </div>
-    </div>
-    </div>
+    <div id="workSpace" class="section scrollspy col s10"/>
 </main>
 
 <!--<footer class="page-footer teal blue-grey lighten-4">-->

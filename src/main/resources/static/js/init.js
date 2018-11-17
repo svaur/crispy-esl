@@ -1,20 +1,26 @@
 $(document).ready(function () {
     $('.sidenav').sidenav();
     $('.dropdown-trigger').dropdown();
-    displayWorkSpace('#menu1', '/api/getTableData');
-    $('#menu1').click(function () {
-        displayWorkSpace('#menu1', '/api/getTableData');
+    displayWorkSpace('#welcomeWorkSpace', '');
+    setActive('#welcomeWorkSpace');
+    $('#welcomeWorkSpace').click(function () {
+        setActive('#welcomeWorkSpace');
+        displayWorkSpace('#welcomeWorkSpace', '');
     });
-    $('#menu2').click(function () {
-        setActive('#menu2');
-        displayWorkSpace('#menu2', '/api/getAnotherTableData');
+    $('#eslsWorkSpace').click(function () {
+        setActive('#eslsWorkSpace');
+        displayWorkSpace('#eslsWorkSpace', '/api/getTableData');
     });
-    $('#menu3').click(function () {
-        setActive('#menu3');
-        displayWorkSpace('#menu3', '/api/getAnotherTableData');
+    $('#itemsWorkSpace').click(function () {
+        setActive('#itemsWorkSpace');
+        displayWorkSpace('#itemsWorkSpace', '/api/getAnotherTableData');
     });
-    $('#menu4').click(function () {
-        setActive('#menu4');
+    $('#associateWorkSpace').click(function () {
+        setActive('#associateWorkSpace');
+        displayWorkSpace('#associateWorkSpace', '/api/getAnotherTableData');
+    });
+    $('#schedulerWorkSpace').click(function () {
+        setActive('#schedulerWorkSpace');
         $('#workSpace').html('')
             .append("<h5>sdfsdfsdfsdfsdfsdf</h5>")
     });
@@ -23,19 +29,27 @@ $(document).ready(function () {
 function displayWorkSpace(menu, url) {
     setActive();
     switch(menu) {
-        case "#menu1":
+        case "#welcomeWorkSpace":
+            $('#workSpace').html('')
+                .append(getWelcomeTemplate());
+            testChart("myChart1", 'Статистика обновления ценников');
+            testChart("myChart2", ' ');
+            testChart("myChart3", ' ');
+            activateActions();
+            break;
+        case "#eslsWorkSpace":
             $('#workSpace').html('')
                 .append(getEslsTemplate());
             activateActions();
             displayEslData(url);
             break;
-        case "#menu2":
+        case "#itemsWorkSpace":
             $('#workSpace').html('')
-                .append(getTestTemplate());
+            //     .append(getTestTemplate());
             break;
-        case "#menu3":
+        case "#associateWorkSpace":
             $('#workSpace').html('')
-                .append(getAssertTemplate());
+                .append(getAssociateTemplate());
             $('.tabs').tabs();
             activateActions();
             displayEslData(url);
@@ -43,22 +57,24 @@ function displayWorkSpace(menu, url) {
         default:
             alert("пока не готово");
     }
+    $('select').formSelect()//Для отображения селектов
 }
 
 function setActive(nameClassToActive) {
-    $('#menu1').removeClass("active");
-    $('#menu2').removeClass("active");
-    $('#menu3').removeClass("active");
-    $('#menu4').removeClass("active");
+    $('#welcomeWorkSpace').removeClass("active");
+    $('#eslsWorkSpace').removeClass("active");
+    $('#itemsWorkSpace').removeClass("active");
+    $('#associateWorkSpace').removeClass("active");
+    $('#schedulerWorkSpace').removeClass("active");
     $(nameClassToActive).addClass("active");
 }
 function activateActions() {
-    $('select').formSelect().on('change', function () {
-        var headers = {"size": $('select').val()};
+    $('#eslTableCounter').formSelect().on('change', function () {
+        var headers = {"size": $('#eslTableCounter').val()};
         displayEslData("/api/getTableData", headers);
     });
     $('#search').on('input', function() {
-        var headers = {"size": $('select').val(), "searchValue": $('#search').val()};
+        var headers = {"size": $('#eslTableCounter').val(), "searchValue": $('#search').val()};
         displayEslData("/api/searchData", headers);
     });
     $('.dropdown-trigger').dropdown();
@@ -71,5 +87,7 @@ function showImage(code) {
             "box-shadow: 0 0 10px rgba(0,0,0,0.5);" +
             "padding: 0px;}</style>" +
             "<img class=\"shadow\" id='esl-image' src='" + data + "'>");
+    }).error(function(jqXHR) {
+        alert(jqXHR.responseText);
     });
 }

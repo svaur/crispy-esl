@@ -1,4 +1,4 @@
-function getAssertTemplate() {
+function getAssociateTemplate() {
     return "<span class='flow-text'>Привязка ценников</span>" +
         "<div class=\"divider\"></div>"+
         "<ul id=\"tabs-swipe-demo\" class=\"tabs tabs-fixed-width grey lighten-5\">" +
@@ -6,7 +6,7 @@ function getAssertTemplate() {
         "   <li class=\"tab col s3\"><a href=\"#test-swipe-2\">Конфигурация</a></li>" +
         "</ul>" +
         "<div id=\"test-swipe-1\" class=\"col s12\">" +
-            "<select>" +
+            "<select id=\"selectAssertEsl\" class=\"validate\">" +
                 "<option value=\"add\">Привязка ценника</option>" +
                 "<option value=\"delete\">Отвязать ценник</option>" +
             "</select>" +
@@ -31,7 +31,8 @@ function getAssertTemplate() {
         "<a class=\"waves-effect waves-light btn-small\" onclick='cancelBtn()'><i class=\"material-icons left\">cancel</i>отменить</a>"+
         "<a class=\"waves-effect waves-light btn-small\" onclick='saveData()'><i class=\"material-icons left\">check</i>сохранить</a>"+
         "</div>" +
-        "<div id=\"test-swipe-2\" class=\"col s12\">не готово</div>"
+        "<div id=\"test-swipe-2\" class=\"col s12\">не готово</div>";
+
 }
 
 function saveData() {
@@ -39,12 +40,15 @@ function saveData() {
         alert("введите данные для сохранения");
     }else {
         var dataToSave = {
+            "type": document.getElementById("selectAssertEsl").value,
             "esl": document.getElementById("eslInput").value,
             "template": document.getElementById("templateInput").value,
             "item": document.getElementById("itemInput").value
         };
         $.getJSON("/api/assignEsl", dataToSave, function (data) {
             alert(data);
+        }).error(function(jqXHR) {
+           alert(jqXHR.responseText);
         });
     }
 }

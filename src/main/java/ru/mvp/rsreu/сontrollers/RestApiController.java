@@ -20,6 +20,7 @@ import ru.mvp.rsreu.templates.EslInfoTemplate;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -115,32 +116,34 @@ public class RestApiController {
     @RequestMapping("/api/assignEsl")
     public String assignEsl(@RequestParam("esl") String esl,
                             @RequestParam("template") String template,
-                            @RequestParam("item") String item) {
+                            @RequestParam("item") String item,
+                            @RequestParam("type") String type) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         EntityTransaction tx = session.getTransaction();
-        tx.begin();
-        try {
-            ESL eslElement = eslDao.searchByESLCode(esl);
-            Item itemElement = eslDao.searchByItemCode(item);
-            session.find(ESL.class, eslElement.getItem());
-            eslElement.setItem(itemElement);
-            session.close();
-            TransactionStatus result = ((Transaction) tx).getStatus();
-            tx.commit();
-            return result.isOneOf(TransactionStatus.COMMITTED) ? "ok" : "error";
-        } catch (HibernateException hibernateEx) {
-            try {
-                tx.rollback();
-            } catch (RuntimeException runtimeEx) {
-                System.err.printf("Couldn’t Roll Back Transaction", runtimeEx);
-            }
-            hibernateEx.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+        switch (type){
+            case "delete":
+                return "TODO не сделана схема бд. Невозможно отвязать датчик";
+            case "add":
+                try {
+                    tx.begin();
+                    ESL eslElement = eslDao.searchByESLCode(esl);
+                    Item itemElement = eslDao.searchByItemCode(item);
+                    session.find(ESL.class, eslElement.getItem());
+                    eslElement.setItem(itemElement);
+                    session.close();
+                    //TODO НЕВОЗМОЖНО ПРИВЯЗАТЬ ДАТЧИК. Датчик не является отдельной сущностью
+                    TransactionStatus result = ((Transaction) tx).getStatus();
+                    tx.commit();
+                    return result.isOneOf(TransactionStatus.COMMITTED) ? "ok" : "error";
+                }finally {
+                    if (session != null) {
+                        session.close();
+                    }
+                }
+            default:
+                return "unknown type";
+
         }
-        return "error while commit";
     }
 
         @Autowired
