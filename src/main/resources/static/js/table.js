@@ -1,7 +1,7 @@
 function getTableTemplate(suffixForTable) {
     return "<div class=\"divider\"></div>"+
         "<div class=\"row\">" +
-            "<div class=\"input-field col s12 m6 l3\">" +
+            "<div class=\"input-field col s1\">" +
                 "<select id='" + suffixForTable + "TableCounter'>" +
                     "<option value=\"10\">10</option>" +
                     "<option value=\"25\">25</option>" +
@@ -9,10 +9,10 @@ function getTableTemplate(suffixForTable) {
                     "<option value=\"80\">80</option>" +
                 "</select>" +
             "</div>" +
-            "<div class=\"input-field col s12 m6 l3\">" +
+            "<div class=\"input-field col s4 offset-s3\">" +
                 "<input id=\"search\" type=\"search\" placeholder=\"Search\">" +
             "</div>" +
-            "<div id=\"uploadBtn\" class=\"col s12 m6 l1\">" +
+            "<div class=\"input-field col s1 offset-s3\">" +
                 "<a class=\"dropdown-trigger btn\" href=\"#\" data-target=\"upload\">" +
                     "<i class=\"tiny material-icons\">file_upload</i>" +
                 "</a>" +
@@ -27,5 +27,5 @@ function getTableTemplate(suffixForTable) {
             "</div>" +
         "</div>" +
         "<div class=\"divider\"></div>" +
-        "<table class=\"centered striped\" id=\"" + suffixForTable + "Table\"></table>";
+        "<table class=\"centered striped z-depth-2\" id=\"" + suffixForTable + "Table\"></table>";
 }
