@@ -1,7 +1,6 @@
 package ru.mvp.rsreu.db.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 /**
@@ -19,10 +18,10 @@ public class ESL {
     private String eslType;
 
     @Column(name = "Connectivity", nullable = false)
-    private boolean connectivity;
+    private String connectivity;
 
     @Column(name = "Status", nullable = false)
-    private boolean status;
+    private String status;
 
     @Column(name = "BatteryLevel", nullable = false)
     private String batteryLevel;
@@ -45,13 +44,15 @@ public class ESL {
     @OneToOne(cascade = CascadeType.ALL)
     private Item item;
 
-    public ESL(){}
+    public ESL() {
+    }
 
     @PrePersist
     protected void onCreate() {
         lastUpdate = LocalDateTime.now();    //todo в зависимости от реализации в образце потребует изменений
 
     }
+
     @PreUpdate
     protected void onUpdate() {
         lastUpdate = LocalDateTime.now();    //todo в зависимости от реализации в образце потребует изменений
@@ -73,19 +74,19 @@ public class ESL {
         this.eslType = eslType;
     }
 
-    public boolean isConnectivity() {
+    public String getConnectivity() {
         return connectivity;
     }
 
-    public void setConnectivity(boolean connectivity) {
+    public void setConnectivity(String connectivity) {
         this.connectivity = connectivity;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -152,10 +153,10 @@ public class ESL {
 
         ESL esl = (ESL) o;
 
-        if (connectivity != esl.connectivity) return false;
-        if (status != esl.status) return false;
         if (eslCode != null ? !eslCode.equals(esl.eslCode) : esl.eslCode != null) return false;
         if (eslType != null ? !eslType.equals(esl.eslType) : esl.eslType != null) return false;
+        if (connectivity != null ? !connectivity.equals(esl.connectivity) : esl.connectivity != null) return false;
+        if (status != null ? !status.equals(esl.status) : esl.status != null) return false;
         if (batteryLevel != null ? !batteryLevel.equals(esl.batteryLevel) : esl.batteryLevel != null) return false;
         if (firmWare != null ? !firmWare.equals(esl.firmWare) : esl.firmWare != null) return false;
         if (registrationDate != null ? !registrationDate.equals(esl.registrationDate) : esl.registrationDate != null)
@@ -170,8 +171,8 @@ public class ESL {
     public int hashCode() {
         int result = eslCode != null ? eslCode.hashCode() : 0;
         result = 31 * result + (eslType != null ? eslType.hashCode() : 0);
-        result = 31 * result + (connectivity ? 1 : 0);
-        result = 31 * result + (status ? 1 : 0);
+        result = 31 * result + (connectivity != null ? connectivity.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (batteryLevel != null ? batteryLevel.hashCode() : 0);
         result = 31 * result + (firmWare != null ? firmWare.hashCode() : 0);
         result = 31 * result + (registrationDate != null ? registrationDate.hashCode() : 0);

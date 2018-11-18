@@ -50,7 +50,7 @@ public class ItemService implements ItemDao {
         Session session = HibernateUtil.getSessionFactory().openSession();
         String sql = "SELECT * FROM ITEMS WHERE itemcode = :itemcode";
         Query query = session.createNativeQuery(sql).addEntity(Item.class);
-        query.setParameter("itemcode", Integer.valueOf(ItemCode));//todo разобраться что за ссанина с типом переменной
+        query.setParameter("itemcode", ItemCode);
         Item Item = (Item) query.uniqueResult();
         session.close();
         return Item;

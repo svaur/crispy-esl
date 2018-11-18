@@ -1,29 +1,20 @@
 package ru.mvp.rsreu.сontrollers;
 
 import com.google.gson.Gson;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mvp.rsreu.db.dao.ESLDao;
-import ru.mvp.rsreu.db.dao.ESLService;
 import ru.mvp.rsreu.db.dao.ItemDao;
 import ru.mvp.rsreu.db.dao.TaskDao;
 import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.db.entity.Task;
-import ru.mvp.rsreu.db.util.HibernateUtil;
 import ru.mvp.rsreu.templates.BaseSaleTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
 
 import javax.imageio.ImageIO;
-import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
 import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -35,6 +26,7 @@ import java.util.List;
 @RestController
 public class RestApiController {
 
+    private static final String EMPTY_STRING = "";
     private ESLDao eslDao;
     private ItemDao itemDao;
     private TaskDao taskDao;
@@ -132,32 +124,15 @@ public class RestApiController {
                             @RequestParam("template") String template,
                             @RequestParam("item") String item,
                             @RequestParam("type") String type) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        EntityTransaction tx = session.getTransaction();
-        switch (type){
-            case "delete":
-                return "TODO не сделана схема бд. Невозможно отвязать датчик";
-            case "add":
-                try {
-                    tx.begin();
-                    ESL eslElement = eslDao.searchByESLCode(esl);
-                    Item itemElement = itemDao.searchByItemCode(item);
-                    session.find(ESL.class, eslElement.getItem());
-                    eslElement.setItem(itemElement);
-                    session.close();
-                    //TODO НЕВОЗМОЖНО ПРИВЯЗАТЬ ДАТЧИК. Датчик не является отдельной сущностью
-                    TransactionStatus result = ((Transaction) tx).getStatus();
-                    tx.commit();
-                    return result.isOneOf(TransactionStatus.COMMITTED) ? "ok" : "error";
-                }finally {
-                    if (session != null) {
-                        session.close();
-                    }
-                }
-            default:
-                return "unknown type";
-
+        boolean result;
+        ESL eslElement = eslDao.searchByESLCode(esl);
+        Item itemElement = itemDao.searchByItemCode(item);
+        if("add".equalsIgnoreCase(type)){
+            result = eslDao.assignItem(eslElement, itemElement);
+        } else {
+            result = eslDao.unAssignItem(eslElement);
         }
+        return result ? "ok" : "error";
     }
 
     @RequestMapping("/api/getImage")
@@ -186,13 +161,13 @@ public class RestApiController {
         Item item = e.getItem();
         hashMap.put("eslCode", e.getEslCode());
         hashMap.put("eslType", e.getEslType());
-        hashMap.put("itemCode", item.getItemCode());
-        hashMap.put("itemName", item.getItemName());
-        hashMap.put("price", String.valueOf(item.getPromotionPrice()));
+        hashMap.put("itemCode", item == null ? EMPTY_STRING : item.getItemCode());
+        hashMap.put("itemName", item == null ? EMPTY_STRING : item.getItemName());
+        hashMap.put("price", String.valueOf(item == null ? EMPTY_STRING : item.getPromotionPrice()));
         hashMap.put("lastUpdate", String.valueOf(e.getLastUpdate()));
-        hashMap.put("connectivity", String.valueOf(e.isConnectivity()));
+        hashMap.put("connectivity", e.getConnectivity());
         hashMap.put("batteryLevel", String.valueOf(e.getBatteryLevel()));
-        hashMap.put("status", String.valueOf(e.isStatus())); //todo поменять тип
+        hashMap.put("status", e.getStatus());
         return hashMap;
     }
     private HashMap<String, String> fillItemData(Item e){
