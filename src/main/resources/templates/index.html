@@ -12,11 +12,14 @@
     <!--  Scripts-->
     <script th:src="@{/js/default/jquery-2.1.1.min.js}"></script>
     <script th:src="@{/js/default/materialize.js}"></script>
+    <script th:src="@{/js/default/Chart.min.js}"></script>
     <script th:src="@{/js/init.js}"></script>
     <script th:src="@{/js/esls.js}"></script>
     <script th:src="@{/js/associate.js}"></script>
     <script th:src="@{/js/welcome.js}"></script>
-    <script th:src="@{/js/Chart.min.js}"></script>
+    <script th:src="@{/js/table.js}"></script>
+    <script th:src="@{/js/items.js}"></script>
+    <script th:src="@{/js/task.js}"></script>
 </head>
 <body>
 <!--<header>-->
@@ -40,7 +43,7 @@
    class="white top-nav sidenav-trigger full hide-on-large-only">
     <i class="material-icons">menu</i>
 </a>
-<ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey darken-3 col s1 m2">
+<ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey darken-1 col s1 m2">
     <li>
         <div class="user-view">
 
@@ -54,7 +57,7 @@
     <li id="eslsWorkSpace" class="bold"><a class="waves-effect waves-teal">Ценники</a></li>
     <li id="itemsWorkSpace" class="bold"><a class="waves-effect waves-teal">Товары</a></li>
     <li id="associateWorkSpace" class="bold"><a class="waves-effect waves-teal">Привязка ценников</a></li>
-    <li id="schedulerWorkSpace" class="bold"><a class="waves-effect waves-teal">Задачи</a></li>
+    <li id="taskWorkSpace" class="bold"><a class="waves-effect waves-teal">Задачи</a></li>
     <li>
         <form th:action="@{/logout}" method="post">
             <input class="waves-effect waves-light btn-flat" type="submit" value="выйти"/>
@@ -62,7 +65,13 @@
     </li>
 </ul>
 <main class="grey lighten-5">
-    <div id="workSpace" class="section scrollspy col s10"/>
+    <div class="row">
+        <div id="mainProgress" class="progress" style="visibility: hidden; width: 99%">
+            <div class="indeterminate"></div>
+        </div>
+        <div id="workSpace" class="section scrollspy col s11">
+        </div>
+    </div>
 </main>
 
 <!--<footer class="page-footer teal blue-grey lighten-4">-->

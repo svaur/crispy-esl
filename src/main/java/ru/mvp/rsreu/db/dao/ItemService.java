@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.db.util.HibernateUtil;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -33,16 +35,42 @@ public class ItemService implements ItemDao {
     }
 
     @Override
-    public Item searchByItemCode(String itemCode) {
+    public List<Item> getAll(int limit) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT * FROM ITEMS LIMIT :limit";
+        Query query = session.createNativeQuery(sql).addEntity(Item.class);
+        query.setParameter("limit", limit);
+        List<Item> ItemList = query.list();
+        session.close();
+        return ItemList;
+    }
+
+    @Override
+    public Item searchByItemCode(String ItemCode) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         String sql = "SELECT * FROM ITEMS WHERE itemcode = :itemcode";
         Query query = session.createNativeQuery(sql).addEntity(Item.class);
-        query.setParameter("itemcode", itemCode);
-        Item item = (Item) query.uniqueResult();
+        query.setParameter("itemcode", ItemCode);
+        Item Item = (Item) query.uniqueResult();
         session.close();
-        return item;
+        return Item;
     }
 
+    @Override
+    public List<Item> searchByValue(String value, int showSize) {
+        List<Item> fullList = getAll();
+        List<Item> resultList = new ArrayList<>(showSize);
+        Iterator<Item> iterator = fullList.iterator();
+        int i = 0;
+        while (iterator.hasNext() && i < showSize) {
+            Item tempItem = iterator.next();
+            if (tempItem.getItemCode().contains(value) || tempItem.getItemName().toLowerCase().contains(value.toLowerCase())) {
+                resultList.add(tempItem);
+                i++;
+            }
+        }
+        return resultList;
+    }
     @Override
     public void insertOrUpdateItems(List<Item> itemList) {
         Session session = HibernateUtil.getSessionFactory().openSession();

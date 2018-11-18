@@ -9,20 +9,19 @@ $(document).ready(function () {
     });
     $('#eslsWorkSpace').click(function () {
         setActive('#eslsWorkSpace');
-        displayWorkSpace('#eslsWorkSpace', '/api/getTableData');
+        displayWorkSpace('#eslsWorkSpace', '/api/getEslTableData');
     });
     $('#itemsWorkSpace').click(function () {
         setActive('#itemsWorkSpace');
-        displayWorkSpace('#itemsWorkSpace', '/api/getAnotherTableData');
+        displayWorkSpace('#itemsWorkSpace', '/api/getItemTableData');
     });
     $('#associateWorkSpace').click(function () {
         setActive('#associateWorkSpace');
-        displayWorkSpace('#associateWorkSpace', '/api/getAnotherTableData');
+        displayWorkSpace('#associateWorkSpace', ' ');
     });
-    $('#schedulerWorkSpace').click(function () {
-        setActive('#schedulerWorkSpace');
-        $('#workSpace').html('')
-            .append("<h5>sdfsdfsdfsdfsdfsdf</h5>")
+    $('#taskWorkSpace').click(function () {
+        setActive('#taskWorkSpace');
+        displayWorkSpace('#taskWorkSpace', '/api/getTaskTableData');
     });
 });
 
@@ -33,26 +32,31 @@ function displayWorkSpace(menu, url) {
             $('#workSpace').html('')
                 .append(getWelcomeTemplate());
             testChart("myChart1", 'Статистика обновления ценников');
-            testChart("myChart2", ' ');
-            testChart("myChart3", ' ');
-            activateActions();
+            testChart("myChart2", 'Статистика обновления товаров');
+            testChart("myChart3", 'Статистика привязок');
             break;
         case "#eslsWorkSpace":
             $('#workSpace').html('')
                 .append(getEslsTemplate());
-            activateActions();
+            eslActivateActions();
             displayEslData(url);
             break;
         case "#itemsWorkSpace":
             $('#workSpace').html('')
-            //     .append(getTestTemplate());
+                .append(getItemsTemplate());
+            itemActivateActions();
+            displayItemData(url);
             break;
         case "#associateWorkSpace":
             $('#workSpace').html('')
                 .append(getAssociateTemplate());
             $('.tabs').tabs();
-            activateActions();
-            displayEslData(url);
+            break;
+        case "#taskWorkSpace":
+            $('#workSpace').html('')
+                .append(getTasksTemplate());
+            taskActivateActions();
+            displayTaskData(url);
             break;
         default:
             alert("пока не готово");
@@ -65,23 +69,12 @@ function setActive(nameClassToActive) {
     $('#eslsWorkSpace').removeClass("active");
     $('#itemsWorkSpace').removeClass("active");
     $('#associateWorkSpace').removeClass("active");
-    $('#schedulerWorkSpace').removeClass("active");
+    $('#taskWorkSpace').removeClass("active");
     $(nameClassToActive).addClass("active");
-}
-function activateActions() {
-    $('#eslTableCounter').formSelect().on('change', function () {
-        var headers = {"size": $('#eslTableCounter').val()};
-        displayEslData("/api/getTableData", headers);
-    });
-    $('#search').on('input', function() {
-        var headers = {"size": $('#eslTableCounter').val(), "searchValue": $('#search').val()};
-        displayEslData("/api/searchData", headers);
-    });
-    $('.dropdown-trigger').dropdown();
 }
 function showImage(code) {
     var w = window.open();
-    $.getJSON("/api/getImage", {elsCode:code}, function (data) {
+    $.getJSON("/api/getImage", {eslCode:code}, function (data) {
         $(w.document.body).html(
             "<style>.shadow {" +
             "box-shadow: 0 0 10px rgba(0,0,0,0.5);" +

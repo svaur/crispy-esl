@@ -9,6 +9,9 @@ import java.util.List;
  */
 public interface ItemDao {
     List<Item> getAll();
-    void insertOrUpdateItems(List<Item> itemList);
+    List<Item> getAll(int limit);
+    /* Поиск по колонкам: ItemCode, ItemType */
+    List<Item> searchByValue(String value, int showSize);
     Item searchByItemCode(String itemCode);
+    void insertOrUpdateItems(List<Item> itemList);
 }

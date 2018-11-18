@@ -49,7 +49,7 @@ body {
 main {
     flex: 1 0 auto;
 }
-#esl-table td:hover {
+#eslTable td:hover {
     cursor: pointer;
 }
 /* Поехали костыли */
