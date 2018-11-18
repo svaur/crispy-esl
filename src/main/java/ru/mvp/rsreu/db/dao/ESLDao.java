@@ -15,5 +15,6 @@ public interface ESLDao {
     /* Поиск по колонкам: EslCode, EslType, ItemCode, ItemType */
     List<ESL> searchByValue(String value, int showSize);
     ESL searchByESLCode(String eslCode);
-    Item searchByItemCode(String itemCode);
+    boolean unAssignItem(ESL esl);
+    boolean assignItem(ESL esl, Item item);
 }

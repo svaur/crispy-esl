@@ -10,4 +10,5 @@ import java.util.List;
 public interface ItemDao {
     List<Item> getAll();
     void insertOrUpdateItems(List<Item> itemList);
+    Item searchByItemCode(String itemCode);
 }

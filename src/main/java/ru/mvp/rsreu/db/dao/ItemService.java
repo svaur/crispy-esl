@@ -33,6 +33,17 @@ public class ItemService implements ItemDao {
     }
 
     @Override
+    public Item searchByItemCode(String itemCode) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "SELECT * FROM ITEMS WHERE itemcode = :itemcode";
+        Query query = session.createNativeQuery(sql).addEntity(Item.class);
+        query.setParameter("itemcode", itemCode);
+        Item item = (Item) query.uniqueResult();
+        session.close();
+        return item;
+    }
+
+    @Override
     public void insertOrUpdateItems(List<Item> itemList) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

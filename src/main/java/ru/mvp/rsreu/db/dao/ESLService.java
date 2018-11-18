@@ -2,6 +2,9 @@ package ru.mvp.rsreu.db.dao;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.db.entity.Item;
@@ -16,6 +19,9 @@ import java.util.List;
  */
 @Component
 public class ESLService implements ESLDao {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ESLService.class);
+
     @Override
     public List<ESL> getAll() {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -40,22 +46,50 @@ public class ESLService implements ESLDao {
     @Override
     public ESL searchByESLCode(String eslCode) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "SELECT * FROM ESLS WHERE elscode = :elscode";
+        String sql = "SELECT * FROM ESLS WHERE esls.eslcode = :elscode";
         Query query = session.createNativeQuery(sql).addEntity(ESL.class);
         query.setParameter("elscode", eslCode);
         ESL esl = (ESL) query.getSingleResult();
         session.close();
         return esl;
     }
+
     @Override
-    public Item searchByItemCode(String itemCode) {
+    public boolean unAssignItem(ESL esl) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "SELECT * FROM ITEMS WHERE itemcode = :itemcode";
-        Query query = session.createNativeQuery(sql).addEntity(Item.class);
-        query.setParameter("itemcode", Integer.valueOf(itemCode));//todo разобраться что за ссанина с типом переменной
-        Item item = (Item) query.uniqueResult();
-        session.close();
-        return item;
+        session.beginTransaction();
+        boolean result;
+        try {
+            esl.setItem(null);
+            session.saveOrUpdate(esl);
+        } catch (Exception e) {
+            LOGGER.error("Catch error: ", e);
+            session.getTransaction().rollback();
+        } finally {
+            session.getTransaction().commit();
+            result = session.getTransaction().getStatus().isOneOf(TransactionStatus.COMMITTED);
+            session.close();
+        }
+        return result;
+    }
+
+    @Override
+    public boolean assignItem(ESL esl, Item item) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        boolean result;
+        try {
+            esl.setItem(item);
+            session.saveOrUpdate(esl);
+        } catch (Exception e) {
+            LOGGER.error("Catch error: ", e);
+            session.getTransaction().rollback();
+        } finally {
+            session.getTransaction().commit();
+            result = session.getTransaction().getStatus().isOneOf(TransactionStatus.COMMITTED);
+            session.close();
+        }
+        return result;
     }
 
     @Override
