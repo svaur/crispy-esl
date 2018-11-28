@@ -47,3 +47,34 @@ function taskActivateActions() {
     });
     $('.dropdown-trigger').dropdown();
 }
+function showAddTaskWindow() {
+    return "<div id=\"addTaskWindow\" class=\"z-depth-2\">"+
+        "   <div class=\"row\">"+
+        "       <div id=\"test-swipe-1\" class=\"col s5\">" +
+        "       <select id=\"selectAssertEsl\" class=\"validate\">" +
+        "           <option value=\"add\">Привязка ценника</option>" +
+        "           <option value=\"delete\">Отвязать ценник</option>" +
+        "       </select>" +
+        "       <form>" +
+        "          <div class=\"row\">" +
+        "          <div class=\"col s12 input-field\">" +
+        "              <input id=\"eslInput\" type=\"text\" class=\"validate\">" +
+        "              <label for=\"eslInput\">Ценник</label>" +
+        "          </div>" +
+        "          <div class=\"col s12 input-field\">" +
+        "             <select id=\"templateInput\" class=\"validate\">" +
+        "                 <option value=\"default\">по умолчанию</option>" +
+        "             </select>" +
+        "              <label for=\"templateInput\">Шаблон</label>" +
+        "          </div>" +
+        "          <div class=\"col s12 input-field\">" +
+        "              <input id=\"itemInput\" type=\"tel\" class=\"validate\">" +
+        "              <label for=\"itemInput\">Товар</label>" +
+        "          </div>" +
+        "          </div>"+
+        "       </form>" +
+        "       <a class=\"waves-effect waves-light btn-small\" onclick='cancelBtn()'><i class=\"material-icons left\">cancel</i>отменить</a>"+
+        "       <a class=\"waves-effect waves-light btn-small\" onclick='saveData()'><i class=\"material-icons left\">check</i>сохранить</a>"+
+        "   </div>"
+        "</div>"
+}

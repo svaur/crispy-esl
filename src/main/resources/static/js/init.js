@@ -57,6 +57,10 @@ function displayWorkSpace(menu, url) {
                 .append(getTasksTemplate());
             taskActivateActions();
             displayTaskData(url);
+            $('#addTask').click(function () {
+                $('#workSpace').html('')
+                    .append(showAddTaskWindow());
+            });
             break;
         default:
             alert("пока не готово");

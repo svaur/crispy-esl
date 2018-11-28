@@ -15,7 +15,7 @@ function getTableTemplate(suffixForTable) {
     if (suffixForTable==="task"){
         resultTableHtml+=
             "<div class=\"input-field col s1 offset-s3\">" +
-                "<a class=\"btn\" href=\"#\">Добавить</a>" +
+                "<a id='addTask' class=\"btn\" href=\"#\">Добавить</a>" +
             "</div>";
     }else {
         resultTableHtml+="<div class=\"input-field col s1 offset-s3\">" +
