@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ru.mvp.rsreu.db.dao.ItemDao;
+import ru.mvp.rsreu.db.service.ItemService;
 import ru.mvp.rsreu.integration.file.parsers.IParser;
 import ru.mvp.rsreu.integration.file.parsers.ParserFactory;
 
@@ -32,10 +32,11 @@ public class FileMonitor {
     //todo Временный хардкод для показа
     private String directory = "src\\main\\resources\\tempDir";
     private Map<String, FileInfo> fileInfoMap = new HashMap<>();
-    @Autowired
-    ItemDao itemService;
+
     @Autowired
     ParserFactory factory;
+    @Autowired
+    ItemService itemService;
 
 
     @Scheduled(fixedDelay = CHECK_INTERVAL)

@@ -2,15 +2,18 @@ package ru.mvp.rsreu.сontrollers;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.mvp.rsreu.db.dao.ESLDao;
-import ru.mvp.rsreu.db.dao.ItemDao;
-import ru.mvp.rsreu.db.dao.TaskDao;
 import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.db.entity.Task;
+import ru.mvp.rsreu.db.service.ESLService;
+import ru.mvp.rsreu.db.service.ItemService;
+import ru.mvp.rsreu.db.service.TaskService;
 import ru.mvp.rsreu.templates.BaseSaleTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
 
@@ -27,16 +30,19 @@ import java.util.List;
 public class RestApiController {
 
     private static final String EMPTY_STRING = "";
-    private ESLDao eslDao;
-    private ItemDao itemDao;
-    private TaskDao taskDao;
     private BaseSaleTemplate baseSaleTemplate;
 
     @Autowired
-    public RestApiController(ESLDao eslDao, ItemDao itemDao, TaskDao taskDao, BaseSaleTemplate baseSaleTemplate) {
-        this.eslDao = eslDao;
-        this.itemDao = itemDao;
-        this.taskDao = taskDao;
+    private ItemService itemService;
+
+    @Autowired
+    private ESLService eslService;
+
+    @Autowired
+    private TaskService taskService;
+
+    @Autowired
+    public RestApiController(BaseSaleTemplate baseSaleTemplate) {
         this.baseSaleTemplate = baseSaleTemplate;
     }
 
@@ -44,7 +50,8 @@ public class RestApiController {
     public String getEslTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size) {//todo получать мапу? не станет ли избыточным?
         int showSize = Integer.valueOf(size);
         List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        List<ESL> list = eslDao.getAll(showSize);
+        Pageable pageable = PageRequest.of(0, showSize);
+        Page<ESL> list = eslService.findAll(pageable);
         list.forEach(e -> {
             HashMap<String, String> hashMap = fillEslData(e);
             tableData.add(hashMap);
@@ -56,7 +63,8 @@ public class RestApiController {
     public String getTaskTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size) {//todo получать мапу? не станет ли избыточным?
         int showSize = Integer.valueOf(size);
         List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        List<Task> list = taskDao.getAll(showSize);
+        Pageable pageable = PageRequest.of(0, showSize);
+        Page<Task> list = taskService.findAll(pageable);
         list.forEach(e -> {
             HashMap<String, String> hashMap = fillTaskData(e);
             tableData.add(hashMap);
@@ -68,7 +76,8 @@ public class RestApiController {
     public String getItemTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size) {//todo получать мапу? не станет ли избыточным?
         int showSize = Integer.valueOf(size);
         List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        List<Item> list = itemDao.getAll(showSize);
+        Pageable pageable = PageRequest.of(0, showSize);
+        Page<Item> list = itemService.findAll(pageable);
         list.forEach(e -> {
             HashMap<String, String> hashMap = fillItemData(e);
             tableData.add(hashMap);
@@ -82,7 +91,8 @@ public class RestApiController {
                                @RequestParam(value = "searchValue") String searchValue) {                           //todo получать мапу? не станет ли избыточным?
         int showSize = Integer.valueOf(size);
         List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        List<ESL> list = eslDao.searchByValue(searchValue, showSize);
+        Pageable pageable = PageRequest.of(0, showSize);
+        List<ESL> list = eslService.searchByValue(searchValue, pageable);
         list.forEach(e -> {
             HashMap<String, String> hashMap = fillEslData(e);
             tableData.add(hashMap);
@@ -96,7 +106,8 @@ public class RestApiController {
                                @RequestParam(value = "searchValue") String searchValue) {                           //todo получать мапу? не станет ли избыточным?
         int showSize = Integer.valueOf(size);
         List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        List<Item> list = itemDao.searchByValue(searchValue, showSize);
+        Pageable pageable = PageRequest.of(0, showSize);
+        List<Item> list = itemService.searchByValue(searchValue, pageable);
         list.forEach(e -> {
             HashMap<String, String> hashMap = fillItemData(e);
             tableData.add(hashMap);
@@ -110,7 +121,8 @@ public class RestApiController {
                                @RequestParam(value = "searchValue") String searchValue) {                           //todo получать мапу? не станет ли избыточным?
         int showSize = Integer.valueOf(size);
         List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        List<Task> list = taskDao.searchByValue(searchValue, showSize);
+        Pageable pageable = PageRequest.of(0, showSize);
+        List<Task> list = taskService.searchByValue(searchValue, pageable);
         list.forEach(e -> {
             HashMap<String, String> hashMap = fillTaskData(e);
             tableData.add(hashMap);
@@ -125,13 +137,16 @@ public class RestApiController {
                             @RequestParam("item") String item,
                             @RequestParam("type") String type) {
         boolean result;
-        ESL eslElement = eslDao.searchByESLCode(esl);
-        Item itemElement = itemDao.searchByItemCode(item);
+        ESL eslElement = eslService.searchByESLCode(esl);
+        Item itemElement = itemService.searchByItemCode(item);
         if("add".equalsIgnoreCase(type)){
-            result = eslDao.assignItem(eslElement, itemElement);
+            eslElement.setItem(itemElement);
+            eslService.saveEsl(eslElement);
         } else {
-            result = eslDao.unAssignItem(eslElement);
+            eslElement.setItem(null);
+            eslService.saveEsl(eslElement);
         }
+        result = true;
         return result ? "ok" : "error";
     }
 
@@ -139,7 +154,7 @@ public class RestApiController {
     public String getImage(@RequestParam("eslCode") String eslCode) throws IOException {
         int width = 152;
         int height = 152;
-        Item selectedGood = eslDao.searchByESLCode(eslCode).getItem();
+        Item selectedGood = eslService.searchByESLCode(eslCode).getItem();
         EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(selectedGood.getItemName(),
                 selectedGood.getItemName(),
                 String.valueOf(selectedGood.getPrice()),
