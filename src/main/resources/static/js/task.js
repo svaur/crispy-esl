@@ -1,6 +1,91 @@
 function getTasksTemplate() {
-    return "<span class='flow-text'>Планировщик задач</span>"
-        + getTableTemplate('task')
+    return "<span class='flow-text'>Планировщик задач</span>"+
+        "<div class=\"divider\"></div>" +
+        "<div id=\"addTaskWindow\" class=\"z-depth-2\">"+
+        "   <div class=\"row\">"+
+        "       <div id=\"test-swipe-1\" class=\"col s8\">" +
+        "           <form>" +
+        // "              <select id=\"repeatTaskType\" class=\"validate\">" +
+        // "                  <option value=\"singleRun\">однократное срабатывание</option>" +
+        // "                  <option value=\"repeatRun\">цикличное срабатывание</option>" +
+        // "              </select>" +
+        "              <div class=\"switch\">" +
+        "                 <label>" +
+        "                   однократное срабатывание" +
+        "                   <input id=\"runSwitch\" type=\"checkbox\">" +
+        "                   <span class=\"lever\"></span>" +
+        "                   цикличное срабатывание" +
+        "                 </label>" +
+        "               </div>"+
+        "               <div id=\"daysCheckboxes\">" +
+        "                <p>" +
+        "                  <label>" +
+        "                    <input id='mon' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <span>Понедельник</span>" +
+        "                  </label>" +
+        "                </p>" +
+        "                <p>" +
+        "                  <label>" +
+        "                    <input id='tue' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <span>Вторник</span>" +
+        "                  </label>" +
+        "                </p>" +
+        "                <p>" +
+        "                  <label>" +
+        "                    <input id='wed' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <span>Среда</span>" +
+        "                  </label>" +
+        "                </p>" +
+        "                <p>" +
+        "                  <label>" +
+        "                    <input id='thu' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <span>Четверг</span>" +
+        "                  </label>" +
+        "                </p>" +
+        "                <p>" +
+        "                  <label>" +
+        "                    <input id='fri' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <span>Пятница</span>" +
+        "                  </label>" +
+        "                </p>" +
+        "                <p>" +
+        "                  <label>" +
+        "                    <input id='sat' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <span>Суббота</span>" +
+        "                  </label>" +
+        "                </p>" +
+        "                <p>" +
+        "                  <label>" +
+        "                    <input id='sun' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <span>Воскресенье</span>" +
+        "                  </label>" +
+        "                </p>" +
+        "              </div>"+
+        "              <select id=\"selectTaskType\" class=\"validate\">" +
+        "                  <option value=\"update\">обновление</option>" +
+        "                  <option value=\"smartUpdate\">умное обновление</option>" +
+        "              </select>" +
+        "              <div class=\"row\">" +
+        "              <div class=\"col s12 input-field\">" +
+        "                  <input id=\"taskName\" type=\"text\" class=\"validate\">" +
+        "                  <label for=\"taskName\">Имя задачи</label>" +
+        "              </div>" +
+        "              <div class=\"col s12 input-field\">" +
+        "                  <input id=\"dateStart\" type=\"text\" class=\"datepicker\">" +
+        "                  <label for=\"dateStart\">Дата первого срабатывания</label>" +
+        "              </div>" +
+        "              <div class=\"col s12 input-field\">" +
+        "                  <input id=\"timeStart\" type=\"text\" class=\"timepicker\">" +
+        "                  <label for=\"timeStart\">время срабатывания</label>" +
+        "              </div>" +
+        "           </form>" +
+        "           <a class=\"waves-effect waves-light btn-small\" onclick=\"hideDiv('#addTaskWindow')\"><i class=\"material-icons left\">cancel</i>отменить</a>"+
+        "           <a class=\"waves-effect waves-light btn-small\" onclick='saveTaskData()'><i class=\"material-icons left\">check</i>сохранить</a>"+
+        "           </div>"+
+        "       </div>"+
+        "   </div>"+
+        "</div>"+
+        getTableTemplate('task')
 }
 function displayTaskData(url, headers) {
     var display = document.getElementById("mainProgress");
@@ -47,34 +132,9 @@ function taskActivateActions() {
     });
     $('.dropdown-trigger').dropdown();
 }
-function showAddTaskWindow() {
-    return "<div id=\"addTaskWindow\" class=\"z-depth-2\">"+
-        "   <div class=\"row\">"+
-        "       <div id=\"test-swipe-1\" class=\"col s5\">" +
-        "       <select id=\"selectAssertEsl\" class=\"validate\">" +
-        "           <option value=\"add\">Привязка ценника</option>" +
-        "           <option value=\"delete\">Отвязать ценник</option>" +
-        "       </select>" +
-        "       <form>" +
-        "          <div class=\"row\">" +
-        "          <div class=\"col s12 input-field\">" +
-        "              <input id=\"eslInput\" type=\"text\" class=\"validate\">" +
-        "              <label for=\"eslInput\">Ценник</label>" +
-        "          </div>" +
-        "          <div class=\"col s12 input-field\">" +
-        "             <select id=\"templateInput\" class=\"validate\">" +
-        "                 <option value=\"default\">по умолчанию</option>" +
-        "             </select>" +
-        "              <label for=\"templateInput\">Шаблон</label>" +
-        "          </div>" +
-        "          <div class=\"col s12 input-field\">" +
-        "              <input id=\"itemInput\" type=\"tel\" class=\"validate\">" +
-        "              <label for=\"itemInput\">Товар</label>" +
-        "          </div>" +
-        "          </div>"+
-        "       </form>" +
-        "       <a class=\"waves-effect waves-light btn-small\" onclick='cancelBtn()'><i class=\"material-icons left\">cancel</i>отменить</a>"+
-        "       <a class=\"waves-effect waves-light btn-small\" onclick='saveData()'><i class=\"material-icons left\">check</i>сохранить</a>"+
-        "   </div>"
-        "</div>"
+function hideDiv(elem) {
+    $(elem).hide();
+}
+function saveTaskData() {
+    alert("нет обработчика");
 }

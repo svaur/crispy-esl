@@ -91,6 +91,9 @@ main {
 #welcomeContainer {
     margin: 1rem;
 }
+#test-swipe-1 {
+    margin: 1rem;
+}
 
 @font-face {
     font-family: 'Material Icons';
