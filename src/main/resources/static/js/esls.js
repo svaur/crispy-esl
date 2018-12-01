@@ -9,16 +9,16 @@ function displayEslData(url, headers) {
         $('#eslTable').html('')
             .append("<thead>" +
                 "<tr>" +
-                "<th>ESL code</th>" +
-                "<th>ESL type</th>" +
-                "<th>Item code</th>" +
-                "<th>Item name</th>" +
-                "<th>Price</th>" +
-                "<th>Updated date</th>" +
-                "<th>Connectivity</th>" +
-                "<th>Battery level</th>" +
-                "<th>Status</th>" +
-                "<th>action</th>" +
+                "<th>Код ценника</th>" +
+                "<th>Тип ценника</th>" +
+                "<th>Код товара</th>" +
+                "<th>Имя товара</th>" +
+                "<th>Цена</th>" +
+                "<th>Дата обновления</th>" +
+                "<th>Соединение</th>" +
+                "<th>Уровень заряда</th>" +
+                "<th>Статус</th>" +
+                "<th>Действие</th>" +
                 "</tr>" +
                 "</thead>")
             .append("<tbody id=\"eslTBody\"></tbody>");

@@ -1,5 +1,5 @@
 function getTableTemplate(suffixForTable) {
-    var resultTableHtml= "<div class=\"divider\"></div>"+
+    var resultTableHtml= "<div id=\"mainSpaceForTable\">"+
         "<div class=\"row\">" +
             "<div class=\"input-field col s1\">" +
                 "<select id='" + suffixForTable + "TableCounter'>" +
@@ -11,11 +11,11 @@ function getTableTemplate(suffixForTable) {
             "</div>" +
             "<div class=\"input-field col s4 offset-s3\">" +
                 "<input id=\"search\" type=\"search\" placeholder=\"Search\">" +
-            "</div>"
+            "</div>";
     if (suffixForTable==="task"){
         resultTableHtml+=
             "<div class=\"input-field col s1 offset-s3\">" +
-                "<a class=\"btn\" href=\"#\">Добавить</a>" +
+                "<a id='addTask' class=\"btn\" href=\"#\">Добавить</a>" +
             "</div>";
     }else {
         resultTableHtml+="<div class=\"input-field col s1 offset-s3\">" +
@@ -34,6 +34,6 @@ function getTableTemplate(suffixForTable) {
     }
 
     resultTableHtml+="</div>" +
-        "<table class=\"centered striped z-depth-2\" id=\"" + suffixForTable + "Table\"></table>";
+        "<table class=\"centered striped z-depth-2\" id=\"" + suffixForTable + "Table\"></table></div>";
     return resultTableHtml;
 }

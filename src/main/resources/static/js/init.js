@@ -57,11 +57,27 @@ function displayWorkSpace(menu, url) {
                 .append(getTasksTemplate());
             taskActivateActions();
             displayTaskData(url);
+            $('#addTaskWindow').hide();
+            $('#addTask').click(function () {
+                $('#addTaskWindow').show();
+            });
+            $('.datepicker').datepicker();
+            $('.timepicker').timepicker();
+            $('#daysCheckboxes').hide();
+            $('#runSwitch').click(function () {
+                if($('#runSwitch').prop('checked')){
+                    $('#daysCheckboxes').show();
+                    console.log("sddsd")
+                }else{
+                    $('#daysCheckboxes').hide();
+                    console.log("1211111")
+                }
+            });
             break;
         default:
             alert("пока не готово");
     }
-    $('select').formSelect()//Для отображения селектов
+    $('select').formSelect();//Для отображения селектов
 }
 
 function setActive(nameClassToActive) {
