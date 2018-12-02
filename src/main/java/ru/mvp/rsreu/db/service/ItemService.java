@@ -9,18 +9,25 @@ import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.db.repository.ItemRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-@Service("item")
-public class ItemService {
-    @Autowired
-    private ItemRepository itemRepository;
+@Service
+public class ItemService implements IService<Item> {
+    private final ItemRepository itemRepository;
 
+    @Autowired
+    public ItemService(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
+
+    @Override
     public Page<Item> findAll(Pageable pageable) {
         return itemRepository.findAll(pageable);
     }
 
+    @Override
     public List<Item> searchByValue(String value, Pageable pageable) {
         List<Item> fullList = itemRepository.findAll();
         List<Item> resultList = new ArrayList<>(pageable.getPageSize());
@@ -46,5 +53,16 @@ public class ItemService {
                 itemRepository.save(item);
             }
         }
+    }
+
+    @Override
+    public HashMap<String, String> fillEntityData(Item e) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("itemCode", e.getItemCode());
+        hashMap.put("itemName", e.getItemName());
+        hashMap.put("price", String.valueOf(e.getPromotionPrice()));
+        hashMap.put("lastUpdate", String.valueOf(e.getLastUpdated()));
+        hashMap.put("active", "true");
+        return hashMap;
     }
 }

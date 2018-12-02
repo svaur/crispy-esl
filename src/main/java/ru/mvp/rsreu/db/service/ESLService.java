@@ -9,14 +9,19 @@ import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.db.repository.ESLRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-@Service("esl")
-public class ESLService  {
+@Service
+public class ESLService implements IService<ESL>  {
+
+    private final ESLRepository eslRepository;
 
     @Autowired
-    private ESLRepository eslRepository;
+    public ESLService(ESLRepository eslRepository) {
+        this.eslRepository = eslRepository;
+    }
 
     public Page<ESL> findAll(Pageable pageable) {
         return eslRepository.findAll(pageable);
@@ -48,5 +53,20 @@ public class ESLService  {
         eslRepository.saveAndFlush(esl);
     }
 
+    @Override
+    public HashMap<String, String> fillEntityData(ESL e) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        Item item = e.getItem();
+        hashMap.put("eslCode", e.getEslCode());
+        hashMap.put("eslType", e.getEslType());
+        hashMap.put("itemCode", item == null ? "" : item.getItemCode());
+        hashMap.put("itemName", item == null ? "" : item.getItemName());
+        hashMap.put("price", String.valueOf(item == null ? "" : item.getPromotionPrice()));
+        hashMap.put("lastUpdate", String.valueOf(e.getLastUpdate()));
+        hashMap.put("connectivity", e.getConnectivity());
+        hashMap.put("batteryLevel", String.valueOf(e.getBatteryLevel()));
+        hashMap.put("status", e.getStatus());
+        return hashMap;
+    }
 
 }
