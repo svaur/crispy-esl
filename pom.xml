@@ -6,10 +6,7 @@
 	<groupId>ru.mvp</groupId>
 	<artifactId>rsreu</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-    <modules>
-        <module>gateway</module>
-    </modules>
-    <packaging>pom</packaging>
+	<packaging>jar</packaging>
 
 	<name>rsreu</name>
 	<description>Demo project for Spring Boot</description>
