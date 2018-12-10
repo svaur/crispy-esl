@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>test design</title>
+
+    <!-- CSS  -->
+    <link th:href="@{/css/materialIcon.css}" rel="stylesheet">
+    <link th:href="@{/css/materialize.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/css/mainstyle.css}" type="text/css" rel="stylesheet"/>
+    <!--  Scripts-->
+    <script th:src="@{/js/default/jquery-2.1.1.min.js}"></script>
+    <script th:src="@{/js/default/materialize.js}"></script>
+    <script th:src="@{/js/default/Chart.min.js}"></script>
+    <script th:src="@{/js/init.js}"></script>
+    <script th:src="@{/js/esls.js}"></script>
+    <script th:src="@{/js/associate.js}"></script>
+    <script th:src="@{/js/welcome.js}"></script>
+    <script th:src="@{/js/table.js}"></script>
+    <script th:src="@{/js/items.js}"></script>
+    <script th:src="@{/js/task.js}"></script>
+</head>
+<body>
+<!--<header>-->
+    <!--<nav class="top-nav grey lighten-5">-->
+        <!--<div class="nav-wrapper">-->
+            <!--<div class="row">-->
+                <!--<ul class="left">-->
+                    <!--<li>-->
+                        <!--<a th:href="@{#}" data-target="nav-mobile"-->
+                           <!--class="blue-grey darken-3 top-nav sidenav-trigger full">-->
+                            <!--<i class="material-icons">menu</i>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</nav>-->
+
+
+<a th:href="@{#}" data-target="nav-mobile"
+   class="white top-nav sidenav-trigger full hide-on-large-only">
+    <i class="material-icons">menu</i>
+</a>
+<ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey darken-1 col s1 m2">
+    <li>
+        <div class="user-view">
+
+            <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
+            <a th:href="@{#name}"><span
+                    class="white-text name">менеджер [[${#httpServletRequest.remoteUser}]]</span></a>
+            <a th:href="@{#email}"><span class="white-text email">user@gmail.com</span></a>
+        </div>
+    </li>
+    <li id="welcomeWorkSpace" class="bold"><a class="waves-effect waves-teal">Главная</a></li>
+    <li id="eslsWorkSpace" class="bold"><a class="waves-effect waves-teal">Ценники</a></li>
+    <li id="itemsWorkSpace" class="bold"><a class="waves-effect waves-teal">Товары</a></li>
+    <li id="associateWorkSpace" class="bold"><a class="waves-effect waves-teal">Привязка ценников</a></li>
+    <li id="taskWorkSpace" class="bold"><a class="waves-effect waves-teal">Задачи</a></li>
+    <li>
+        <form th:action="@{/logout}" method="post">
+            <input class="waves-effect waves-light btn-flat" type="submit" value="выйти"/>
+        </form>
+    </li>
+</ul>
+<main class="grey lighten-5">
+    <div class="row">
+        <div id="mainProgress" class="progress" style="visibility: hidden; width: 99%">
+            <div class="indeterminate"></div>
+        </div>
+        <div id="workSpace" class="section scrollspy col s11">
+        </div>
+    </div>
+</main>
+
+<!--<footer class="page-footer teal blue-grey lighten-4">-->
+<!--<div class="footer-copyright blue-grey lighten-3">-->
+<!--<div class="container">-->
+<!--<span>Copyright © 2015 <a class="grey-text text-lighten-4" th:href="@{https://vk.com/svaur}"-->
+<!--target="_blank">test</a> All rights reserved.</span>-->
+<!--<span class="right"> Design and Developed by <a class="grey-text text-lighten-4"-->
+<!--th:href="@{https://vk.com/svaur}">test</a></span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</footer>-->
+</body>
+
+</html>
