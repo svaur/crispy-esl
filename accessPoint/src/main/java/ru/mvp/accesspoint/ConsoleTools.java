@@ -1,10 +1,8 @@
-package ru.mvp.gateway;
+package ru.mvp.accesspoint;
 
 import org.springframework.stereotype.Component;
 
 import java.io.*;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 import static com.sun.javafx.font.PrismFontFactory.isWindows;
 

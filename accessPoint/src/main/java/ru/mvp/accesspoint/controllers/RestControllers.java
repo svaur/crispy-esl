@@ -1,9 +1,9 @@
-package ru.mvp.gateway.controllers;
+package ru.mvp.accesspoint.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.mvp.gateway.ConsoleTools;
+import ru.mvp.accesspoint.ConsoleTools;
 
 
 @RestController
