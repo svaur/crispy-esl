@@ -22,7 +22,7 @@ public class BaseSaleTemplate {
      */
     public BufferedImage drawEsl(EslInfoTemplate eslInfoTemplate, int width, int height){
         BufferedImage image = new BufferedImage(
-                width, height, BufferedImage.TYPE_INT_ARGB);
+                width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = image.createGraphics();
         g2d.setColor(Color.WHITE);
         g2d.fillRect(0, 0, width, height);

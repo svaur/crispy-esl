@@ -149,12 +149,14 @@ public class RestApiController {
         BufferedImage image = baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(image, "png", baos);
-
-        String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
-        String imageString = "data:image/png;base64," + data;
-        Gson gson = new Gson();
-        return gson.toJson(imageString);
+        ImageIO.getWriterFormatNames();
+        if (ImageIO.write(image, "BMP", baos)){
+            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
+            String imageString = "data:image/bmp;base64," + data;
+            Gson gson = new Gson();
+            return gson.toJson(imageString);
+        }
+        return "error";//todo сделать нормальный возврат ошибок на фронт
     }
     private HashMap<String, String> fillEslData(ESL e){
         HashMap<String, String> hashMap = new HashMap<>();
