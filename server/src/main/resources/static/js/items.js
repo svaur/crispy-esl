@@ -26,7 +26,7 @@ function displayItemData(url, headers) {
                     "<td>" + tableData[i].price + "</td>" +
                     "<td>" + tableData[i].lastUpdate + "</td>" +
                     "<td>" + tableData[i].associate + "</td>" +
-                    "<td>" + tableData[i].action + "</td>" +
+                    "<td> </td>" +
                 "</tr>");
         }
         $('.dropdown-trigger').dropdown();

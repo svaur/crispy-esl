@@ -2,7 +2,6 @@ package ru.mvp.rsreu.integration.file.parsers.csv;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.mvp.rsreu.db.entity.Item;
@@ -19,9 +18,9 @@ import java.util.stream.StreamSupport;
 /**
  * Created by Art on 15.11.2018.
  */
-public class CsvParser implements IParser {
+public class ItemCsvParser implements IParser {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CsvParser.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(ItemCsvParser.class);
 
     @Override
     public List<Item> parse(Path data) {

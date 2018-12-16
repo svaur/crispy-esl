@@ -10,6 +10,11 @@ import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.db.util.HibernateUtil;
 
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -80,6 +85,7 @@ public class ESLService implements ESLDao {
         boolean result;
         try {
             esl.setItem(item);
+            item.setEsl(esl);
             session.saveOrUpdate(esl);
         } catch (Exception e) {
             LOGGER.error("Catch error: ", e);
@@ -101,13 +107,47 @@ public class ESLService implements ESLDao {
         while (iterator.hasNext() && i < showSize) {
             ESL tempEsl = iterator.next();
             Item item = tempEsl.getItem();
-            if (tempEsl.getEslCode().contains(value) || tempEsl.getEslType().toLowerCase().contains(value.toLowerCase()) ||
-                    item.getItemCode().contains(value) ||
-                    item.getItemName().toLowerCase().contains(value.toLowerCase())) {
+            if (item!=null&& (item.getItemCode().contains(value) ||
+                    item.getItemName().toLowerCase().contains(value.toLowerCase()))){
+                resultList.add(tempEsl);
+                i++;
+            }
+            if (tempEsl.getEslCode().contains(value) || tempEsl.getEslType().toLowerCase().contains(value.toLowerCase())) {
                 resultList.add(tempEsl);
                 i++;
             }
         }
         return resultList;
+    }
+
+    @Override
+    public void insertOrUpdateEsls(List<ESL> eslList) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        try {
+            eslList.forEach(e -> {
+                        //проверяем наличие идентичной по ключевым полям записи, если есть то не апдейтим
+                        CriteriaBuilder builder = session.getCriteriaBuilder();
+                        CriteriaQuery<ESL> query = builder.createQuery(ESL.class);
+                        Root<ESL> acc = query.from(ESL.class);
+                        Predicate cond = builder.and(
+                                builder.equal(acc.get("eslCode"), e.getEslCode()),
+                                builder.equal(acc.get("eslType"), e.getEslType()),
+                                builder.equal(acc.get("firmWare"), e.getFirmWare())
+                        );
+                        query.where(cond);
+                        TypedQuery<ESL> q = session.createQuery(query);
+                        List<ESL> result = q.getResultList();
+                        if (result.size() == 0) {
+                            session.saveOrUpdate(e);
+                        }
+                    });
+        } catch (Exception e) {
+            LOGGER.error("Catch error: ", e);
+            session.getTransaction().rollback();
+        } finally {
+            session.getTransaction().commit();
+            session.close();
+        }
     }
 }

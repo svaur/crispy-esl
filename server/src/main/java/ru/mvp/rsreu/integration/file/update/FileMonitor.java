@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import ru.mvp.rsreu.db.dao.ESLDao;
 import ru.mvp.rsreu.db.dao.ItemDao;
-import ru.mvp.rsreu.integration.file.parsers.IParser;
+import ru.mvp.rsreu.db.entity.ESL;
+import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.integration.file.parsers.ParserFactory;
+import ru.mvp.rsreu.integration.file.parsers.TypeEntity;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,33 +33,49 @@ public class FileMonitor {
     //разумное время для перезапуска полера
     private final static long CHECK_INTERVAL = 5000;
     //todo Временный хардкод для показа
-    private String directory = "src/main/resources/tempDir";
+    private String itemDirectory = "src/main/resources/itemDir";
+    private String eslDirectory = "src/main/resources/eslDir";
     private Map<String, FileInfo> fileInfoMap = new HashMap<>();
     @Autowired
     ItemDao itemService;
+    @Autowired
+    ESLDao eslService;
     @Autowired
     ParserFactory factory;
 
 
     @Scheduled(fixedDelay = CHECK_INTERVAL)
-    public void task() throws InterruptedException {
+    public void task() {
         LOGGER.debug("Start FileMonitor task. FileInfoMap: {}", fileInfoMap);
         Set<String> currentFileSet = new HashSet<>();
-        try (DirectoryStream<Path> ds = Files.newDirectoryStream(Paths.get(directory))) {
+        try (DirectoryStream<Path> ds = Files.newDirectoryStream(Paths.get(itemDirectory))) {
             StreamSupport.stream(ds.spliterator(), false)
                     .filter(e -> {
                         File file = e.toFile();
                         currentFileSet.add(file.getName());
                         return checkChangeFile(file);})
                     .forEach(e -> {
-                        IParser parser = factory.getParser(e);
-                        itemService.insertOrUpdateItems(parser.parse(e));
+                        List<Item> parse = (List<Item>)factory.getParser(e, TypeEntity.ITEM).parse(e);
+                        itemService.insertOrUpdateItems(parse);
                     });
-            //удаляем из мапы старые файлы(нужно если файлы из папки будут удаляться)
-            cleanOldEntry(currentFileSet);
         } catch (IOException e) {
             LOGGER.error("Catch error: ", e);
         }
+        try (DirectoryStream<Path> ds = Files.newDirectoryStream(Paths.get(eslDirectory))) {
+            StreamSupport.stream(ds.spliterator(), false)
+                    .filter(e -> {
+                        File file = e.toFile();
+                        currentFileSet.add(file.getName());
+                        return checkChangeFile(file);})
+                    .forEach(e -> {
+                        List<ESL> parse = (List<ESL>)factory.getParser(e, TypeEntity.ESL).parse(e);
+                        eslService.insertOrUpdateEsls(parse);
+                    });
+        } catch (IOException e) {
+            LOGGER.error("Catch error: ", e);
+        }
+        //удаляем из мапы старые файлы(нужно если файлы из папки будут удаляться)
+        cleanOldEntry(currentFileSet);
         LOGGER.debug("End FileMonitor task. FileInfoMap: {}", fileInfoMap);
     }
 

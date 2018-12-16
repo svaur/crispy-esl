@@ -1,4 +1,5 @@
-/target/
+/server/target/
+/accessPoint/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###

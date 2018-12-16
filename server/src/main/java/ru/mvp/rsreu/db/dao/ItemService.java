@@ -5,6 +5,7 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.db.util.HibernateUtil;
 
@@ -68,6 +69,11 @@ public class ItemService implements ItemDao {
                 resultList.add(tempItem);
                 i++;
             }
+            ESL esl = tempItem.getEsl();
+            if (esl!=null&&esl.getEslCode().contains(value)){
+                resultList.add(tempItem);
+                i++;
+            }
         }
         return resultList;
     }
@@ -76,8 +82,7 @@ public class ItemService implements ItemDao {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         try {
-            itemList.stream()
-                    .forEach(e -> {
+            itemList.forEach(e -> {
                         //проверяем наличие идентичной по ключевым полям записи, если есть то не апдейтим
                         CriteriaBuilder builder = session.getCriteriaBuilder();
                         CriteriaQuery<Item> query = builder.createQuery(Item.class);
