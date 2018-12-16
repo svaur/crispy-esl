@@ -5,6 +5,7 @@ import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import ru.mvp.rsreu.db.entity.ESL;
 import ru.mvp.rsreu.db.entity.Item;
 import ru.mvp.rsreu.db.util.HibernateUtil;
 
@@ -65,6 +66,11 @@ public class ItemService implements ItemDao {
         while (iterator.hasNext() && i < showSize) {
             Item tempItem = iterator.next();
             if (tempItem.getItemCode().contains(value) || tempItem.getItemName().toLowerCase().contains(value.toLowerCase())) {
+                resultList.add(tempItem);
+                i++;
+            }
+            ESL esl = tempItem.getEsl();
+            if (esl!=null&&esl.getEslCode().contains(value)){
                 resultList.add(tempItem);
                 i++;
             }

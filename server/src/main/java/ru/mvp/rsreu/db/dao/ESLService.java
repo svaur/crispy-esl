@@ -85,6 +85,7 @@ public class ESLService implements ESLDao {
         boolean result;
         try {
             esl.setItem(item);
+            item.setEsl(esl);
             session.saveOrUpdate(esl);
         } catch (Exception e) {
             LOGGER.error("Catch error: ", e);
@@ -106,9 +107,12 @@ public class ESLService implements ESLDao {
         while (iterator.hasNext() && i < showSize) {
             ESL tempEsl = iterator.next();
             Item item = tempEsl.getItem();
-            if (tempEsl.getEslCode().contains(value) || tempEsl.getEslType().toLowerCase().contains(value.toLowerCase()) ||
-                    item.getItemCode().contains(value) ||
-                    item.getItemName().toLowerCase().contains(value.toLowerCase())) {
+            if (item!=null&& (item.getItemCode().contains(value) ||
+                    item.getItemName().toLowerCase().contains(value.toLowerCase()))){
+                resultList.add(tempEsl);
+                i++;
+            }
+            if (tempEsl.getEslCode().contains(value) || tempEsl.getEslType().toLowerCase().contains(value.toLowerCase())) {
                 resultList.add(tempEsl);
                 i++;
             }

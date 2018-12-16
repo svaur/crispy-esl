@@ -53,6 +53,10 @@ public class ItemApiController {
         hashMap.put("itemName", e.getItemName());
         hashMap.put("price", String.valueOf(e.getPromotionPrice()));
         hashMap.put("lastUpdate", String.valueOf(e.getLastUpdated()));
+        if (e.getEsl()!=null)
+            hashMap.put("associate", e.getEsl().getEslCode());
+        else
+            hashMap.put("associate", "нет");
         hashMap.put("active", "true");
         return hashMap;
     }
