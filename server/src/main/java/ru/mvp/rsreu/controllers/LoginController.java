@@ -1,4 +1,4 @@
-package ru.mvp.rsreu.сontrollers;
+package ru.mvp.rsreu.controllers;
 
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;

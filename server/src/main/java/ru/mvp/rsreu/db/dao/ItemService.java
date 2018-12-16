@@ -76,8 +76,7 @@ public class ItemService implements ItemDao {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         try {
-            itemList.stream()
-                    .forEach(e -> {
+            itemList.forEach(e -> {
                         //проверяем наличие идентичной по ключевым полям записи, если есть то не апдейтим
                         CriteriaBuilder builder = session.getCriteriaBuilder();
                         CriteriaQuery<Item> query = builder.createQuery(Item.class);

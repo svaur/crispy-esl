@@ -1,7 +1,5 @@
 package ru.mvp.rsreu.integration.file.parsers;
 
-import ru.mvp.rsreu.db.entity.Item;
-
 import java.nio.file.Path;
 import java.util.List;
 
@@ -10,5 +8,5 @@ import java.util.List;
  */
 public interface IParser {
     //при необходимости хаюзать дженерики, пока нет смысла городить
-    List<Item> parse(Path data);
+    List<?> parse(Path data);
 }

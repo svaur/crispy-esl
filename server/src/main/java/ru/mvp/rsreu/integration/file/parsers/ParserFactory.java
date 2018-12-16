@@ -4,7 +4,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import ru.mvp.rsreu.integration.file.parsers.csv.CsvParser;
+import ru.mvp.rsreu.integration.file.parsers.csv.EslCsvParser;
+import ru.mvp.rsreu.integration.file.parsers.csv.ItemCsvParser;
 import ru.mvp.rsreu.integration.file.parsers.excel.ExcelParser;
 
 import java.io.File;
@@ -20,15 +21,22 @@ public class ParserFactory {
     private final static Logger LOGGER = LoggerFactory.getLogger(ParserFactory.class);
     private IParser parser;
 
-    public IParser getParser(Path data){
+    public IParser getParser(Path data, TypeEntity typeEntity){
         File f = data.toFile();
         String extension = FilenameUtils.getExtension(f.getName());
-        if ("xlsx".equalsIgnoreCase(extension) || "xls".equalsIgnoreCase(extension)) {
-            parser = new ExcelParser();
-            LOGGER.debug("Excel parser changed");
-        } else {
-            parser = new CsvParser();
+        if ("csv".equalsIgnoreCase(extension)) {
+            switch (typeEntity) {
+                case ESL:
+                    parser = new EslCsvParser();
+                    break;
+                case ITEM:
+                    parser = new ItemCsvParser();
+                    break;
+            }
             LOGGER.debug("CSV parser changed");
+        } else {
+            //parser = new ExcelParser();
+            LOGGER.debug("ignore");
         }
         return parser;
     }

@@ -17,4 +17,5 @@ public interface ESLDao {
     ESL searchByESLCode(String eslCode);
     boolean unAssignItem(ESL esl);
     boolean assignItem(ESL esl, Item item);
+    void insertOrUpdateEsls(List<ESL> eslList);
 }
