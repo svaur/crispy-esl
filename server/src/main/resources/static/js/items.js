@@ -1,5 +1,7 @@
 function getItemsTemplate() {
-    return "<span class='flow-text'>Товары</span>" + getTableTemplate('item')
+    return "<span class='flow-text'>Товары</span>" +
+        "<div class=\"divider\"></div>" +
+        getTableTemplate('item')
 }
 function displayItemData(url, headers) {
     var display = document.getElementById("mainProgress");

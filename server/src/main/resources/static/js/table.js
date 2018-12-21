@@ -15,7 +15,7 @@ function getTableTemplate(suffixForTable) {
     if (suffixForTable==="task"){
         resultTableHtml+=
             "<div class=\"input-field col s1 offset-s3\">" +
-                "<a id='addTask' class=\"btn\" href=\"#\">Добавить</a>" +
+                "<a id='addTask' class=\"btn\" href=\"#\">+</a>" +
             "</div>";
     }else {
         resultTableHtml+="<div class=\"input-field col s1 offset-s3\">" +
@@ -34,6 +34,16 @@ function getTableTemplate(suffixForTable) {
     }
 
     resultTableHtml+="</div>" +
-        "<table class=\"centered striped z-depth-2\" id=\"" + suffixForTable + "Table\"></table></div>";
+        "<table class=\"centered striped\" id=\"" + suffixForTable + "Table\"></table>" +
+        "</div>"+
+        "  <ul class=\"pagination col offset-s8\">\n" +
+        "    <li class=\"waves-effect\"><a href=\"#!\"><i class=\"material-icons\">chevron_left</i></a></li>\n" +
+        "    <li class=\"active\"><a href=\"#!\">1</a></li>\n" +
+        "    <li class=\"waves-effect\"><a href=\"#!\">2</a></li>\n" +
+        "    <li class=\"waves-effect\"><a href=\"#!\">3</a></li>\n" +
+        "    <li class=\"waves-effect\"><a href=\"#!\">4</a></li>\n" +
+        "    <li class=\"waves-effect\"><a href=\"#!\">5</a></li>\n" +
+        "    <li class=\"waves-effect\"><a href=\"#!\"><i class=\"material-icons\">chevron_right</i></a></li>\n" +
+        "  </ul>"
     return resultTableHtml;
 }

@@ -1,6 +1,18 @@
 table th, table td {
     padding: 10px;
 }
+#workSpace {
+    width: 98%;
+    min-height: 80vh;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #4db6ac; //background color of buttons. Blue by default
+border-color: #4db6ac; // color or borders. Also blue by default
+color: #4db6ac; // text color of buttons which is white by default
+cursor:pointer;
+    z-index:2;
+}
 
 main, footer {
     padding-left: 200px;

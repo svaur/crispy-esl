@@ -1,5 +1,7 @@
 function getEslsTemplate() {
-    return "<span class='flow-text'>Ценники</span>" + getTableTemplate('esl')
+    return "<span class='flow-text'>Ценники</span>" +
+        "<div class=\"divider\"></div>" +
+        getTableTemplate('esl')
 }
 function displayEslData(url, headers) {
     var display = document.getElementById("mainProgress");

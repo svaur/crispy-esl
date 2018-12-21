@@ -53,14 +53,16 @@
             <a th:href="@{#email}"><span class="white-text email">user@gmail.com</span></a>
         </div>
     </li>
-    <li id="welcomeWorkSpace" class="bold"><a class="waves-effect waves-teal">Главная</a></li>
-    <li id="eslsWorkSpace" class="bold"><a class="waves-effect waves-teal">Ценники</a></li>
-    <li id="itemsWorkSpace" class="bold"><a class="waves-effect waves-teal">Товары</a></li>
-    <li id="associateWorkSpace" class="bold"><a class="waves-effect waves-teal">Привязка ценников</a></li>
-    <li id="taskWorkSpace" class="bold"><a class="waves-effect waves-teal">Задачи</a></li>
+    <li id="welcomeWorkSpace" class="bold"><a class="waves-effect waves-teal white-text">Главная</a></li>
+    <li id="eslsWorkSpace" class="bold"><a class="waves-effect waves-teal white-text">Ценники</a></li>
+    <li id="itemsWorkSpace" class="bold"><a class="waves-effect waves-teal white-text">Товары</a></li>
+    <li id="associateWorkSpace" class="bold"><a class="waves-effect waves-teal white-text">Привязка ценников</a></li>
+    <li id="taskWorkSpace" class="bold"><a class="waves-effect waves-teal white-text">Задачи</a></li>
     <li>
-        <form th:action="@{/logout}" method="post">
-            <input class="waves-effect waves-light btn-flat" type="submit" value="выйти"/>
+        <a class="waves-effect waves-teal white-text" href="javascript: document.logoutForm.submit()" role="menuitem">Выйти</a>
+
+        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+            <input hidden type="submit" value="Sign Out"/>
         </form>
     </li>
 </ul>
@@ -69,7 +71,7 @@
         <div id="mainProgress" class="progress" style="visibility: hidden; width: 99%">
             <div class="indeterminate"></div>
         </div>
-        <div id="workSpace" class="section scrollspy col s11">
+        <div id="workSpace" class="section scrollspy col s11 white z-depth-1">
         </div>
     </div>
 </main>
