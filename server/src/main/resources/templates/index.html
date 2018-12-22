@@ -45,7 +45,7 @@
    class="white top-nav sidenav-trigger full hide-on-large-only">
     <i class="material-icons">menu</i>
 </a>
-<ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey col s1 m2">
+<ul id="nav-mobile" class="sidenav sidenav-fixed grey darken-2 col s1 m2">
     <li>
         <div class="user-view">
             <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
@@ -53,39 +53,52 @@
                     class="white-text name">менеджер [[${#httpServletRequest.remoteUser}]]</span></a>
             <a th:href="@{#email}"><span class="white-text email">user@gmail.com</span></a>
         </div>
+        <div class="divider"></div>
     </li>
-    <li id="welcomeWorkSpace" class="blue-grey darken-1 bold active">
+    <li id="welcomeWorkSpace" class="bold active">
         <i class="card-image material-icons md-light">home</i>
         <span class="white-text">Главная</span>
+        <div class="divider"></div>
     </li>
-    <li id="eslsWorkSpace" class="blue-grey darken-1 bold active">
+    <li id="eslsWorkSpace" class="bold active">
         <i class="card-image material-icons md-light">style</i>
         <span class="white-text">Ценники</span>
+        <div class="divider"></div>
     </li>
-    <li id="itemsWorkSpace" class="blue-grey darken-1 bold active">
+    <li id="itemsWorkSpace" class="bold active">
         <i class="card-image material-icons md-light">content_copy</i>
             <span class="white-text">Товары</span>
+        <div class="divider"></div>
     </li>
-    <li id="associateWorkSpace" class="blue-grey darken-1 bold active">
+    <li id="associateWorkSpace" class="bold active">
         <i class="card-image material-icons md-light">swap_horiz</i>
             <span class="white-text">Привязка</span>
+        <div class="divider"></div>
     </li>
-    <li id="logWorkSpace" class="blue-grey darken-1 bold active">
+    <li id="taskWorkSpace" class="bold active">
+        <i class="card-image material-icons md-light">receipt</i>
+            <span class="white-text">Задачи</span>
+        <div class="divider"></div>
+    </li>
+    <li id="logWorkSpace" class="bold active">
         <i class="card-image material-icons md-light">subject</i>
             <span class="white-text">Логи</span>
+        <div class="divider"></div>
     </li>
-    <li id="reportWorkSpace" class="blue-grey darken-1 bold active">
+    <li id="reportWorkSpace" class="bold active">
         <i class="card-image material-icons md-light">insert_chart</i>
             <span class="white-text">Отчеты</span>
+        <div class="divider"></div>
     </li>
-    <li id="taskWorkSpace" class="blue-grey bold active">
+    <li class="bold active">
         <a class="waves-effect waves-teal white-text" href="javascript: document.logoutForm.submit()" role="menuitem">Выйти</a>
         <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
             <input hidden type="submit" value="Sign Out"/>
         </form>
+        <div class="divider"></div>
     </li>
 </ul>
-<main class="grey lighten-5">
+<main class="grey lighten-3">
     <div class="row">
         <div id="mainProgress" class="progress" style="visibility: hidden; width: 99%">
             <div class="indeterminate"></div>

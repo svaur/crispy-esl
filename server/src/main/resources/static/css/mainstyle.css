@@ -3,13 +3,13 @@ table th, table td {
 }
 #workSpace {
     width: 98%;
-    min-height: 80vh;
+    min-height: 90vh;
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-    background-color: #4db6ac; //background color of buttons. Blue by default
-border-color: #4db6ac; // color or borders. Also blue by default
-color: #4db6ac; // text color of buttons which is white by default
+    background-color: #546e7a; //background color of buttons. Blue by default
+border-color: #546e7a; // color or borders. Also blue by default
+color: #546e7a; // text color of buttons which is white by default
 cursor:pointer;
     z-index:2;
 }
@@ -36,7 +36,7 @@ main, footer {
     margin-right: 10px;
 }
 #title{
-    background-color: #2bbbad;
+    background-color: #546e7a;
     color: white;
     padding: 8px;
     margin-top: 0px
@@ -150,4 +150,19 @@ main {
 }
 .mainContainer{
     padding:10px;
+}
+.btn{
+    background-color: #546e7a !important
+}
+.btn-small{
+    background-color: #546e7a !important
+}
+.btn.btn-small:hover {
+    background-color: #90a4ae; !important;
+}
+.switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #546e7a !important;
+}
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #90a4ae !important;
 }

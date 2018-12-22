@@ -20,7 +20,7 @@ function getTableTemplate(suffixForTable) {
     }else {
         resultTableHtml+="<div class=\"input-field col s1 offset-s3\">" +
             "<a class=\"dropdown-trigger btn\" href=\"#\" data-target=\"upload\">" +
-                "<i class=\"tiny material-icons\">file_upload</i>" +
+                "<i class=\"white-text tiny material-icons\">file_upload</i>" +
             "</a>" +
             "<ul id=\"upload\" class=\"dropdown-content\">" +
             "<li>" +
@@ -36,13 +36,13 @@ function getTableTemplate(suffixForTable) {
     resultTableHtml+="</div>" +
         "<table class=\"centered striped\" id=\"" + suffixForTable + "Table\"></table>" +
         "</div>"+
-        "  <ul class=\"pagination col offset-s9\">\n" +
+        "  <ul class=\"pagination col offset-s8\">\n" +
         "    <li class=\"waves-effect\"><a href=\"#!\"><i class=\"material-icons\">chevron_left</i></a></li>\n" +
         "    <li class=\"active\"><a href=\"#!\">1</a></li>\n" +
         "    <li class=\"waves-effect\"><a href=\"#!\">2</a></li>\n" +
         "    <li class=\"waves-effect\"><a href=\"#!\">3</a></li>\n" +
         "    <li class=\"waves-effect\"><a href=\"#!\">4</a></li>\n" +
         "    <li class=\"waves-effect\"><a href=\"#!\"><i class=\"material-icons\">chevron_right</i></a></li>\n" +
-        "  </ul>"
+        "  </ul>";
     return resultTableHtml;
 }

@@ -20,43 +20,43 @@ function getTasksTemplate() {
         "               <div id=\"daysCheckboxes\">" +
         "                <p>" +
         "                  <label>" +
-        "                    <input id='mon' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <input id='mon' type=\"checkbox\"/>" +
         "                    <span>Понедельник</span>" +
         "                  </label>" +
         "                </p>" +
         "                <p>" +
         "                  <label>" +
-        "                    <input id='tue' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <input id='tue' type=\"checkbox\"/>" +
         "                    <span>Вторник</span>" +
         "                  </label>" +
         "                </p>" +
         "                <p>" +
         "                  <label>" +
-        "                    <input id='wed' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <input id='wed' type=\"checkbox\" />" +
         "                    <span>Среда</span>" +
         "                  </label>" +
         "                </p>" +
         "                <p>" +
         "                  <label>" +
-        "                    <input id='thu' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <input id='thu' type=\"checkbox\" />" +
         "                    <span>Четверг</span>" +
         "                  </label>" +
         "                </p>" +
         "                <p>" +
         "                  <label>" +
-        "                    <input id='fri' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <input id='fri' type=\"checkbox\" />" +
         "                    <span>Пятница</span>" +
         "                  </label>" +
         "                </p>" +
         "                <p>" +
         "                  <label>" +
-        "                    <input id='sat' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <input id='sat' type=\"checkbox\" />" +
         "                    <span>Суббота</span>" +
         "                  </label>" +
         "                </p>" +
         "                <p>" +
         "                  <label>" +
-        "                    <input id='sun' type=\"checkbox\" class=\"filled-in\"/>" +
+        "                    <input id='sun' type=\"checkbox\" />" +
         "                    <span>Воскресенье</span>" +
         "                  </label>" +
         "                </p>" +
@@ -79,8 +79,8 @@ function getTasksTemplate() {
         "                  <label for=\"timeStart\">время срабатывания</label>" +
         "              </div>" +
         "           </form>" +
-        "           <a class=\"waves-effect waves-light btn-small\" onclick=\"hideDiv('#addTaskWindow')\"><i class=\"material-icons left\">cancel</i>отменить</a>"+
-        "           <a class=\"waves-effect waves-light btn-small\" onclick='saveTaskData()'><i class=\"material-icons left\">check</i>сохранить</a>"+
+        "           <a class=\"waves-effect waves-light btn-small\" onclick=\"hideDiv('#addTaskWindow')\"><i class=\"white-text material-icons left\">cancel</i>отменить</a>"+
+        "           <a class=\"waves-effect waves-light btn-small\" onclick='saveTaskData()'><i class=\"white-text material-icons left\">check</i>сохранить</a>"+
         "           </div>"+
         "       </div>"+
         "   </div>"+

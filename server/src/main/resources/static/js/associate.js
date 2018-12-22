@@ -3,7 +3,7 @@ function getAssociateTemplate() {
         "<div class=\"divider\"></div>"+
         "   <div class=\"row\">"+
         "       <div class=\"col s6\">" +
-        "           <ul id=\"tabs-swipe-demo\" class=\"tabs tabs-fixed-width grey lighten-5\">" +
+        "           <ul id=\"tabs-swipe-demo\" class=\"tabs tabs-fixed-width\">" +
         "              <li class=\"tab col s3\"><a class=\"active\" href=\"#test-swipe-1\">Привязка</a></li>" +
         "              <li class=\"tab col s3\"><a href=\"#test-swipe-2\">Конфигурация</a></li>" +
         "           </ul>" +

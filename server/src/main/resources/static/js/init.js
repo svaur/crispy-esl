@@ -39,9 +39,9 @@ function displayWorkSpace(menu, url) {
         case "#welcomeWorkSpace":
             $('#workSpace').html('')
                 .append(getWelcomeTemplate());
-            testChart("myChart1", 'Статистика обновления ценников');
-            testChart("myChart2", 'Статистика обновления товаров');
-            testChart("myChart3", 'Статистика привязок');
+            testChart("myChart1", 'Статистика обновления ценников', [0, 2, 5, 3]);
+            testChart("myChart2", 'Статистика обновления товаров', [0, 2, 2, 0]);
+            testChart("myChart3", 'Статистика привязок',[0, 2, 50, 3]);
             break;
         case "#eslsWorkSpace":
             $('#workSpace').html('')
@@ -97,11 +97,13 @@ function displayWorkSpace(menu, url) {
 }
 
 function setActive(nameClassToActive) {
-    // $('#welcomeWorkSpace').removeClass("active");
-    // $('#eslsWorkSpace').removeClass("active");
-    // $('#itemsWorkSpace').removeClass("active");
-    // $('#associateWorkSpace').removeClass("active");
-    // $('#taskWorkSpace').removeClass("active");
+    $('#welcomeWorkSpace').removeClass("active");
+    $('#eslsWorkSpace').removeClass("active");
+    $('#itemsWorkSpace').removeClass("active");
+    $('#associateWorkSpace').removeClass("active");
+    $('#taskWorkSpace').removeClass("active");
+    $('#logWorkSpace').removeClass("active");
+    $('#reportWorkSpace').removeClass("active");
     $(nameClassToActive).addClass("active");
 }
 function showImage(code) {
