@@ -43,24 +43,33 @@
    class="white top-nav sidenav-trigger full hide-on-large-only">
     <i class="material-icons">menu</i>
 </a>
-<ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey darken-1 col s1 m2">
+<ul id="nav-mobile" class="sidenav sidenav-fixed blue-grey col s1 m2">
     <li>
         <div class="user-view">
-
             <a th:href="@{#user}"><img class="circle" th:src="@{/images/user.jpg}"></a>
             <a th:href="@{#name}"><span
                     class="white-text name">менеджер [[${#httpServletRequest.remoteUser}]]</span></a>
             <a th:href="@{#email}"><span class="white-text email">user@gmail.com</span></a>
         </div>
     </li>
-    <li id="welcomeWorkSpace" class="bold"><a class="waves-effect waves-teal white-text">Главная</a></li>
-    <li id="eslsWorkSpace" class="bold"><a class="waves-effect waves-teal white-text">Ценники</a></li>
-    <li id="itemsWorkSpace" class="bold"><a class="waves-effect waves-teal white-text">Товары</a></li>
-    <li id="associateWorkSpace" class="bold"><a class="waves-effect waves-teal white-text">Привязка ценников</a></li>
-    <li id="taskWorkSpace" class="bold"><a class="waves-effect waves-teal white-text">Задачи</a></li>
-    <li>
+    <li id="welcomeWorkSpace" class="blue-grey darken-1 bold active">
+        <i class="card-image material-icons md-light">home</i>
+        <span class="white-text">Главная</span>
+    </li>
+    <li id="eslsWorkSpace" class="blue-grey darken-1 bold active">
+        <i class="card-image material-icons md-light">style</i>
+        <span class="white-text">Ценники</span>
+    </li>
+    <li id="itemsWorkSpace" class="blue-grey darken-1 bold active">
+        <i class="card-image material-icons md-light">content_copy</i>
+            <span class="white-text">Товары</span>
+    </li>
+    <li id="associateWorkSpace" class="blue-grey darken-1 bold active">
+        <i class="card-image material-icons md-light">swap_horiz</i>
+            <span class="white-text">Привязка</span>
+    </li>
+    <li id="taskWorkSpace" class="blue-grey darken-1 bold active">
         <a class="waves-effect waves-teal white-text" href="javascript: document.logoutForm.submit()" role="menuitem">Выйти</a>
-
         <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
             <input hidden type="submit" value="Sign Out"/>
         </form>

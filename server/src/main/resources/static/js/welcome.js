@@ -1,5 +1,5 @@
 function getWelcomeTemplate() {
-    return "<span class='flow-text'>Добро пожаловать</span>" +
+    return "<h2 class='flow-text'>Добро пожаловать</h2>" +
         "<div class=\"divider\"></div>"+
         "<div class=\"row\">"+
         "   <div class=\"col s6 m4 l3\">" +

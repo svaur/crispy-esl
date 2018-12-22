@@ -1,5 +1,5 @@
 function getEslsTemplate() {
-    return "<span class='flow-text'>Ценники</span>" +
+    return "<h2 class='flow-text'>Ценники</h2>" +
         "<div class=\"divider\"></div>" +
         getTableTemplate('esl')
 }

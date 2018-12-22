@@ -118,12 +118,17 @@ main {
     url(iconfont/MaterialIcons-Regular.woff) format('woff'),
     url(iconfont/MaterialIcons-Regular.ttf) format('truetype');
 }
-
+/*html {*/
+    /*font-family: 'Inconsolata', Monaco, Consolas, 'Andale Mono', monospace;*/
+/*}*/
+.material-icons.md-light {
+    padding-left: 25px;
+    color: rgba(255, 255, 255, 1); }
 .material-icons {
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;  /* Preferred icon size */
+    font-size: 16px;  /* Preferred icon size */
     display: inline-block;
     line-height: 1;
     text-transform: none;

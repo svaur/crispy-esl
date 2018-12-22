@@ -1,5 +1,5 @@
 function getTasksTemplate() {
-    return "<span class='flow-text'>Планировщик задач</span>"+
+    return "<h2 class='flow-text'>Планировщик задач</h2>"+
         "<div class=\"divider\"></div>" +
         "<div id=\"addTaskWindow\">"+
         "   <div class=\"row\">"+

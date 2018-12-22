@@ -81,11 +81,11 @@ function displayWorkSpace(menu, url) {
 }
 
 function setActive(nameClassToActive) {
-    $('#welcomeWorkSpace').removeClass("active");
-    $('#eslsWorkSpace').removeClass("active");
-    $('#itemsWorkSpace').removeClass("active");
-    $('#associateWorkSpace').removeClass("active");
-    $('#taskWorkSpace').removeClass("active");
+    // $('#welcomeWorkSpace').removeClass("active");
+    // $('#eslsWorkSpace').removeClass("active");
+    // $('#itemsWorkSpace').removeClass("active");
+    // $('#associateWorkSpace').removeClass("active");
+    // $('#taskWorkSpace').removeClass("active");
     $(nameClassToActive).addClass("active");
 }
 function showImage(code) {

@@ -1,5 +1,5 @@
 function getAssociateTemplate() {
-    return "<span class='flow-text'>Привязка ценников</span>" +
+    return "<h2 class='flow-text'>Привязка ценников</h2>" +
         "<div class=\"divider\"></div>"+
         "   <div class=\"row\">"+
         "       <div class=\"col s6\">" +

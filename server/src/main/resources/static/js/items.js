@@ -1,5 +1,5 @@
 function getItemsTemplate() {
-    return "<span class='flow-text'>Товары</span>" +
+    return "<h2 class='flow-text'>Товары</h2>" +
         "<div class=\"divider\"></div>" +
         getTableTemplate('item')
 }
