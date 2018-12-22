@@ -23,6 +23,14 @@ $(document).ready(function () {
         setActive('#taskWorkSpace');
         displayWorkSpace('#taskWorkSpace', '/api/getTaskTableData');
     });
+    $('#logWorkSpace').click(function () {
+        setActive('#logWorkSpace');
+        displayWorkSpace('#logWorkSpace', ' ');
+    });
+    $('#reportWorkSpace').click(function () {
+        setActive('#reportWorkSpace');
+        displayWorkSpace('#reportWorkSpace', ' ');
+    });
 });
 
 function displayWorkSpace(menu, url) {
@@ -73,6 +81,14 @@ function displayWorkSpace(menu, url) {
                     console.log("1211111")
                 }
             });
+            break;
+        case "#logWorkSpace":
+            $('#workSpace').html('')
+                .append(getLogTemplate());
+            break;
+        case "#reportWorkSpace":
+            $('#workSpace').html('')
+                .append(getReportTemplate());
             break;
         default:
             alert("пока не готово");

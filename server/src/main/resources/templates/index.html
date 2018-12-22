@@ -20,6 +20,8 @@
     <script th:src="@{/js/table.js}"></script>
     <script th:src="@{/js/items.js}"></script>
     <script th:src="@{/js/task.js}"></script>
+    <script th:src="@{/js/log.js}"></script>
+    <script th:src="@{/js/report.js}"></script>
 </head>
 <body>
 <!--<header>-->
@@ -67,6 +69,14 @@
     <li id="associateWorkSpace" class="blue-grey darken-1 bold active">
         <i class="card-image material-icons md-light">swap_horiz</i>
             <span class="white-text">Привязка</span>
+    </li>
+    <li id="logWorkSpace" class="blue-grey darken-1 bold active">
+        <i class="card-image material-icons md-light">subject</i>
+            <span class="white-text">Логи</span>
+    </li>
+    <li id="reportWorkSpace" class="blue-grey darken-1 bold active">
+        <i class="card-image material-icons md-light">insert_chart</i>
+            <span class="white-text">Отчеты</span>
     </li>
     <li id="taskWorkSpace" class="blue-grey bold active">
         <a class="waves-effect waves-teal white-text" href="javascript: document.logoutForm.submit()" role="menuitem">Выйти</a>
