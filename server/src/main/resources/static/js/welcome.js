@@ -3,28 +3,27 @@ function getWelcomeTemplate() {
         "<div class=\"divider\"></div>"+
         "<div class=\"row\">"+
         "   <div class=\"col s6 m4 l3\">" +
-        "       <div id=\"welcomeContainer\" class=\"row blue-grey lighten-2\">" +
-        "           <div class=\"col s4\"><i class=\"material-icons medium\">style</i></div>" +
-        "           <div class=\"col s3\"><p>25</p><p>ESL</p></div>" +
-        "           <div class=\"col s3\"><p>100</p><p>ITEM</p></div>" +
+        "       <div id=\"welcomeContainer\" class=\"z-depth-1 mainContainer blue-grey lighten-2\">" +
+        "           <div><i class=\"material-icons\">style</i> 25 ценников</div>" +
+        "           <div><i class=\"material-icons\">content_copy</i> 100 товаров</div>" +
         "       </div>" +
         "   </div>" +
         "   <div class=\"col s6 m4 l3\">" +
-        "       <div id=\"welcomeContainer\" class=\"row blue-grey lighten-2\">" +
-        "           <div class=\"col s4\"><i class=\"material-icons medium\">wifi</i></div>" +
-        "           <div class=\"col s8\"><p>10 ESLs in</p><p>transmissions</p></div>" +
+        "       <div id=\"welcomeContainer\" class=\"z-depth-1 mainContainer blue-grey lighten-2\">" +
+        "           <div><i class=\"material-icons\">wifi</i> 10 ценников</div>" +
+        "           <div>обновляются</div>" +
         "       </div>" +
         "   </div>" +
         "   <div class=\"col s6 m4 l3\">" +
-        "       <div id=\"welcomeContainer\" class=\"row orange lighten-2\">" +
-        "           <div class=\"col s4\"><i class=\"material-icons medium\">content_copy</i></div>" +
-        "           <div class=\"col s8\"><p>1 items</p><p>today</p></div>" +
+        "       <div id=\"welcomeContainer\" class=\"z-depth-1 mainContainer orange lighten-2\">" +
+                "<div><i class=\"material-icons\">content_copy</i>10 товаров</div>" +
+        "           <div>добавлено</div>" +
         "       </div>" +
         "   </div>" +
         "   <div class=\"col s6 m4 l3\">" +
-        "       <div id=\"welcomeContainer\" class=\"row orange lighten-2\">" +
-        "           <div class=\"col s4\"><i class=\"material-icons medium\">swap_horiz</i></div>" +
-        "           <div class=\"col s8\"><p>1 Associations</p><p>today</p></div>" +
+        "       <div id=\"welcomeContainer\" class=\"z-depth-1 mainContainer orange lighten-2\">" +
+        "       <div><i class=\"material-icons\">swap_horiz</i>10 привязок</div>" +
+        "           <div>добавлено</div>" +
         "       </div>" +
         "</div>"+
         "<div class=\"row\">" +

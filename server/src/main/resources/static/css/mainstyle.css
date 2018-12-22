@@ -148,3 +148,6 @@ main {
     /* Support for IE. */
     font-feature-settings: 'liga';
 }
+.mainContainer{
+    padding:10px;
+}
