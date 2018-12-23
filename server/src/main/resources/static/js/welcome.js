@@ -52,10 +52,11 @@ function getWelcomeTemplate() {
         "           <div align=\"right\">не удалось обновить товары</div>" +
         "       </div>" +
         "</div>"+
+        "</div>"+
         "<div class=\"row\">" +
-        "   <div class=\"col s4\"><canvas id=\"myChart1\"></canvas></div>"+
-        "   <div class=\"col s4\"><canvas id=\"myChart2\"></canvas></div>"+
-        "   <div class=\"col s4\"><canvas id=\"myChart3\"></canvas></div>"+
+        "   <div class=\"col s6 m4 l3\"><canvas id=\"myChart1\"></canvas></div>"+
+        "   <div class=\"col s6 m4 l3\"><canvas id=\"myChart2\"></canvas></div>"+
+        "   <div class=\"col s6 m4 l3\"><canvas id=\"myChart3\"></canvas></div>"+
         "</div>"
 }
 function testChart(chartName, chartSignature, indata) {

@@ -10,7 +10,7 @@ function getTableTemplate(suffixForTable) {
                 "</select>" +
             "</div>" +
             "<div class=\"input-field col s4 offset-s3\">" +
-                "<input id=\"search\" type=\"search\" placeholder=\"Search\">" +
+                "<input id=\"search\" type=\"search\" placeholder=\"Поиск\">" +
             "</div>";
     if (suffixForTable==="task"){
         resultTableHtml+=
