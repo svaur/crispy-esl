@@ -100,7 +100,7 @@ public class Items {
         this.itemParamsGroupsById = itemParamsGroupsById;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "esl_id", referencedColumnName = "id")
     public Esls getEslsByEslId() {
         return eslsByEslId;
