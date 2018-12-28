@@ -28,10 +28,9 @@ public class DataBaseConfiguration {
 
     @Bean
     public DataSource dataSource() {
-
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(org.postgresql.Driver.class.getName());
         //TODO: вынести в конфиг
+        dataSource.setDriverClassName(org.postgresql.Driver.class.getName());
         dataSource.setUrl("jdbc:postgresql://127.0.0.1:5432/eslbase");
         dataSource.setUsername("postgres");
         dataSource.setPassword("Ieatcxz123");
@@ -46,6 +45,7 @@ public class DataBaseConfiguration {
         vendorAdapter.setGenerateDdl(false);
         vendorAdapter.setShowSql(true);
         vendorAdapter.setDatabase(Database.POSTGRESQL);
+
         return vendorAdapter;
     }
 
@@ -53,17 +53,18 @@ public class DataBaseConfiguration {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(jpaVendorAdapter());
-        factory.setPackagesToScan("ru.mvp.database.entities");
         factory.setDataSource(dataSource());
+        //TODO: вынести в конфиг
+        factory.setPackagesToScan("ru.mvp.database.entities");
 
         return factory;
     }
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(entityManagerFactory);
+
         return txManager;
     }
 }

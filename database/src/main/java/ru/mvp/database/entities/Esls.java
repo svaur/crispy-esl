@@ -18,7 +18,7 @@ public class Esls {
     private Timestamp registrationDate;
     private Timestamp startDate;
     private String status;
-    private Collection<Items> itemsById;
+    private Items itemsById;
 
     @Id
     @Column(name = "id")
@@ -170,12 +170,12 @@ public class Esls {
         return result;
     }
 
-    @OneToMany(mappedBy = "eslsByEslId")
-    public Collection<Items> getItemsById() {
+    @OneToOne(mappedBy = "eslsByEslId")
+    public Items getItemsById() {
         return itemsById;
     }
 
-    public void setItemsById(Collection<Items> itemsById) {
+    public void setItemsById(Items itemsById) {
         this.itemsById = itemsById;
     }
 }
