@@ -33,8 +33,8 @@ public class FileMonitor {
     //разумное время для перезапуска полера
     private final static long CHECK_INTERVAL = 5000;
     //todo Временный хардкод для показа
-    private String itemDirectory = "src/main/resources/itemDir";
-    private String eslDirectory = "src/main/resources/eslDir";
+    private String itemDirectory = "server/src/main/resources/itemDir";
+    private String eslDirectory = "server/src/main/resources/eslDir/";
     private Map<String, FileInfo> fileInfoMap = new HashMap<>();
     @Autowired
     ItemDao itemService;

@@ -127,20 +127,20 @@ public class ESLService implements ESLDao {
         try {
             eslList.forEach(e -> {
                         //проверяем наличие идентичной по ключевым полям записи, если есть то не апдейтим
-                        CriteriaBuilder builder = session.getCriteriaBuilder();
-                        CriteriaQuery<ESL> query = builder.createQuery(ESL.class);
-                        Root<ESL> acc = query.from(ESL.class);
-                        Predicate cond = builder.and(
-                                builder.equal(acc.get("eslCode"), e.getEslCode()),
-                                builder.equal(acc.get("eslType"), e.getEslType()),
-                                builder.equal(acc.get("firmWare"), e.getFirmWare())
-                        );
-                        query.where(cond);
-                        TypedQuery<ESL> q = session.createQuery(query);
-                        List<ESL> result = q.getResultList();
-                        if (result.size() == 0) {
-                            session.saveOrUpdate(e);
-                        }
+//                        CriteriaBuilder builder = session.getCriteriaBuilder();
+//                        CriteriaQuery<ESL> query = builder.createQuery(ESL.class);
+//                        Root<ESL> acc = query.from(ESL.class);
+//                        Predicate cond = builder.and(
+//                                builder.equal(acc.get("eslCode"), e.getEslCode()),
+//                                builder.equal(acc.get("eslType"), e.getEslType()),
+//                                builder.equal(acc.get("firmWare"), e.getFirmWare())
+//                        );
+//                        query.where(cond);
+//                        TypedQuery<ESL> q = session.createQuery(query);
+//                        List<ESL> result = q.getResultList();
+//                        if (result.size() == 0) {
+//                            session.saveOrUpdate(e);
+//                        }
                     });
         } catch (Exception e) {
             LOGGER.error("Catch error: ", e);
