@@ -2,6 +2,7 @@ package ru.mvp.database.entities;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "directory_params", schema = "public", catalog = "eslbase")
@@ -47,22 +48,17 @@ public class DirectoryParams {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         DirectoryParams that = (DirectoryParams) o;
-
-        if (id != that.id) return false;
-        if (typeParam != that.typeParam) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-        return true;
+        return id == that.id &&
+                typeParam == that.typeParam &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(availableParamsForTemplatesById, that.availableParamsForTemplatesById) &&
+                Objects.equals(itemParamsById, that.itemParamsById);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + typeParam;
-        return result;
+        return Objects.hash(id, name, typeParam, availableParamsForTemplatesById, itemParamsById);
     }
 
     @OneToMany(mappedBy = "directoryParamsByParamId")

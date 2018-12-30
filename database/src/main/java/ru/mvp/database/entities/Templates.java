@@ -2,6 +2,7 @@ package ru.mvp.database.entities;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 public class Templates {
@@ -46,22 +47,17 @@ public class Templates {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Templates templates = (Templates) o;
-
-        if (id != templates.id) return false;
-        if (name != null ? !name.equals(templates.name) : templates.name != null) return false;
-        if (template != null ? !template.equals(templates.template) : templates.template != null) return false;
-
-        return true;
+        return id == templates.id &&
+                Objects.equals(name, templates.name) &&
+                Objects.equals(template, templates.template) &&
+                Objects.equals(availableParamsForTemplatesById, templates.availableParamsForTemplatesById) &&
+                Objects.equals(itemParamsGroupsById, templates.itemParamsGroupsById);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (template != null ? template.hashCode() : 0);
-        return result;
+        return Objects.hash(id, name, template, availableParamsForTemplatesById, itemParamsGroupsById);
     }
 
     @OneToMany(mappedBy = "templatesByTemplateId")

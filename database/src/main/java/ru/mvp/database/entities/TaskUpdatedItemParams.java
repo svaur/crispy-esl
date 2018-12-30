@@ -1,6 +1,7 @@
 package ru.mvp.database.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "task_updated_item_params", schema = "public", catalog = "eslbase")
@@ -35,20 +36,16 @@ public class TaskUpdatedItemParams {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         TaskUpdatedItemParams that = (TaskUpdatedItemParams) o;
-
-        if (id != that.id) return false;
-        if (status != that.status) return false;
-
-        return true;
+        return id == that.id &&
+                status == that.status &&
+                Objects.equals(tasksByTaskId, that.tasksByTaskId) &&
+                Objects.equals(itemParamsGroupByItemParamsGroupId, that.itemParamsGroupByItemParamsGroupId);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + status;
-        return result;
+        return Objects.hash(id, status, tasksByTaskId, itemParamsGroupByItemParamsGroupId);
     }
 
     @ManyToOne
