@@ -19,7 +19,7 @@ CREATE TABLE esls
   battery_level     VARCHAR(255),
   current_image     BYTEA,
   connectivity      VARCHAR(255),
-  esltype           VARCHAR(255) NOT NULL,
+  esl_type           VARCHAR(255) NOT NULL,
   firmware          VARCHAR(255) NOT NULL,
   last_update       TIMESTAMP,
   registration_date TIMESTAMP,
@@ -34,7 +34,7 @@ CREATE TABLE items
   code          VARCHAR(255) NOT NULL,
   name          VARCHAR(256) NOT NULL,
   last_updated  TIMESTAMP,
-  storageUnit   VARCHAR(255) NOT NULL,
+  storage_unit   VARCHAR(255) NOT NULL,
   esl_id        INT NULL REFERENCES esls(id) 
 );
 
@@ -88,7 +88,7 @@ CREATE TABLE available_params_for_template
 CREATE TABLE tasks
 (
   id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  taskName        VARCHAR(255),
+  task_name        VARCHAR(255),
   cron_expression VARCHAR(255),
   status          INT NOT NULL
 );

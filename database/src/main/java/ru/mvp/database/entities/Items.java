@@ -85,7 +85,7 @@ public class Items {
         return Objects.hash(id, code, name, lastUpdated, storageUnit, itemParamsGroupsById, eslsByEslId);
     }
 
-    @OneToMany(mappedBy = "items_by_item_id")
+    @OneToMany(mappedBy = "itemsByItemId")
     public Collection<ItemParamsGroup> getItemParamsGroupsById() {
         return itemParamsGroupsById;
     }

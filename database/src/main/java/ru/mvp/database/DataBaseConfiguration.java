@@ -40,7 +40,7 @@ public class DataBaseConfiguration {
     }
 
     @Bean
-    public JpaVendorAdapter jpaVendorAdapter(){
+    public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         //TODO: вынести в конфиг
         vendorAdapter.setGenerateDdl(false);

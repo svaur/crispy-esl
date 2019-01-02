@@ -2,7 +2,8 @@ package ru.mvp.rsreu;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import org.springframework.context.annotation.ComponentScan;
+@ComponentScan("ru.mvp.database")
 @SpringBootApplication
 public class RsreuApplication {
 
