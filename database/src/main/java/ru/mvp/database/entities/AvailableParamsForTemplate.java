@@ -1,6 +1,7 @@
 package ru.mvp.database.entities;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "available_params_for_template", schema = "public", catalog = "eslbase")
@@ -24,17 +25,15 @@ public class AvailableParamsForTemplate {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         AvailableParamsForTemplate that = (AvailableParamsForTemplate) o;
-
-        if (id != that.id) return false;
-
-        return true;
+        return id == that.id &&
+                Objects.equals(templatesByTemplateId, that.templatesByTemplateId) &&
+                Objects.equals(directoryParamsByParamId, that.directoryParamsByParamId);
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return Objects.hash(id, templatesByTemplateId, directoryParamsByParamId);
     }
 
     @ManyToOne

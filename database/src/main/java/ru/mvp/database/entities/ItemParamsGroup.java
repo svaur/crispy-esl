@@ -3,6 +3,7 @@ package ru.mvp.database.entities;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "item_params_group", schema = "public", catalog = "eslbase")
@@ -39,23 +40,21 @@ public class ItemParamsGroup {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ItemParamsGroup that = (ItemParamsGroup) o;
-
-        if (id != that.id) return false;
-        if (dateAdded != null ? !dateAdded.equals(that.dateAdded) : that.dateAdded != null) return false;
-
-        return true;
+        return id == that.id &&
+                Objects.equals(dateAdded, that.dateAdded) &&
+                Objects.equals(itemParamsById, that.itemParamsById) &&
+                Objects.equals(itemsByItemId, that.itemsByItemId) &&
+                Objects.equals(templatesByTemplateId, that.templatesByTemplateId) &&
+                Objects.equals(taskUpdatedItemParamsById, that.taskUpdatedItemParamsById);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (dateAdded != null ? dateAdded.hashCode() : 0);
-        return result;
+        return Objects.hash(id, dateAdded, itemParamsById, itemsByItemId, templatesByTemplateId, taskUpdatedItemParamsById);
     }
 
-    @OneToMany(mappedBy = "itemParamsGroupByItemParamsGroupId")
+    @OneToMany(mappedBy = "item_params_group_by_item_params_group_id")
     public Collection<ItemParams> getItemParamsById() {
         return itemParamsById;
     }
@@ -84,7 +83,7 @@ public class ItemParamsGroup {
         this.templatesByTemplateId = templatesByTemplateId;
     }
 
-    @OneToMany(mappedBy = "itemParamsGroupByItemParamsGroupId")
+    @OneToMany(mappedBy = "item_params_group_by_item_params_group_id")
     public Collection<TaskUpdatedItemParams> getTaskUpdatedItemParamsById() {
         return taskUpdatedItemParamsById;
     }

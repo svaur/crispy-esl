@@ -3,6 +3,7 @@ package ru.mvp.database.entities;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 public class Items {
@@ -10,7 +11,7 @@ public class Items {
     private String code;
     private String name;
     private Timestamp lastUpdated;
-    private String storageunit;
+    private String storageUnit;
     private Collection<ItemParamsGroup> itemParamsGroupsById;
     private Esls eslsByEslId;
 
@@ -56,42 +57,35 @@ public class Items {
     }
 
     @Basic
-    @Column(name = "storageunit")
-    public String getStorageunit() {
-        return storageunit;
+    @Column(name = "storage_unit")
+    public String getStorageUnit() {
+        return storageUnit;
     }
 
-    public void setStorageunit(String storageunit) {
-        this.storageunit = storageunit;
+    public void setStorageUnit(String storageUnit) {
+        this.storageUnit = storageUnit;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Items items = (Items) o;
-
-        if (id != items.id) return false;
-        if (code != null ? !code.equals(items.code) : items.code != null) return false;
-        if (name != null ? !name.equals(items.name) : items.name != null) return false;
-        if (lastUpdated != null ? !lastUpdated.equals(items.lastUpdated) : items.lastUpdated != null) return false;
-        if (storageunit != null ? !storageunit.equals(items.storageunit) : items.storageunit != null) return false;
-
-        return true;
+        return id == items.id &&
+                Objects.equals(code, items.code) &&
+                Objects.equals(name, items.name) &&
+                Objects.equals(lastUpdated, items.lastUpdated) &&
+                Objects.equals(storageUnit, items.storageUnit) &&
+                Objects.equals(itemParamsGroupsById, items.itemParamsGroupsById) &&
+                Objects.equals(eslsByEslId, items.eslsByEslId);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0);
-        result = 31 * result + (storageunit != null ? storageunit.hashCode() : 0);
-        return result;
+        return Objects.hash(id, code, name, lastUpdated, storageUnit, itemParamsGroupsById, eslsByEslId);
     }
 
-    @OneToMany(mappedBy = "itemsByItemId")
+    @OneToMany(mappedBy = "items_by_item_id")
     public Collection<ItemParamsGroup> getItemParamsGroupsById() {
         return itemParamsGroupsById;
     }
