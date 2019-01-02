@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 public class Tasks {
     private int id;
-    private String taskname;
+    private String taskName;
     private String cronExpression;
     private int status;
     private Collection<TaskResults> taskResultsById;
@@ -25,13 +25,13 @@ public class Tasks {
     }
 
     @Basic
-    @Column(name = "taskname")
-    public String getTaskname() {
-        return taskname;
+    @Column(name = "task_name")
+    public String getTaskName() {
+        return taskName;
     }
 
-    public void setTaskname(String taskname) {
-        this.taskname = taskname;
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
     @Basic
@@ -61,7 +61,7 @@ public class Tasks {
         Tasks tasks = (Tasks) o;
         return id == tasks.id &&
                 status == tasks.status &&
-                Objects.equals(taskname, tasks.taskname) &&
+                Objects.equals(taskName, tasks.taskName) &&
                 Objects.equals(cronExpression, tasks.cronExpression) &&
                 Objects.equals(taskResultsById, tasks.taskResultsById) &&
                 Objects.equals(taskUpdatedItemParamsById, tasks.taskUpdatedItemParamsById);
@@ -69,10 +69,10 @@ public class Tasks {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, taskname, cronExpression, status, taskResultsById, taskUpdatedItemParamsById);
+        return Objects.hash(id, taskName, cronExpression, status, taskResultsById, taskUpdatedItemParamsById);
     }
 
-    @OneToMany(mappedBy = "tasksByTaskId")
+    @OneToMany(mappedBy = "tasks_by_task_id")
     public Collection<TaskResults> getTaskResultsById() {
         return taskResultsById;
     }
@@ -81,7 +81,7 @@ public class Tasks {
         this.taskResultsById = taskResultsById;
     }
 
-    @OneToMany(mappedBy = "tasksByTaskId")
+    @OneToMany(mappedBy = "tasks_by_task_id")
     public Collection<TaskUpdatedItemParams> getTaskUpdatedItemParamsById() {
         return taskUpdatedItemParamsById;
     }

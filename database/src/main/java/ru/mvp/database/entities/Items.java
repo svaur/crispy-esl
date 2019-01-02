@@ -11,7 +11,7 @@ public class Items {
     private String code;
     private String name;
     private Timestamp lastUpdated;
-    private String storageunit;
+    private String storageUnit;
     private Collection<ItemParamsGroup> itemParamsGroupsById;
     private Esls eslsByEslId;
 
@@ -57,13 +57,13 @@ public class Items {
     }
 
     @Basic
-    @Column(name = "storageunit")
-    public String getStorageunit() {
-        return storageunit;
+    @Column(name = "storage_unit")
+    public String getStorageUnit() {
+        return storageUnit;
     }
 
-    public void setStorageunit(String storageunit) {
-        this.storageunit = storageunit;
+    public void setStorageUnit(String storageUnit) {
+        this.storageUnit = storageUnit;
     }
 
     @Override
@@ -75,17 +75,17 @@ public class Items {
                 Objects.equals(code, items.code) &&
                 Objects.equals(name, items.name) &&
                 Objects.equals(lastUpdated, items.lastUpdated) &&
-                Objects.equals(storageunit, items.storageunit) &&
+                Objects.equals(storageUnit, items.storageUnit) &&
                 Objects.equals(itemParamsGroupsById, items.itemParamsGroupsById) &&
                 Objects.equals(eslsByEslId, items.eslsByEslId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, name, lastUpdated, storageunit, itemParamsGroupsById, eslsByEslId);
+        return Objects.hash(id, code, name, lastUpdated, storageUnit, itemParamsGroupsById, eslsByEslId);
     }
 
-    @OneToMany(mappedBy = "itemsByItemId")
+    @OneToMany(mappedBy = "items_by_item_id")
     public Collection<ItemParamsGroup> getItemParamsGroupsById() {
         return itemParamsGroupsById;
     }

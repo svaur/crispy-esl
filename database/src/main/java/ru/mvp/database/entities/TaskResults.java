@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "task_results", schema = "public", catalog = "eslbase")
-public class TaskResults {
+public class  TaskResults {
     private int id;
     private Timestamp startDate;
     private Timestamp endDate;

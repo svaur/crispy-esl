@@ -73,7 +73,7 @@ public class Esls {
     }
 
     @Basic
-    @Column(name = "esltype")
+    @Column(name = "esl_type")
     public String getEsltype() {
         return esltype;
     }
