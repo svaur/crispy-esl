@@ -2,13 +2,14 @@ package ru.mvp.rsreu.controllers;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.mvp.rsreu.db.dao.ESLDao;
-import ru.mvp.rsreu.db.dao.ItemDao;
-import ru.mvp.rsreu.db.entity.ESL;
-import ru.mvp.rsreu.db.entity.Item;
+import ru.mvp.database.entities.Esls;
+import ru.mvp.database.repositories.EslsRepository;
 import ru.mvp.rsreu.templates.BaseSaleTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
 
@@ -25,93 +26,82 @@ import java.util.List;
 public class EslApiController {
 
     private static final String EMPTY_STRING = "";
-    private ESLDao eslDao;
-    private ItemDao itemDao;
+    private EslsRepository eslsRepository;
     private BaseSaleTemplate baseSaleTemplate;
 
     @Autowired
-    public EslApiController(ESLDao eslDao, ItemDao itemDao, BaseSaleTemplate baseSaleTemplate) {
-        this.eslDao = eslDao;
-        this.itemDao = itemDao;
+    public EslApiController(EslsRepository eslsRepository, BaseSaleTemplate baseSaleTemplate) {
+        this.eslsRepository = eslsRepository;
         this.baseSaleTemplate = baseSaleTemplate;
     }
 
     @RequestMapping("/api/getEslTableData")
-    public String getEslTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size) {//todo получать мапу? не станет ли избыточным?
-        int showSize = Integer.valueOf(size);
-        List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        List<ESL> list = eslDao.getAll(showSize);
-        list.forEach(e -> {
-            HashMap<String, String> hashMap = fillEslData(e);
-            tableData.add(hashMap);
-        });
-        return new Gson().toJson(tableData);
+    public String getEslTableData(@RequestParam(value = "size") Integer size,
+                                  @RequestParam(value = "pageNum") Integer pageNum,
+                                  @RequestParam(value = "searchValue") String searchValue) {
+        Page<Esls> output;
+        if (searchValue.isEmpty())
+            output = eslsRepository.findAll(PageRequest.of(pageNum, size, Sort.Direction.ASC, "code"));
+        else
+            output = eslsRepository.findByFilter(PageRequest.of(pageNum, size, Sort.Direction.ASC, "code"), searchValue);
+
+        return new Gson().toJson(fillEslData(output));
     }
 
-    @RequestMapping("/api/searchEslData")
-    public String searchEslData(@RequestParam(value = "size", required = false, defaultValue = "10") String size,    //todo для показа конечно и так сойдет, но уж дюже похоже на предыдущий метод, фабрика ESLDao
-                                @RequestParam(value = "searchValue") String searchValue) {                           //todo получать мапу? не станет ли избыточным?
-        int showSize = Integer.valueOf(size);
-        List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        List<ESL> list = eslDao.searchByValue(searchValue, showSize);
-        list.forEach(e -> {
-            HashMap<String, String> hashMap = fillEslData(e);
-            tableData.add(hashMap);
-        });
-        return new Gson().toJson(tableData);
-    }
+//    @RequestMapping("/api/assignEsl")
+//    public String assignEsl(@RequestParam("esl") String esl,
+//                            @RequestParam("template") String template,
+//                            @RequestParam("item") String item,
+//                            @RequestParam("type") String type) {
+//        boolean result;
+//        ESL eslElement = eslDao.searchByESLCode(esl);
+//        Item itemElement = itemDao.searchByItemCode(item);
+//        if ("add".equalsIgnoreCase(type)) {
+//            result = eslDao.assignItem(eslElement, itemElement);
+//        } else {
+//            result = eslDao.unAssignItem(eslElement);
+//        }
+//        return result ? "ok" : "error";
+//    }
+//
+//    @RequestMapping("/api/getImage")
+//    public String getImage(@RequestParam("eslCode") String eslCode) throws IOException {
+//        int width = 152;
+//        int height = 152;
+//        Item selectedGood = eslDao.searchByESLCode(eslCode).getItem();
+//        EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(selectedGood.getItemName(),
+//                selectedGood.getItemName(),
+//                String.valueOf(selectedGood.getPrice()),
+//                String.valueOf(selectedGood.getPromotionPrice()),
+//                "рублей",
+//                selectedGood.getItemCode());
+//        BufferedImage image = baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
+//
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        ImageIO.getWriterFormatNames();
+//        if (ImageIO.write(image, "BMP", baos)) {
+//            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
+//            String imageString = "data:image/bmp;base64," + data;
+//            return new Gson().toJson(imageString);
+//        }
+//        return "error";//todo сделать нормальный возврат ошибок на фронт
+//    }
 
-    @RequestMapping("/api/assignEsl")
-    public String assignEsl(@RequestParam("esl") String esl,
-                            @RequestParam("template") String template,
-                            @RequestParam("item") String item,
-                            @RequestParam("type") String type) {
-        boolean result;
-        ESL eslElement = eslDao.searchByESLCode(esl);
-        Item itemElement = itemDao.searchByItemCode(item);
-        if ("add".equalsIgnoreCase(type)) {
-            result = eslDao.assignItem(eslElement, itemElement);
-        } else {
-            result = eslDao.unAssignItem(eslElement);
-        }
-        return result ? "ok" : "error";
-    }
-
-    @RequestMapping("/api/getImage")
-    public String getImage(@RequestParam("eslCode") String eslCode) throws IOException {
-        int width = 152;
-        int height = 152;
-        Item selectedGood = eslDao.searchByESLCode(eslCode).getItem();
-        EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(selectedGood.getItemName(),
-                selectedGood.getItemName(),
-                String.valueOf(selectedGood.getPrice()),
-                String.valueOf(selectedGood.getPromotionPrice()),
-                "рублей",
-                selectedGood.getItemCode());
-        BufferedImage image = baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.getWriterFormatNames();
-        if (ImageIO.write(image, "BMP", baos)) {
-            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
-            String imageString = "data:image/bmp;base64," + data;
-            return new Gson().toJson(imageString);
-        }
-        return "error";//todo сделать нормальный возврат ошибок на фронт
-    }
-
-    private HashMap<String, String> fillEslData(ESL e) {
-        HashMap<String, String> hashMap = new HashMap<>();
-        Item item = e.getItem();
-        hashMap.put("eslCode", e.getEslCode());
-        hashMap.put("eslType", e.getEslType());
-        hashMap.put("itemCode", item == null ? EMPTY_STRING : item.getItemCode());
-        hashMap.put("itemName", item == null ? EMPTY_STRING : item.getItemName());
-        hashMap.put("price", String.valueOf(item == null ? EMPTY_STRING : item.getPromotionPrice()));
-        hashMap.put("lastUpdate", String.valueOf(e.getLastUpdate()));
-        hashMap.put("connectivity", e.getConnectivity());
-        hashMap.put("batteryLevel", String.valueOf(e.getBatteryLevel()));
-        hashMap.put("status", e.getStatus());
-        return hashMap;
+    private List<HashMap<String, String>> fillEslData(Page<Esls> e) {
+        List<HashMap<String, String>> outList= new ArrayList<>();
+        e.forEach(element->{
+            HashMap<String, String> map = new HashMap<>();
+            map.put("eslCode", element.getCode());
+            map.put("eslType", element.getEsltype());
+            map.put("itemCode", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getCode());
+            map.put("itemName", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getName());
+            //todo нет цены
+            map.put("price", element.getItemsById() == null ? EMPTY_STRING : "todo цена");
+            map.put("lastUpdate", element.getLastUpdate().toString());
+            map.put("connectivity", element.getConnectivity());
+            map.put("batteryLevel", element.getBatteryLevel());
+            map.put("status", element.getStatus());
+            outList.add(map);});
+        return outList;
     }
 }

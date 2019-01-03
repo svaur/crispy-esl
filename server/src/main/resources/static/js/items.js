@@ -25,7 +25,7 @@ function displayItemData(url, headers) {
                 "<tr>" +
                     "<td>" + tableData[i].itemCode + "</td>" +
                     "<td>" + tableData[i].itemName + "</td>" +
-                    "<td>" + tableData[i].price + "</td>" +
+                    "<td>" + tableData[i].storageUnit + "</td>" +
                     "<td>" + tableData[i].lastUpdate + "</td>" +
                     "<td>" + tableData[i].associate + "</td>" +
                     "<td> </td>" +
@@ -40,12 +40,14 @@ function displayItemData(url, headers) {
 }
 function itemActivateActions() {
     $('#itemTableCounter').formSelect().on('change', function () {
-        var headers = {"size": $('#itemTableCounter').val()};
-        displayItemData("/api/getItemTableData", headers);
+        getAllItemsData(0);
     });
     $('#search').on('input', function() {
-        var headers = {"size": $('#itemTableCounter').val(), "searchValue": $('#search').val()};
-        displayItemData("/api/searchItemData", headers);
+        getAllItemsData(0);
     });
     $('.dropdown-trigger').dropdown();
+}
+function getAllItemsData(pageNum) {
+    var headers = {"size": $('#itemTableCounter').val(), "pageNum": pageNum, "searchValue": $('#search').val()};
+    displayItemData("/api/getItemTableData", headers);
 }
