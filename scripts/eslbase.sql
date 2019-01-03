@@ -15,7 +15,7 @@ DROP TABLE esls;*/
 CREATE TABLE esls
 (
   id                INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  code              VARCHAR(255) NOT NULL,
+  code              VARCHAR(255) NOT NULL UNIQUE,
   battery_level     VARCHAR(255),
   current_image     BYTEA,
   connectivity      VARCHAR(255),
@@ -31,7 +31,7 @@ CREATE TABLE esls
 CREATE TABLE items
 (
   id            INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  code          VARCHAR(255) NOT NULL,
+  code          VARCHAR(255) NOT NULL UNIQUE,
   name          VARCHAR(256) NOT NULL,
   last_updated  TIMESTAMP,
   storage_unit   VARCHAR(255) NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE available_params_for_template
 CREATE TABLE tasks
 (
   id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  task_name        VARCHAR(255),
+  task_name        VARCHAR(255) UNIQUE,
   cron_expression VARCHAR(255),
   status          INT NOT NULL
 );
