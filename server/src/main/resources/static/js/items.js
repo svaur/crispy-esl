@@ -25,7 +25,7 @@ function displayItemData(url, headers) {
                 "<tr>" +
                     "<td>" + tableData[i].itemCode + "</td>" +
                     "<td>" + tableData[i].itemName + "</td>" +
-                    "<td>" + tableData[i].storageUnit + "</td>" +
+                    "<td>" + tableData[i].price + "</td>" +
                     "<td>" + tableData[i].lastUpdate + "</td>" +
                     "<td>" + tableData[i].associate + "</td>" +
                     "<td> </td>" +

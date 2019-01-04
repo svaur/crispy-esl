@@ -34,7 +34,7 @@ CREATE TABLE items
   code          VARCHAR(255) NOT NULL UNIQUE,
   name          VARCHAR(256) NOT NULL,
   last_updated  TIMESTAMP,
-  storage_unit   VARCHAR(255) NOT NULL,
+  price   NUMERIC NOT NULL,
   esl_id        INT NULL REFERENCES esls(id) 
 );
 
@@ -111,4 +111,4 @@ CREATE TABLE task_updated_item_params
   task_id               INT REFERENCES tasks(id),
   item_params_group_id  INT REFERENCES item_params_group(id),
   status                INT NOT NULL
-)
+);

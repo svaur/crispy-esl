@@ -11,13 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.mvp.database.entities.Esls;
 import ru.mvp.database.repositories.EslsRepository;
 import ru.mvp.rsreu.templates.BaseSaleTemplate;
-import ru.mvp.rsreu.templates.EslInfoTemplate;
 
-import javax.imageio.ImageIO;
-import javax.xml.bind.DatatypeConverter;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,7 +86,7 @@ public class EslApiController {
         e.forEach(element->{
             HashMap<String, String> map = new HashMap<>();
             map.put("eslCode", element.getCode());
-            map.put("eslType", element.getEsltype());
+            map.put("eslType", element.getEslType());
             map.put("itemCode", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getCode());
             map.put("itemName", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getName());
             //todo нет цены

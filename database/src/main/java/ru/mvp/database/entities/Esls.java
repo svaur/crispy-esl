@@ -12,7 +12,7 @@ public class Esls {
     private String batteryLevel;
     private byte[] currentImage;
     private String connectivity;
-    private String esltype;
+    private String eslType;
     private String firmware;
     private Timestamp lastUpdate;
     private Timestamp registrationDate;
@@ -73,12 +73,12 @@ public class Esls {
 
     @Basic
     @Column(name = "esl_type")
-    public String getEsltype() {
-        return esltype;
+    public String getEslType() {
+        return eslType;
     }
 
-    public void setEsltype(String esltype) {
-        this.esltype = esltype;
+    public void setEslType(String eslType) {
+        this.eslType = eslType;
     }
 
     @Basic
@@ -141,7 +141,7 @@ public class Esls {
                 Objects.equals(batteryLevel, esls.batteryLevel) &&
                 Arrays.equals(currentImage, esls.currentImage) &&
                 Objects.equals(connectivity, esls.connectivity) &&
-                Objects.equals(esltype, esls.esltype) &&
+                Objects.equals(eslType, esls.eslType) &&
                 Objects.equals(firmware, esls.firmware) &&
                 Objects.equals(lastUpdate, esls.lastUpdate) &&
                 Objects.equals(registrationDate, esls.registrationDate) &&
@@ -152,7 +152,7 @@ public class Esls {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, code, batteryLevel, connectivity, esltype, firmware, lastUpdate, registrationDate, startDate, status, itemsById);
+        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status, itemsById);
         result = 31 * result + Arrays.hashCode(currentImage);
         return result;
     }

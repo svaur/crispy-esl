@@ -44,7 +44,7 @@ public class ItemApiController {
             HashMap<String, String> map = new HashMap<>();
             map.put("itemName", element.getName());
             map.put("itemCode", element.getCode());
-            map.put("storageUnit", element.getStorageUnit());
+            map.put("price", element.getPrice().toString());
             map.put("lastUpdate", element.getLastUpdated().toString());
             String value = element.getEslsByEslId()==null?"нет":String.valueOf(element.getEslsByEslId().getId());
             map.put("associate", value);

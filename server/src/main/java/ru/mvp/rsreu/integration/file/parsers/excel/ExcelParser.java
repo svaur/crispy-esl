@@ -55,7 +55,7 @@
 //                            item.setItemName(itemName);
 //                            item.setPrice(price);
 //                            item.setPromotionPrice(promotionPrice);
-//                            item.setStorageUnit(storageUnit);
+//                            item.setPrice(storageUnit);
 //
 //                            items.add(item);
 //                        });
