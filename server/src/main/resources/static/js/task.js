@@ -129,6 +129,39 @@ function taskActivateActions() {
         getAllTaskData(0)
     });
     $('.dropdown-trigger').dropdown();
+    $('#previousBtn').click(function () {
+        if (pageNum > 0) {
+            pageNum = pageNum - 1;
+            document.getElementById("firstBtn").innerHTML = pageNum + 1;
+            getAllTaskData(pageNum);
+        }
+    });
+    // $('#secondBtn').click(function () {
+    //     pageNum = $('#secondBtn').innerText;
+    //     buttonsUpdate();
+    //     getAllItemsData(pageNum);
+    // });
+    // $('#thirdBtn').click(function () {
+    //     pageNum = $('#thirdBtn').innerText.;
+    //     buttonsUpdate();
+    //     getAllItemsData(pageNum);
+    // });
+    // $('#fourthBtn').click(function () {
+    //     pageNum = $('#fourthBtn').innerText;
+    //     buttonsUpdate();
+    //     getAllItemsData(pageNum);
+    // });
+    $('#nextBtn').click(function () {
+        pageNum = pageNum + 1;
+        document.getElementById("firstBtn").innerHTML = pageNum + 1;
+        getAllTaskData(pageNum);
+    });
+    // function buttonsUpdate() {
+    //     $('#firstBtn').innerText = pageNum;
+    //     $('#secondBtn').innerText = pageNum + 1;
+    //     $('#thirdBtn').innerText = pageNum + 2;
+    //     $('#fourthBtn').innerText = pageNum + 3;
+    // }
 }
 function getAllTaskData(pageNum) {
     var headers = {"size": $('#taskTableCounter').val(), "pageNum": pageNum, "searchValue": $('#search').val()};

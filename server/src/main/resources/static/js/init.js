@@ -32,8 +32,9 @@ $(document).ready(function () {
         displayWorkSpace('#reportWorkSpace', ' ');
     });
 });
-
+var pageNum=0;
 function displayWorkSpace(menu, url) {
+    pageNum=0;
     setActive();
     switch(menu) {
         case "#welcomeWorkSpace":
@@ -49,6 +50,7 @@ function displayWorkSpace(menu, url) {
             eslActivateActions();
             var headers = {"size": $('#eslTableCounter').val(), "pageNum": 0, "searchValue": ""};
             displayEslData(url, headers);
+            activatePaginator();
             break;
         case "#itemsWorkSpace":
             $('#workSpace').html('')
@@ -56,6 +58,7 @@ function displayWorkSpace(menu, url) {
             itemActivateActions();
             var headers = {"size": $('#itemTableCounter').val(), "pageNum": 0, "searchValue": ""};
             displayItemData(url, headers);
+            activatePaginator();
             break;
         case "#associateWorkSpace":
             $('#workSpace').html('')
@@ -84,6 +87,7 @@ function displayWorkSpace(menu, url) {
                     console.log("1211111")
                 }
             });
+            activatePaginator();
             break;
         case "#logWorkSpace":
             $('#workSpace').html('')
