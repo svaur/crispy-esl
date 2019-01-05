@@ -14,4 +14,8 @@ import java.util.List;
 public interface ItemsRepository extends JpaRepository<Items, Long> {
     @Query("SELECT item FROM Items item WHERE LOWER(item.name) LIKE LOWER(CONCAT('%',?1,'%')) OR LOWER(item.code) LIKE LOWER(CONCAT('%',?1,'%'))")
     Page<Items> findByFilter(Pageable pageable, String filter);
+    @Query("SELECT item FROM Items item where item.code = ?1")
+    Items findByCode(String code);
+    @Query("SELECT item FROM Items item where item.code = ?1 and item.name = ?2 and item.price = ?3 and item.storageUnit = ?4")
+    Items findDuplicate(String code, String name, Double price, String storageUnit);
 }

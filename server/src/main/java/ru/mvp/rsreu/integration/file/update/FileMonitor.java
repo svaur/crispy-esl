@@ -55,8 +55,22 @@ public class FileMonitor {
                         currentFileSet.add(file.getName());
                         return checkChangeFile(file);})
                     .forEach(e -> {
-                        List<Items> parse = (List<Items>)factory.getParser(e, TypeEntity.ITEM).parse(e);
-                        parse.forEach(element->itemsRepository.save(element));
+                        List<Items> parse = (List<Items>) factory.getParser(e, TypeEntity.ITEM).parse(e);
+                        //todo подумать как сделать поиск дубликатов элегантнее. ща топорно.
+                        parse.forEach(el->{
+                            if (itemsRepository.findDuplicate(el.getCode(), el.getName(), el.getPrice(), el.getStorageUnit())==null) {
+                                Items findByCodeElement = itemsRepository.findByCode(el.getCode());
+                                if(findByCodeElement == null){
+                                    //новый элемент. Просто вставляем
+                                    itemsRepository.save(el);
+                                }else{
+                                    //такой айдишник есть. Надо апдейтить
+                                    el.setId(findByCodeElement.getId());
+                                    itemsRepository.save(el);
+                                }
+                            }
+                        });
+                        itemsRepository.flush();
                     });
         } catch (IOException e) {
             LOGGER.error("Catch error: ", e);
@@ -68,8 +82,21 @@ public class FileMonitor {
                         currentFileSet.add(file.getName());
                         return checkChangeFile(file);})
                     .forEach(e -> {
-                        List<Esls> parse = (List<Esls>)factory.getParser(e, TypeEntity.ESL).parse(e);
-                        parse.forEach(element->eslsRepository.save(element));
+                        List<Esls> parse = (List<Esls>) factory.getParser(e, TypeEntity.ESL).parse(e);
+                        parse.forEach(el->{
+                            if (eslsRepository.findDuplicate(el.getCode(), el.getEslType(), el.getFirmware())==null) {
+                                Esls findByCodeElement = eslsRepository.findByCode(el.getCode());
+                                if(findByCodeElement == null){
+                                    //новый элемент. Просто вставляем
+                                    eslsRepository.save(el);
+                                }else{
+                                    //такой айдишник есть. Надо апдейтить
+                                    el.setId(findByCodeElement.getId());
+                                    eslsRepository.save(el);
+                                }
+                            }
+                        });
+                        eslsRepository.flush();
                     });
         } catch (IOException e) {
             LOGGER.error("Catch error: ", e);

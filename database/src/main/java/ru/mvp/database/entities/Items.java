@@ -29,7 +29,7 @@ public class Items {
     }
 
     @Basic
-    @Column(name = "code")
+    @Column(name = "code", unique=true)
     public String getCode() {
         return code;
     }
