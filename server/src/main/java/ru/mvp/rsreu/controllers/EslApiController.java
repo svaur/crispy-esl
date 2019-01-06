@@ -69,7 +69,7 @@ public class EslApiController {
             }
         } else {
             eslElement.setNextImage(null);
-            itemElement.getEslsByEslId().remove
+            itemElement.setEslsByEslId(null);
         }
         itemsRepository.saveAndFlush(itemElement);
         eslsRepository.saveAndFlush(eslElement);
