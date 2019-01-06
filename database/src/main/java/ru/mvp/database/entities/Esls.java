@@ -11,6 +11,7 @@ public class Esls {
     private String code;
     private String batteryLevel;
     private byte[] currentImage;
+    private byte[] nextImage;
     private String connectivity;
     private String eslType;
     private String firmware;
@@ -59,6 +60,16 @@ public class Esls {
 
     public void setCurrentImage(byte[] currentImage) {
         this.currentImage = currentImage;
+    }
+
+    @Basic
+    @Column(name = "next_image")
+    public byte[] getNextImage() {
+        return nextImage;
+    }
+
+    public void setNextImage(byte[] nextImage) {
+        this.nextImage = nextImage;
     }
 
     @Basic
@@ -140,6 +151,7 @@ public class Esls {
                 Objects.equals(code, esls.code) &&
                 Objects.equals(batteryLevel, esls.batteryLevel) &&
                 Arrays.equals(currentImage, esls.currentImage) &&
+                Arrays.equals(nextImage, esls.nextImage) &&
                 Objects.equals(connectivity, esls.connectivity) &&
                 Objects.equals(eslType, esls.eslType) &&
                 Objects.equals(firmware, esls.firmware) &&
@@ -154,6 +166,7 @@ public class Esls {
     public int hashCode() {
         int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status, itemsById);
         result = 31 * result + Arrays.hashCode(currentImage);
+        result = 31 * result + Arrays.hashCode(nextImage);
         return result;
     }
 

@@ -18,6 +18,7 @@ CREATE TABLE esls
   code              VARCHAR(255) NOT NULL UNIQUE,
   battery_level     VARCHAR(255),
   current_image     BYTEA,
+  next_image     BYTEA,
   connectivity      VARCHAR(255),
   esl_type           VARCHAR(255) NOT NULL,
   firmware          VARCHAR(255) NOT NULL,

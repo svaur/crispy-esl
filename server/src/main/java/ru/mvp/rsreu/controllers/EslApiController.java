@@ -13,7 +13,13 @@ import ru.mvp.database.entities.Items;
 import ru.mvp.database.repositories.EslsRepository;
 import ru.mvp.database.repositories.ItemsRepository;
 import ru.mvp.rsreu.templates.BaseSaleTemplate;
+import ru.mvp.rsreu.templates.EslInfoTemplate;
 
+import javax.imageio.ImageIO;
+import javax.xml.bind.DatatypeConverter;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,38 +60,32 @@ public class EslApiController {
         Esls eslElement = eslsRepository.findByCode(esl);
         Items itemElement = itemsRepository.findByCode(item);
         if ("add".equalsIgnoreCase(type)) {
-            itemElement.setEslsByEslId(eslElement);
+            try {
+                byte[] generateImage = generateImage(itemElement);
+                eslElement.setNextImage(generateImage);
+                itemElement.setEslsByEslId(eslElement);
+            } catch (IOException e) {
+                return "error " + e.getMessage();
+            }
         } else {
-            itemElement.setEslsByEslId(null);
+            eslElement.setNextImage(null);
+            itemElement.getEslsByEslId().remove
         }
         itemsRepository.saveAndFlush(itemElement);
+        eslsRepository.saveAndFlush(eslElement);
         return "ok";
     }
 
     @RequestMapping("/api/getImage")
     public String getImage(@RequestParam("eslCode") String eslCode){
-//        int width = 152;
-//        int height = 152;
-//        Item selectedGood = eslDao.searchByESLCode(eslCode).getItem();
-//        EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(selectedGood.getItemName(),
-//                selectedGood.getItemName(),
-//                String.valueOf(selectedGood.getPrice()),
-//                String.valueOf(selectedGood.getPromotionPrice()),
-//                "рублей",
-//                selectedGood.getItemCode());
-//        BufferedImage image = baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
-//
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        ImageIO.getWriterFormatNames();
-//        if (ImageIO.write(image, "BMP", baos)) {
-//            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
-//            String imageString = "data:image/bmp;base64," + data;
         Esls code = eslsRepository.findByCode(eslCode);
-        if (code.getCurrentImage()!=null)
-            return new Gson().toJson(code.getCurrentImage());
-        return "ERROR";
-//        }
-//        return "error";//todo сделать нормальный возврат ошибок на фронт
+        //todo для проверки.
+        byte[] currentImage = code.getNextImage();
+        if (currentImage !=null) {
+            String data = "data:image/bmp;base64," + DatatypeConverter.printBase64Binary(currentImage);
+            return new Gson().toJson(data);
+        }
+        return "ERROR";//todo сделать нормальный возврат ошибок на фронт
     }
 
     private List<HashMap<String, String>> fillEslData(Page<Esls> e) {
@@ -97,7 +97,6 @@ public class EslApiController {
             map.put("eslFirmWare", element.getFirmware());
             map.put("itemCode", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getCode());
             map.put("itemName", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getName());
-            //todo нет цены
             map.put("price", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getPrice().toString());
             map.put("lastUpdate", element.getLastUpdate() == null ? EMPTY_STRING : element.getLastUpdate().toString());
             map.put("connectivity", element.getConnectivity());
@@ -105,5 +104,26 @@ public class EslApiController {
             map.put("status", element.getStatus());
             outList.add(map);});
         return outList;
+    }
+    private byte[] generateImage(Items items) throws IOException{
+        int width = 152;
+        int height = 152;
+        EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(items.getName(),
+                items.getName(),
+                String.valueOf(items.getPrice()),
+                String.valueOf(items.getStorageUnit()),
+                "рублей",
+                items.getCode());
+        BufferedImage image = baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.getWriterFormatNames();
+        if (ImageIO.write(image, "BMP", baos)) {
+            return baos.toByteArray();
+//            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
+//            return "data:image/bmp;base64," + data;
+        }else{
+            throw new IOException();
+        }
     }
 }

@@ -116,15 +116,11 @@ function setActive(nameClassToActive) {
 function showImage(code) {
     var w = window.open();
     $.getJSON("/api/getImage", {eslCode:code}, function (data) {
-        if(data.contains("ERROR")){
-            alert("не удалось загрузить изображение. Попробуйте запросить обновление статуса");
-        }else {
-            $(w.document.body).html(
-                "<style>.shadow {" +
-                "box-shadow: 0 0 10px rgba(0,0,0,0.5);" +
-                "padding: 0px;}</style>" +
-                "<img class=\"shadow\" id='esl-image' src='" + data + "'>");
-        }
+        $(w.document.body).html(
+            "<style>.shadow {" +
+            "box-shadow: 0 0 10px rgba(0,0,0,0.5);" +
+            "padding: 0px;}</style>" +
+            "<img class=\"shadow\" id='esl-image' src='" + data + "'>");
     }).error(function(jqXHR) {
         alert(jqXHR.responseText);
     });
