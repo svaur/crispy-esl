@@ -36,13 +36,15 @@ public class FileMonitor {
     private String itemDirectory = "server/src/main/resources/itemDir";
     private String eslDirectory = "server/src/main/resources/eslDir/";
     private Map<String, FileInfo> fileInfoMap = new HashMap<>();
-    @Autowired
     ItemsRepository itemsRepository;
-    @Autowired
     EslsRepository eslsRepository;
-    @Autowired
     ParserFactory factory;
 
+    public FileMonitor(ItemsRepository itemsRepository, EslsRepository eslsRepository, ParserFactory factory) {
+        this.itemsRepository = itemsRepository;
+        this.eslsRepository = eslsRepository;
+        this.factory = factory;
+    }
 
     @Scheduled(fixedDelay = CHECK_INTERVAL)
     public void task() {

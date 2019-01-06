@@ -13,6 +13,7 @@ function displayEslData(url, headers) {
                 "<tr>" +
                 "<th>Код ценника</th>" +
                 "<th>Тип ценника</th>" +
+                "<th>Прошивка</th>" +
                 "<th>Код товара</th>" +
                 "<th>Имя товара</th>" +
                 "<th>Цена</th>" +
@@ -28,6 +29,7 @@ function displayEslData(url, headers) {
             $('#eslTBody').append("<tr>" +
                 "<td>" + tableData[i].eslCode + "</td>" +
                 "<td>" + tableData[i].eslType + "</td>" +
+                "<td>" + tableData[i].eslFirmWare + "</td>" +
                 "<td>" + tableData[i].itemCode + "</td>" +
                 "<td>" + tableData[i].itemName + "</td>" +
                 "<td>" + tableData[i].price + "</td>" +
@@ -72,7 +74,7 @@ function displayEslData(url, headers) {
     });
 }
 function getAllEslData(pageNum) {
-    var headers = {"size": $('#taskEslCounter').val(), "pageNum": pageNum, "searchValue": $('#search').val()};
+    var headers = {"size": $('#eslTableCounter').val(), "pageNum": pageNum, "searchValue": $('#search').val()};
     displayEslData("/api/getEslTableData", headers);
 }
 function eslActivateActions() {

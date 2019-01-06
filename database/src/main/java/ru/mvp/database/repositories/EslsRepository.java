@@ -15,5 +15,4 @@ public interface EslsRepository extends JpaRepository<Esls, Long> {
     Esls findByCode(String code);
     @Query("SELECT esl FROM Esls esl where esl.code = ?1 and esl.eslType = ?2 and esl.firmware = ?3")
     Esls findDuplicate(String code, String type, String firmware);
-
 }

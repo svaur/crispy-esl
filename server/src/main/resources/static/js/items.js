@@ -53,32 +53,11 @@ function itemActivateActions() {
             getAllItemsData(pageNum);
         }
     });
-    // $('#secondBtn').click(function () {
-    //     pageNum = $('#secondBtn').innerText;
-    //     buttonsUpdate();
-    //     getAllItemsData(pageNum);
-    // });
-    // $('#thirdBtn').click(function () {
-    //     pageNum = $('#thirdBtn').innerText.;
-    //     buttonsUpdate();
-    //     getAllItemsData(pageNum);
-    // });
-    // $('#fourthBtn').click(function () {
-    //     pageNum = $('#fourthBtn').innerText;
-    //     buttonsUpdate();
-    //     getAllItemsData(pageNum);
-    // });
     $('#nextBtn').click(function () {
         pageNum = pageNum + 1;
         document.getElementById("firstBtn").innerHTML = pageNum + 1;
         getAllItemsData(pageNum);
     });
-    // function buttonsUpdate() {
-    //     $('#firstBtn').innerText = pageNum;
-    //     $('#secondBtn').innerText = pageNum + 1;
-    //     $('#thirdBtn').innerText = pageNum + 2;
-    //     $('#fourthBtn').innerText = pageNum + 3;
-    // }
 }
 function getAllItemsData(pageNum) {
     var headers = {"size": $('#itemTableCounter').val(), "pageNum": pageNum, "searchValue": $('#search').val()};

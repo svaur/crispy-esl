@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mvp.database.entities.Esls;
+import ru.mvp.database.entities.Items;
 import ru.mvp.database.repositories.EslsRepository;
+import ru.mvp.database.repositories.ItemsRepository;
 import ru.mvp.rsreu.templates.BaseSaleTemplate;
 
 import java.util.ArrayList;
@@ -21,11 +23,13 @@ public class EslApiController {
 
     private static final String EMPTY_STRING = "";
     private EslsRepository eslsRepository;
+    private ItemsRepository itemsRepository;
     private BaseSaleTemplate baseSaleTemplate;
 
     @Autowired
-    public EslApiController(EslsRepository eslsRepository, BaseSaleTemplate baseSaleTemplate) {
+    public EslApiController(EslsRepository eslsRepository, ItemsRepository itemsRepository, BaseSaleTemplate baseSaleTemplate) {
         this.eslsRepository = eslsRepository;
+        this.itemsRepository = itemsRepository;
         this.baseSaleTemplate = baseSaleTemplate;
     }
 
@@ -42,24 +46,24 @@ public class EslApiController {
         return new Gson().toJson(fillEslData(output));
     }
 
-//    @RequestMapping("/api/assignEsl")
-//    public String assignEsl(@RequestParam("esl") String esl,
-//                            @RequestParam("template") String template,
-//                            @RequestParam("item") String item,
-//                            @RequestParam("type") String type) {
-//        boolean result;
-//        ESL eslElement = eslDao.searchByESLCode(esl);
-//        Item itemElement = itemDao.searchByItemCode(item);
-//        if ("add".equalsIgnoreCase(type)) {
-//            result = eslDao.assignItem(eslElement, itemElement);
-//        } else {
-//            result = eslDao.unAssignItem(eslElement);
-//        }
-//        return result ? "ok" : "error";
-//    }
-//
-//    @RequestMapping("/api/getImage")
-//    public String getImage(@RequestParam("eslCode") String eslCode) throws IOException {
+    @RequestMapping("/api/assignEsl")
+    public String assignEsl(@RequestParam("esl") String esl,
+                            @RequestParam("template") String template,
+                            @RequestParam("item") String item,
+                            @RequestParam("type") String type) {
+        Esls eslElement = eslsRepository.findByCode(esl);
+        Items itemElement = itemsRepository.findByCode(item);
+        if ("add".equalsIgnoreCase(type)) {
+            eslElement.setItemsByCode(itemElement);
+        } else {
+            eslElement.setItemsByCode(null);
+        }
+        eslsRepository.saveAndFlush(eslElement);
+        return "ok";
+    }
+
+    @RequestMapping("/api/getImage")
+    public String getImage(@RequestParam("eslCode") String eslCode){
 //        int width = 152;
 //        int height = 152;
 //        Item selectedGood = eslDao.searchByESLCode(eslCode).getItem();
@@ -76,10 +80,13 @@ public class EslApiController {
 //        if (ImageIO.write(image, "BMP", baos)) {
 //            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
 //            String imageString = "data:image/bmp;base64," + data;
-//            return new Gson().toJson(imageString);
+        Esls code = eslsRepository.findByCode(eslCode);
+        if (code.getCurrentImage()!=null)
+            return new Gson().toJson(code.getCurrentImage());
+        return "ERROR";
 //        }
 //        return "error";//todo сделать нормальный возврат ошибок на фронт
-//    }
+    }
 
     private List<HashMap<String, String>> fillEslData(Page<Esls> e) {
         List<HashMap<String, String>> outList= new ArrayList<>();
@@ -87,11 +94,12 @@ public class EslApiController {
             HashMap<String, String> map = new HashMap<>();
             map.put("eslCode", element.getCode());
             map.put("eslType", element.getEslType());
-            map.put("itemCode", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getCode());
-            map.put("itemName", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getName());
+            map.put("eslFirmWare", element.getFirmware());
+            map.put("itemCode", element.getItemsByCode() == null ? EMPTY_STRING : element.getItemsByCode().getCode());
+            map.put("itemName", element.getItemsByCode() == null ? EMPTY_STRING : element.getItemsByCode().getName());
             //todo нет цены
-            map.put("price", element.getItemsById() == null ? EMPTY_STRING : "todo цена");
-            map.put("lastUpdate", element.getLastUpdate().toString());
+            map.put("price", element.getItemsByCode() == null ? EMPTY_STRING : element.getItemsByCode().getPrice().toString());
+            map.put("lastUpdate", element.getLastUpdate() == null ? EMPTY_STRING : element.getLastUpdate().toString());
             map.put("connectivity", element.getConnectivity());
             map.put("batteryLevel", element.getBatteryLevel());
             map.put("status", element.getStatus());
