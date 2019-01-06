@@ -18,7 +18,7 @@ public class Esls {
     private Timestamp registrationDate;
     private Timestamp startDate;
     private String status;
-    private Items itemsByCode;
+    private Items itemsById;
 
     @Id
     @Column(name = "id")
@@ -147,22 +147,22 @@ public class Esls {
                 Objects.equals(registrationDate, esls.registrationDate) &&
                 Objects.equals(startDate, esls.startDate) &&
                 Objects.equals(status, esls.status) &&
-                Objects.equals(itemsByCode, esls.itemsByCode);
+                Objects.equals(itemsById, esls.itemsById);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status, itemsByCode);
+        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status, itemsById);
         result = 31 * result + Arrays.hashCode(currentImage);
         return result;
     }
 
-    @OneToOne(mappedBy = "eslsByEslCode")
-    public Items getItemsByCode() {
-        return itemsByCode;
+    @OneToOne(mappedBy = "eslsByEslId")
+    public Items getItemsById() {
+        return itemsById;
     }
 
-    public void setItemsByCode(Items itemsByCode) {
-        this.itemsByCode = itemsByCode;
+    public void setItemsById(Items itemsById) {
+        this.itemsById = itemsById;
     }
 }

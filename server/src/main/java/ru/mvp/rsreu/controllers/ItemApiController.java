@@ -18,8 +18,8 @@ import java.util.List;
 @RestController
 public class ItemApiController {
 
-    private ItemsRepository itemsRepository;
     private static final String EMPTY_STRING = "";
+    private ItemsRepository itemsRepository;
 
     @Autowired
     public ItemApiController(ItemsRepository itemsRepository) {
@@ -46,8 +46,8 @@ public class ItemApiController {
             map.put("itemName", element.getName());
             map.put("itemCode", element.getCode());
             map.put("price", element.getPrice().toString());
-            map.put("lastUpdate", element.getLastUpdated()== null?EMPTY_STRING:element.getLastUpdated().toString());
-            String value = element.getEslsByEslCode()==null?"нет":String.valueOf(element.getEslsByEslCode().getId());
+            map.put("lastUpdate", element.getLastUpdated()==null?EMPTY_STRING:element.getLastUpdated().toString());
+            String value = element.getEslsByEslId()==null?"нет":String.valueOf(element.getEslsByEslId().getId());
             map.put("associate", value);
             outList.add(map);});
         return outList;

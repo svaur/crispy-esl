@@ -54,11 +54,11 @@ public class EslApiController {
         Esls eslElement = eslsRepository.findByCode(esl);
         Items itemElement = itemsRepository.findByCode(item);
         if ("add".equalsIgnoreCase(type)) {
-            eslElement.setItemsByCode(itemElement);
+            itemElement.setEslsByEslId(eslElement);
         } else {
-            eslElement.setItemsByCode(null);
+            itemElement.setEslsByEslId(null);
         }
-        eslsRepository.saveAndFlush(eslElement);
+        itemsRepository.saveAndFlush(itemElement);
         return "ok";
     }
 
@@ -95,10 +95,10 @@ public class EslApiController {
             map.put("eslCode", element.getCode());
             map.put("eslType", element.getEslType());
             map.put("eslFirmWare", element.getFirmware());
-            map.put("itemCode", element.getItemsByCode() == null ? EMPTY_STRING : element.getItemsByCode().getCode());
-            map.put("itemName", element.getItemsByCode() == null ? EMPTY_STRING : element.getItemsByCode().getName());
+            map.put("itemCode", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getCode());
+            map.put("itemName", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getName());
             //todo нет цены
-            map.put("price", element.getItemsByCode() == null ? EMPTY_STRING : element.getItemsByCode().getPrice().toString());
+            map.put("price", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getPrice().toString());
             map.put("lastUpdate", element.getLastUpdate() == null ? EMPTY_STRING : element.getLastUpdate().toString());
             map.put("connectivity", element.getConnectivity());
             map.put("batteryLevel", element.getBatteryLevel());

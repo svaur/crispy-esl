@@ -14,8 +14,8 @@ public class Items {
     //todo будут ли операции расчитаны тут. Если да, то надо будет тип BigInteger
     private Double price;
     private String storageUnit;
-    private Collection<ItemParamsGroup> itemParamsGroupsByCode;
-    private Esls eslsByEslCode;
+    private Collection<ItemParamsGroup> itemParamsGroupsById;
+    private Esls eslsByEslId;
 
     @Id
     @Column(name = "id")
@@ -89,31 +89,31 @@ public class Items {
                 Objects.equals(lastUpdated, items.lastUpdated) &&
                 Objects.equals(price, items.price) &&
                 Objects.equals(storageUnit, items.storageUnit) &&
-                Objects.equals(itemParamsGroupsByCode, items.itemParamsGroupsByCode) &&
-                Objects.equals(eslsByEslCode, items.eslsByEslCode);
+                Objects.equals(itemParamsGroupsById, items.itemParamsGroupsById) &&
+                Objects.equals(eslsByEslId, items.eslsByEslId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, name, lastUpdated, price, storageUnit, itemParamsGroupsByCode, eslsByEslCode);
+        return Objects.hash(id, code, name, lastUpdated, price, storageUnit, itemParamsGroupsById, eslsByEslId);
     }
 
-    @OneToMany(mappedBy = "itemsByItemCode")
-    public Collection<ItemParamsGroup> getItemParamsGroupsByCode() {
-        return itemParamsGroupsByCode;
+    @OneToMany(mappedBy = "itemsByItemId")
+    public Collection<ItemParamsGroup> getItemParamsGroupsById() {
+        return itemParamsGroupsById;
     }
 
-    public void setItemParamsGroupsByCode(Collection<ItemParamsGroup> itemParamsGroupsByCode) {
-        this.itemParamsGroupsByCode = itemParamsGroupsByCode;
+    public void setItemParamsGroupsById(Collection<ItemParamsGroup> itemParamsGroupsById) {
+        this.itemParamsGroupsById = itemParamsGroupsById;
     }
 
-    @OneToOne
-    @JoinColumn(name = "esl_code", referencedColumnName = "code")
-    public Esls getEslsByEslCode() {
-        return eslsByEslCode;
+    @ManyToOne
+    @JoinColumn(name = "esl_id", referencedColumnName = "id")
+    public Esls getEslsByEslId() {
+        return eslsByEslId;
     }
 
-    public void setEslsByEslCode(Esls eslsByEslCode) {
-        this.eslsByEslCode = eslsByEslCode;
+    public void setEslsByEslId(Esls eslsByEslId) {
+        this.eslsByEslId = eslsByEslId;
     }
 }

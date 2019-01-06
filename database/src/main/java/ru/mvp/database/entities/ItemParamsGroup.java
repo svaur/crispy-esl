@@ -11,7 +11,7 @@ public class ItemParamsGroup {
     private int id;
     private Timestamp dateAdded;
     private Collection<ItemParams> itemParamsById;
-    private Items itemsByItemCode;
+    private Items itemsByItemId;
     private Templates templatesByTemplateId;
     private Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById;
 
@@ -44,14 +44,14 @@ public class ItemParamsGroup {
         return id == that.id &&
                 Objects.equals(dateAdded, that.dateAdded) &&
                 Objects.equals(itemParamsById, that.itemParamsById) &&
-                Objects.equals(itemsByItemCode, that.itemsByItemCode) &&
+                Objects.equals(itemsByItemId, that.itemsByItemId) &&
                 Objects.equals(templatesByTemplateId, that.templatesByTemplateId) &&
                 Objects.equals(taskUpdatedItemParamsById, that.taskUpdatedItemParamsById);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateAdded, itemParamsById, itemsByItemCode, templatesByTemplateId, taskUpdatedItemParamsById);
+        return Objects.hash(id, dateAdded, itemParamsById, itemsByItemId, templatesByTemplateId, taskUpdatedItemParamsById);
     }
 
     @OneToMany(mappedBy = "itemParamsGroupByItemParamsGroupId")
@@ -65,12 +65,12 @@ public class ItemParamsGroup {
 
     @ManyToOne
     @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
-    public Items getItemsByItemCode() {
-        return itemsByItemCode;
+    public Items getItemsByItemId() {
+        return itemsByItemId;
     }
 
-    public void setItemsByItemCode(Items itemsByItemCode) {
-        this.itemsByItemCode = itemsByItemCode;
+    public void setItemsByItemId(Items itemsByItemId) {
+        this.itemsByItemId = itemsByItemId;
     }
 
     @ManyToOne

@@ -36,13 +36,12 @@ CREATE TABLE items
   last_updated  TIMESTAMP,
   price   NUMERIC NOT NULL,
   storage_unit          VARCHAR(256) NOT NULL,
-  esl_code        VARCHAR(255) NULL REFERENCES esls(code)
+  esl_id        INT NULL REFERENCES esls(id) 
 );
 
-
 --индекс для обозначения связи 1к1
-CREATE UNIQUE INDEX index_items_esl_code
-  ON public.items (esl_code ASC);
+CREATE UNIQUE INDEX index_items_esl_id
+ON public.items (esl_id ASC);
 
 -- таблица справочник параметров
 CREATE TABLE directory_params
