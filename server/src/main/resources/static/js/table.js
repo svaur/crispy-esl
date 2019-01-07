@@ -36,13 +36,13 @@ function getTableTemplate(suffixForTable) {
     resultTableHtml+="</div>" +
         "<table class=\"centered striped\" id=\"" + suffixForTable + "Table\"></table>" +
         "</div>"+
-        "  <ul class=\"pagination col offset-s8\">\n" +
-        "    <li class=\"waves-effect\"><a id =\"previousBtn\"  href=\"#!\"><i class=\"material-icons\">chevron_left</i></a></li>\n" +
-        "    <li class=\"active waves-effect\"><a id =\"firstBtn\"  href=\"#!\">1</a></li>\n" +
-        // "    <li class=\"waves-effect\"><a id =\"secondBtn\" href=\"#!\">2</a></li>\n" +
-        // "    <li class=\"waves-effect\"><a id =\"thirdBtn\"  href=\"#!\">3</a></li>\n" +
-        // "    <li class=\"waves-effect\"><a id =\"fourthBtn\" href=\"#!\">4</a></li>\n" +
-        "    <li class=\"waves-effect\"><a id =\"nextBtn\" href=\"#!\"><i class=\"material-icons\">chevron_right</i></a></li>\n" +
+        "  <ul class=\"pagination col offset-s8\">" +
+        "    <li class=\"waves-effect\"><a id =\"previousBtn\"  href=\"#!\"><i class=\"material-icons\">chevron_left</i></a></li>" +
+        "    <li class=\"active waves-effect\"><a id =\"firstBtn\"  href=\"#!\">1</a></li>" +
+        // "    <li class=\"waves-effect\"><a id =\"secondBtn\" href=\"#!\">2</a></li>" +
+        // "    <li class=\"waves-effect\"><a id =\"thirdBtn\"  href=\"#!\">3</a></li>" +
+        // "    <li class=\"waves-effect\"><a id =\"fourthBtn\" href=\"#!\">4</a></li>" +
+        "    <li class=\"waves-effect\"><a id =\"nextBtn\" href=\"#!\"><i class=\"material-icons\">chevron_right</i></a></li>" +
         "  </ul>";
     return resultTableHtml;
 }
