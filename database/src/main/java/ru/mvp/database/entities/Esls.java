@@ -3,7 +3,6 @@ package ru.mvp.database.entities;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -12,8 +11,9 @@ public class Esls {
     private String code;
     private String batteryLevel;
     private byte[] currentImage;
+    private byte[] nextImage;
     private String connectivity;
-    private String esltype;
+    private String eslType;
     private String firmware;
     private Timestamp lastUpdate;
     private Timestamp registrationDate;
@@ -33,7 +33,7 @@ public class Esls {
     }
 
     @Basic
-    @Column(name = "code")
+    @Column(name = "code", unique=true)
     public String getCode() {
         return code;
     }
@@ -63,6 +63,16 @@ public class Esls {
     }
 
     @Basic
+    @Column(name = "next_image")
+    public byte[] getNextImage() {
+        return nextImage;
+    }
+
+    public void setNextImage(byte[] nextImage) {
+        this.nextImage = nextImage;
+    }
+
+    @Basic
     @Column(name = "connectivity")
     public String getConnectivity() {
         return connectivity;
@@ -74,12 +84,12 @@ public class Esls {
 
     @Basic
     @Column(name = "esl_type")
-    public String getEsltype() {
-        return esltype;
+    public String getEslType() {
+        return eslType;
     }
 
-    public void setEsltype(String esltype) {
-        this.esltype = esltype;
+    public void setEslType(String eslType) {
+        this.eslType = eslType;
     }
 
     @Basic
@@ -141,8 +151,9 @@ public class Esls {
                 Objects.equals(code, esls.code) &&
                 Objects.equals(batteryLevel, esls.batteryLevel) &&
                 Arrays.equals(currentImage, esls.currentImage) &&
+                Arrays.equals(nextImage, esls.nextImage) &&
                 Objects.equals(connectivity, esls.connectivity) &&
-                Objects.equals(esltype, esls.esltype) &&
+                Objects.equals(eslType, esls.eslType) &&
                 Objects.equals(firmware, esls.firmware) &&
                 Objects.equals(lastUpdate, esls.lastUpdate) &&
                 Objects.equals(registrationDate, esls.registrationDate) &&
@@ -153,8 +164,9 @@ public class Esls {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, code, batteryLevel, connectivity, esltype, firmware, lastUpdate, registrationDate, startDate, status, itemsById);
+        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status, itemsById);
         result = 31 * result + Arrays.hashCode(currentImage);
+        result = 31 * result + Arrays.hashCode(nextImage);
         return result;
     }
 

@@ -72,7 +72,7 @@ public class Tasks {
         return Objects.hash(id, taskName, cronExpression, status, taskResultsById, taskUpdatedItemParamsById);
     }
 
-    @OneToMany(mappedBy = "tasks_by_task_id")
+    @OneToMany(mappedBy = "tasksByTaskId")
     public Collection<TaskResults> getTaskResultsById() {
         return taskResultsById;
     }
@@ -81,7 +81,7 @@ public class Tasks {
         this.taskResultsById = taskResultsById;
     }
 
-    @OneToMany(mappedBy = "tasks_by_task_id")
+    @OneToMany(mappedBy = "tasksByTaskId")
     public Collection<TaskUpdatedItemParams> getTaskUpdatedItemParamsById() {
         return taskUpdatedItemParamsById;
     }

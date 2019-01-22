@@ -2,11 +2,14 @@ package ru.mvp.rsreu.controllers;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.mvp.rsreu.db.dao.ItemDao;
-import ru.mvp.rsreu.db.entity.Item;
+import ru.mvp.database.entities.Items;
+import ru.mvp.database.repositories.ItemsRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,49 +18,38 @@ import java.util.List;
 @RestController
 public class ItemApiController {
 
-    private ItemDao itemDao;
+    private static final String EMPTY_STRING = "";
+    private ItemsRepository itemsRepository;
 
     @Autowired
-    public ItemApiController(ItemDao itemDao) {
-        this.itemDao = itemDao;
+    public ItemApiController(ItemsRepository itemsRepository) {
+        this.itemsRepository = itemsRepository;
     }
 
     @RequestMapping("/api/getItemTableData")
-    public String getItemTableData(@RequestParam(value = "size", required = false, defaultValue = "10") String size) {//todo получать мапу? не станет ли избыточным?
-        int showSize = Integer.valueOf(size);
-        List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        List<Item> list = itemDao.getAll(showSize);
-        list.forEach(e -> {
-            HashMap<String, String> hashMap = fillItemData(e);
-            tableData.add(hashMap);
-        });
-        return new Gson().toJson(tableData);
-    }
-
-    @RequestMapping("/api/searchItemData")
-    public String searchItemData(@RequestParam(value = "size", required = false, defaultValue = "10") String size,    //todo для показа конечно и так сойдет, но уж дюже похоже на предыдущий метод, фабрика ESLDao
-                                 @RequestParam(value = "searchValue") String searchValue) {                           //todo получать мапу? не станет ли избыточным?
-        int showSize = Integer.valueOf(size);
-        List<HashMap<String, String>> tableData = new ArrayList<>(showSize);
-        List<Item> list = itemDao.searchByValue(searchValue, showSize);
-        list.forEach(e -> {
-            HashMap<String, String> hashMap = fillItemData(e);
-            tableData.add(hashMap);
-        });
-        return new Gson().toJson(tableData);
-    }
-
-    private HashMap<String, String> fillItemData(Item e) {
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("itemCode", e.getItemCode());
-        hashMap.put("itemName", e.getItemName());
-        hashMap.put("price", String.valueOf(e.getPromotionPrice()));
-        hashMap.put("lastUpdate", String.valueOf(e.getLastUpdated()));
-        if (e.getEsl()!=null)
-            hashMap.put("associate", e.getEsl().getEslCode());
+    public String getItemTableData(@RequestParam(value = "size") Integer size,
+                                   @RequestParam(value = "pageNum") Integer pageNum,
+                                   @RequestParam(value = "searchValue") String searchValue) {
+        Page<Items> output;
+        if (searchValue.isEmpty())
+            output = itemsRepository.findAll(PageRequest.of(pageNum, size, Sort.Direction.ASC, "name"));
         else
-            hashMap.put("associate", "нет");
-        hashMap.put("active", "true");
-        return hashMap;
+            output = itemsRepository.findByFilter(PageRequest.of(pageNum, size, Sort.Direction.ASC, "name"), searchValue);
+
+        return new Gson().toJson(fillItemData(output));
+    }
+
+    private List<HashMap<String, String>> fillItemData(Page<Items> e) {
+        List<HashMap<String, String>> outList= new ArrayList<>();
+        e.forEach(element->{
+            HashMap<String, String> map = new HashMap<>();
+            map.put("itemName", element.getName());
+            map.put("itemCode", element.getCode());
+            map.put("price", element.getPrice().toString());
+            map.put("lastUpdate", element.getLastUpdated()==null?EMPTY_STRING:element.getLastUpdated().toString());
+            String value = element.getEslsByEslId()==null?"нет":String.valueOf(element.getEslsByEslId().getId());
+            map.put("associate", value);
+            outList.add(map);});
+        return outList;
     }
 }

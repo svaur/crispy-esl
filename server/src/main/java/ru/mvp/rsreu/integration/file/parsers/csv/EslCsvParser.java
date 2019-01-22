@@ -4,7 +4,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.mvp.rsreu.db.entity.ESL;
+import ru.mvp.database.entities.Esls;
 import ru.mvp.rsreu.integration.file.parsers.IParser;
 
 import java.io.IOException;
@@ -23,8 +23,8 @@ public class EslCsvParser implements IParser {
     private final static Logger LOGGER = LoggerFactory.getLogger(EslCsvParser.class);
 
     @Override
-    public List<ESL> parse(Path data) {
-        List<ESL> esls = new ArrayList<>();
+    public List<Esls> parse(Path data) {
+        List<Esls> esls = new ArrayList<>();
         try (Reader reader = Files.newBufferedReader(data);
              CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT)) {
             StreamSupport.stream(csvParser.spliterator(), false)
@@ -33,10 +33,10 @@ public class EslCsvParser implements IParser {
                         String eslType = e.get(1);
                         String eslFirmWare = e.get(2);
 
-                        ESL esl = new ESL();
-                        esl.setEslCode(eslCode);
+                        Esls esl = new Esls();
+                        esl.setCode(eslCode);
                         esl.setEslType(eslType);
-                        esl.setFirmWare(eslFirmWare);
+                        esl.setFirmware(eslFirmWare);
 
                         esls.add(esl);
                     });

@@ -13,6 +13,7 @@ function displayEslData(url, headers) {
                 "<tr>" +
                 "<th>Код ценника</th>" +
                 "<th>Тип ценника</th>" +
+                "<th>Прошивка</th>" +
                 "<th>Код товара</th>" +
                 "<th>Имя товара</th>" +
                 "<th>Цена</th>" +
@@ -28,6 +29,7 @@ function displayEslData(url, headers) {
             $('#eslTBody').append("<tr>" +
                 "<td>" + tableData[i].eslCode + "</td>" +
                 "<td>" + tableData[i].eslType + "</td>" +
+                "<td>" + tableData[i].eslFirmWare + "</td>" +
                 "<td>" + tableData[i].itemCode + "</td>" +
                 "<td>" + tableData[i].itemName + "</td>" +
                 "<td>" + tableData[i].price + "</td>" +
@@ -71,6 +73,10 @@ function displayEslData(url, headers) {
         display.style.visibility='hidden'
     });
 }
+function getAllEslData(pageNum) {
+    var headers = {"size": $('#eslTableCounter').val(), "pageNum": pageNum, "searchValue": $('#search').val()};
+    displayEslData("/api/getEslTableData", headers);
+}
 function eslActivateActions() {
     $('#eslTableCounter').formSelect().on('change', function () {
         var headers = {"size": $('#eslTableCounter').val()};
@@ -81,4 +87,16 @@ function eslActivateActions() {
         displayEslData("/api/searchEslData", headers);
     });
     $('.dropdown-trigger').dropdown();
+    $('#previousBtn').click(function () {
+        if (pageNum > 0) {
+            pageNum = pageNum - 1;
+            document.getElementById("firstBtn").innerHTML = pageNum + 1;
+            getAllEslData(pageNum);
+        }
+    });
+    $('#nextBtn').click(function () {
+        pageNum = pageNum + 1;
+        document.getElementById("firstBtn").innerHTML = pageNum + 1;
+        getAllEslData(pageNum);
+    });
 }

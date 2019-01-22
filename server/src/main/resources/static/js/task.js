@@ -96,10 +96,10 @@ function displayTaskData(url, headers) {
             .append("<thead>" +
                 "<tr>" +
                 "<th>Имя</th>" +
-                "<th>Тип</th>" +
+                "<th>Затронутые товары</th>" +
                 "<th>Частота</th>" +
-                "<th>Последнее обновление</th>" +
-                "<th>Запланированное обновление</th>" +
+                "<th>Статус</th>" +
+                "<th>taskResults</th>" +
                 "<th>Действие</th>" +
                 "</tr>" +
                 "</thead>")
@@ -107,10 +107,10 @@ function displayTaskData(url, headers) {
         for (var i = 0; i < tableData.length; i++) {
             $('#taskTBody').append("<tr>" +
                 "<td>" + tableData[i].taskName + "</td>" +
-                "<td>" + tableData[i].taskType + "</td>" +
+                "<td>" + tableData[i].updatedItemParams + "</td>" +
                 "<td>" + tableData[i].frequency + "</td>" +
-                "<td>" + tableData[i].lastUpdate + "</td>" +
-                "<td>" + tableData[i].nextShedule + "</td>" +
+                "<td>" + tableData[i].status + "</td>" +
+                "<td>" + tableData[i].taskResults + "</td>" +
                 "<td> </td>" +
                 "</tr>");
         }
@@ -123,14 +123,49 @@ function displayTaskData(url, headers) {
 }
 function taskActivateActions() {
     $('#taskTableCounter').formSelect().on('change', function () {
-        var headers = {"size": $('#taskTableCounter').val()};
-        displayEslData("/api/getTaskTableData", headers);
+        getAllTaskData(0)
     });
     $('#search').on('input', function() {
-        var headers = {"size": $('#taskTableCounter').val(), "searchValue": $('#search').val()};
-        displayTaskData("/api/searchTaskData", headers);
+        getAllTaskData(0)
     });
     $('.dropdown-trigger').dropdown();
+    $('#previousBtn').click(function () {
+        if (pageNum > 0) {
+            pageNum = pageNum - 1;
+            document.getElementById("firstBtn").innerHTML = pageNum + 1;
+            getAllTaskData(pageNum);
+        }
+    });
+    // $('#secondBtn').click(function () {
+    //     pageNum = $('#secondBtn').innerText;
+    //     buttonsUpdate();
+    //     getAllItemsData(pageNum);
+    // });
+    // $('#thirdBtn').click(function () {
+    //     pageNum = $('#thirdBtn').innerText.;
+    //     buttonsUpdate();
+    //     getAllItemsData(pageNum);
+    // });
+    // $('#fourthBtn').click(function () {
+    //     pageNum = $('#fourthBtn').innerText;
+    //     buttonsUpdate();
+    //     getAllItemsData(pageNum);
+    // });
+    $('#nextBtn').click(function () {
+        pageNum = pageNum + 1;
+        document.getElementById("firstBtn").innerHTML = pageNum + 1;
+        getAllTaskData(pageNum);
+    });
+    // function buttonsUpdate() {
+    //     $('#firstBtn').innerText = pageNum;
+    //     $('#secondBtn').innerText = pageNum + 1;
+    //     $('#thirdBtn').innerText = pageNum + 2;
+    //     $('#fourthBtn').innerText = pageNum + 3;
+    // }
+}
+function getAllTaskData(pageNum) {
+    var headers = {"size": $('#taskTableCounter').val(), "pageNum": pageNum, "searchValue": $('#search').val()};
+    displayTaskData("/api/getTaskTableData", headers);
 }
 function hideDiv(elem) {
     $(elem).hide();

@@ -11,6 +11,8 @@ public class Items {
     private String code;
     private String name;
     private Timestamp lastUpdated;
+    //todo будут ли операции расчитаны тут. Если да, то надо будет тип BigInteger
+    private Double price;
     private String storageUnit;
     private Collection<ItemParamsGroup> itemParamsGroupsById;
     private Esls eslsByEslId;
@@ -27,7 +29,7 @@ public class Items {
     }
 
     @Basic
-    @Column(name = "code")
+    @Column(name = "code", unique=true)
     public String getCode() {
         return code;
     }
@@ -57,6 +59,16 @@ public class Items {
     }
 
     @Basic
+    @Column(name = "price")
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    @Basic
     @Column(name = "storage_unit")
     public String getStorageUnit() {
         return storageUnit;
@@ -75,6 +87,7 @@ public class Items {
                 Objects.equals(code, items.code) &&
                 Objects.equals(name, items.name) &&
                 Objects.equals(lastUpdated, items.lastUpdated) &&
+                Objects.equals(price, items.price) &&
                 Objects.equals(storageUnit, items.storageUnit) &&
                 Objects.equals(itemParamsGroupsById, items.itemParamsGroupsById) &&
                 Objects.equals(eslsByEslId, items.eslsByEslId);
@@ -82,10 +95,10 @@ public class Items {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, name, lastUpdated, storageUnit, itemParamsGroupsById, eslsByEslId);
+        return Objects.hash(id, code, name, lastUpdated, price, storageUnit, itemParamsGroupsById, eslsByEslId);
     }
 
-    @OneToMany(mappedBy = "items_by_item_id")
+    @OneToMany(mappedBy = "itemsByItemId")
     public Collection<ItemParamsGroup> getItemParamsGroupsById() {
         return itemParamsGroupsById;
     }

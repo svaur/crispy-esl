@@ -32,8 +32,9 @@ $(document).ready(function () {
         displayWorkSpace('#reportWorkSpace', ' ');
     });
 });
-
+var pageNum=0;
 function displayWorkSpace(menu, url) {
+    pageNum=0;
     setActive();
     switch(menu) {
         case "#welcomeWorkSpace":
@@ -47,13 +48,15 @@ function displayWorkSpace(menu, url) {
             $('#workSpace').html('')
                 .append(getEslsTemplate());
             eslActivateActions();
-            displayEslData(url);
+            var headers = {"size": $('#eslTableCounter').val(), "pageNum": 0, "searchValue": ""};
+            displayEslData(url, headers);
             break;
         case "#itemsWorkSpace":
             $('#workSpace').html('')
                 .append(getItemsTemplate());
             itemActivateActions();
-            displayItemData(url);
+            var headers = {"size": $('#itemTableCounter').val(), "pageNum": 0, "searchValue": ""};
+            displayItemData(url, headers);
             break;
         case "#associateWorkSpace":
             $('#workSpace').html('')
@@ -64,7 +67,8 @@ function displayWorkSpace(menu, url) {
             $('#workSpace').html('')
                 .append(getTasksTemplate());
             taskActivateActions();
-            displayTaskData(url);
+            var headers = {"size": $('#taskTableCounter').val(), "pageNum": 0, "searchValue": ""};
+            displayTaskData(url, headers);
             $('#addTaskWindow').hide();
             $('#addTask').click(function () {
                 $('#addTaskWindow').show();

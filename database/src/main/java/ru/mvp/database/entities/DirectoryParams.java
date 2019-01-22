@@ -61,7 +61,7 @@ public class DirectoryParams {
         return Objects.hash(id, name, typeParam, availableParamsForTemplatesById, itemParamsById);
     }
 
-    @OneToMany(mappedBy = "directory_params_by_param_id")
+    @OneToMany(mappedBy = "directoryParamsByParamId")
     public Collection<AvailableParamsForTemplate> getAvailableParamsForTemplatesById() {
         return availableParamsForTemplatesById;
     }
@@ -70,7 +70,7 @@ public class DirectoryParams {
         this.availableParamsForTemplatesById = availableParamsForTemplatesById;
     }
 
-    @OneToMany(mappedBy = "directory_params_by_param_id")
+    @OneToMany(mappedBy = "directoryParamsByParamId")
     public Collection<ItemParams> getItemParamsById() {
         return itemParamsById;
     }

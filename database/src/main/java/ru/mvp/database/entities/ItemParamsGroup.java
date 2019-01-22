@@ -54,7 +54,7 @@ public class ItemParamsGroup {
         return Objects.hash(id, dateAdded, itemParamsById, itemsByItemId, templatesByTemplateId, taskUpdatedItemParamsById);
     }
 
-    @OneToMany(mappedBy = "item_params_group_by_item_params_group_id")
+    @OneToMany(mappedBy = "itemParamsGroupByItemParamsGroupId")
     public Collection<ItemParams> getItemParamsById() {
         return itemParamsById;
     }
@@ -83,7 +83,7 @@ public class ItemParamsGroup {
         this.templatesByTemplateId = templatesByTemplateId;
     }
 
-    @OneToMany(mappedBy = "item_params_group_by_item_params_group_id")
+    @OneToMany(mappedBy = "itemParamsGroupByItemParamsGroupId")
     public Collection<TaskUpdatedItemParams> getTaskUpdatedItemParamsById() {
         return taskUpdatedItemParamsById;
     }

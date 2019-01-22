@@ -40,12 +40,26 @@ function displayItemData(url, headers) {
 }
 function itemActivateActions() {
     $('#itemTableCounter').formSelect().on('change', function () {
-        var headers = {"size": $('#itemTableCounter').val()};
-        displayItemData("/api/getItemTableData", headers);
+        getAllItemsData(pageNum);
     });
     $('#search').on('input', function() {
-        var headers = {"size": $('#itemTableCounter').val(), "searchValue": $('#search').val()};
-        displayItemData("/api/searchItemData", headers);
+        getAllItemsData(pageNum);
     });
     $('.dropdown-trigger').dropdown();
+    $('#previousBtn').click(function () {
+        if (pageNum > 0) {
+            pageNum = pageNum - 1;
+            document.getElementById("firstBtn").innerHTML = pageNum + 1;
+            getAllItemsData(pageNum);
+        }
+    });
+    $('#nextBtn').click(function () {
+        pageNum = pageNum + 1;
+        document.getElementById("firstBtn").innerHTML = pageNum + 1;
+        getAllItemsData(pageNum);
+    });
+}
+function getAllItemsData(pageNum) {
+    var headers = {"size": $('#itemTableCounter').val(), "pageNum": pageNum, "searchValue": $('#search').val()};
+    displayItemData("/api/getItemTableData", headers);
 }

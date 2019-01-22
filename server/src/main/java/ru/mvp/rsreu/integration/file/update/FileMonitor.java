@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ru.mvp.rsreu.db.dao.ESLDao;
-import ru.mvp.rsreu.db.dao.ItemDao;
-import ru.mvp.rsreu.db.entity.ESL;
-import ru.mvp.rsreu.db.entity.Item;
+import ru.mvp.database.entities.Esls;
+import ru.mvp.database.entities.Items;
+import ru.mvp.database.repositories.EslsRepository;
+import ru.mvp.database.repositories.ItemsRepository;
 import ru.mvp.rsreu.integration.file.parsers.ParserFactory;
 import ru.mvp.rsreu.integration.file.parsers.TypeEntity;
 
@@ -36,13 +36,15 @@ public class FileMonitor {
     private String itemDirectory = "server/src/main/resources/itemDir";
     private String eslDirectory = "server/src/main/resources/eslDir/";
     private Map<String, FileInfo> fileInfoMap = new HashMap<>();
-    @Autowired
-    ItemDao itemService;
-    @Autowired
-    ESLDao eslService;
-    @Autowired
+    ItemsRepository itemsRepository;
+    EslsRepository eslsRepository;
     ParserFactory factory;
 
+    public FileMonitor(ItemsRepository itemsRepository, EslsRepository eslsRepository, ParserFactory factory) {
+        this.itemsRepository = itemsRepository;
+        this.eslsRepository = eslsRepository;
+        this.factory = factory;
+    }
 
     @Scheduled(fixedDelay = CHECK_INTERVAL)
     public void task() {
@@ -55,8 +57,22 @@ public class FileMonitor {
                         currentFileSet.add(file.getName());
                         return checkChangeFile(file);})
                     .forEach(e -> {
-                        List<Item> parse = (List<Item>)factory.getParser(e, TypeEntity.ITEM).parse(e);
-                        itemService.insertOrUpdateItems(parse);
+                        List<Items> parse = (List<Items>) factory.getParser(e, TypeEntity.ITEM).parse(e);
+                        //todo подумать как сделать поиск дубликатов элегантнее. ща топорно.
+                        parse.forEach(el->{
+                            if (itemsRepository.findDuplicate(el.getCode(), el.getName(), el.getPrice(), el.getStorageUnit())==null) {
+                                Items findByCodeElement = itemsRepository.findByCode(el.getCode());
+                                if(findByCodeElement == null){
+                                    //новый элемент. Просто вставляем
+                                    itemsRepository.save(el);
+                                }else{
+                                    //такой айдишник есть. Надо апдейтить
+                                    el.setId(findByCodeElement.getId());
+                                    itemsRepository.save(el);
+                                }
+                            }
+                        });
+                        itemsRepository.flush();
                     });
         } catch (IOException e) {
             LOGGER.error("Catch error: ", e);
@@ -68,8 +84,21 @@ public class FileMonitor {
                         currentFileSet.add(file.getName());
                         return checkChangeFile(file);})
                     .forEach(e -> {
-                        List<ESL> parse = (List<ESL>)factory.getParser(e, TypeEntity.ESL).parse(e);
-                        eslService.insertOrUpdateEsls(parse);
+                        List<Esls> parse = (List<Esls>) factory.getParser(e, TypeEntity.ESL).parse(e);
+                        parse.forEach(el->{
+                            if (eslsRepository.findDuplicate(el.getCode(), el.getEslType(), el.getFirmware())==null) {
+                                Esls findByCodeElement = eslsRepository.findByCode(el.getCode());
+                                if(findByCodeElement == null){
+                                    //новый элемент. Просто вставляем
+                                    eslsRepository.save(el);
+                                }else{
+                                    //такой айдишник есть. Надо апдейтить
+                                    el.setId(findByCodeElement.getId());
+                                    eslsRepository.save(el);
+                                }
+                            }
+                        });
+                        eslsRepository.flush();
                     });
         } catch (IOException e) {
             LOGGER.error("Catch error: ", e);

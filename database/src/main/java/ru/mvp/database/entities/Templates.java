@@ -60,7 +60,7 @@ public class Templates {
         return Objects.hash(id, name, template, availableParamsForTemplatesById, itemParamsGroupsById);
     }
 
-    @OneToMany(mappedBy = "templates_by_template_id")
+    @OneToMany(mappedBy = "templatesByTemplateId")
     public Collection<AvailableParamsForTemplate> getAvailableParamsForTemplatesById() {
         return availableParamsForTemplatesById;
     }
@@ -69,7 +69,7 @@ public class Templates {
         this.availableParamsForTemplatesById = availableParamsForTemplatesById;
     }
 
-    @OneToMany(mappedBy = "templates_by_template_id")
+    @OneToMany(mappedBy = "templatesByTemplateId")
     public Collection<ItemParamsGroup> getItemParamsGroupsById() {
         return itemParamsGroupsById;
     }
