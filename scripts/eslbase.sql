@@ -111,6 +111,6 @@ CREATE TABLE task_updated_item_params
 (
   id                    INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   task_id               INT REFERENCES tasks(id),
-  item_params_group_id  INT REFERENCES item_params_group(id),
+  item_id               INT NOT NULL REFERENCES items(id),
   status                INT NOT NULL
 );
