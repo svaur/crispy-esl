@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 public class TaskApiController {
 
-    @Autowired
     TasksRepository tasksRepository;
 
     @Autowired

@@ -1,6 +1,7 @@
 package ru.mvp.database.entities;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -8,6 +9,7 @@ import java.util.Objects;
 public class Tasks {
     private int id;
     private String taskName;
+    private Timestamp startDate;
     private String cronExpression;
     private int status;
     private Collection<TaskResults> taskResultsById;
@@ -22,6 +24,16 @@ public class Tasks {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "start_date")
+    public Timestamp getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Timestamp startDate) {
+        this.startDate = startDate;
     }
 
     @Basic
@@ -62,6 +74,7 @@ public class Tasks {
         return id == tasks.id &&
                 status == tasks.status &&
                 Objects.equals(taskName, tasks.taskName) &&
+                Objects.equals(startDate, tasks.startDate) &&
                 Objects.equals(cronExpression, tasks.cronExpression) &&
                 Objects.equals(taskResultsById, tasks.taskResultsById) &&
                 Objects.equals(taskUpdatedItemParamsById, tasks.taskUpdatedItemParamsById);
@@ -69,7 +82,7 @@ public class Tasks {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, taskName, cronExpression, status, taskResultsById, taskUpdatedItemParamsById);
+        return Objects.hash(id, taskName, startDate, cronExpression, status, taskResultsById, taskUpdatedItemParamsById);
     }
 
     @OneToMany(mappedBy = "tasksByTaskId")

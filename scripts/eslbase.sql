@@ -91,6 +91,7 @@ CREATE TABLE tasks
 (
   id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   task_name        VARCHAR(255) UNIQUE,
+  start_date TIMESTAMP,
   cron_expression VARCHAR(255),
   status          INT NOT NULL
 );

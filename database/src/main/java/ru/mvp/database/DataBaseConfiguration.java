@@ -18,14 +18,6 @@ import javax.sql.DataSource;
 @EnableJpaRepositories("ru.mvp.database.repositories")
 public class DataBaseConfiguration {
 
-//        Пример использования
-//        ApplicationContext ctx = new AnnotationConfigApplicationContext(DataBaseConfiguration.class);
-//        DirectoryParamsRepository directoryParamsRepository = ctx.getBean(DirectoryParamsRepository.class);
-//
-//        for (DirectoryParams directoryParams: directoryParamsRepository.findAll()) {
-//            System.out.println(directoryParams.getId() + " " + directoryParams.getName());
-//        }
-
     @Bean
     public DataSource dataSource() {
 
