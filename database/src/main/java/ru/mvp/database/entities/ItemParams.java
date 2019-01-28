@@ -8,7 +8,7 @@ import java.util.Objects;
 public class ItemParams {
     private int id;
     private String paramValue;
-    private ItemParamsGroup itemParamsGroupByItemParamsGroupId;
+    private ItemParamsGroup itemsByItemId;
     private DirectoryParams directoryParamsByParamId;
 
     @Id
@@ -39,23 +39,23 @@ public class ItemParams {
         ItemParams that = (ItemParams) o;
         return id == that.id &&
                 Objects.equals(paramValue, that.paramValue) &&
-                Objects.equals(itemParamsGroupByItemParamsGroupId, that.itemParamsGroupByItemParamsGroupId) &&
+                Objects.equals(itemsByItemId, that.itemsByItemId) &&
                 Objects.equals(directoryParamsByParamId, that.directoryParamsByParamId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, paramValue, itemParamsGroupByItemParamsGroupId, directoryParamsByParamId);
+        return Objects.hash(id, paramValue, itemsByItemId, directoryParamsByParamId);
     }
 
     @ManyToOne
     @JoinColumn(name = "item_params_group_id", referencedColumnName = "id")
-    public ItemParamsGroup getItemParamsGroupByItemParamsGroupId() {
-        return itemParamsGroupByItemParamsGroupId;
+    public ItemParamsGroup getitemsByItemId() {
+        return itemsByItemId;
     }
 
-    public void setItemParamsGroupByItemParamsGroupId(ItemParamsGroup itemParamsGroupByItemParamsGroupId) {
-        this.itemParamsGroupByItemParamsGroupId = itemParamsGroupByItemParamsGroupId;
+    public void setitemsByItemId(ItemParamsGroup itemsByItemId) {
+        this.itemsByItemId = itemsByItemId;
     }
 
     @ManyToOne

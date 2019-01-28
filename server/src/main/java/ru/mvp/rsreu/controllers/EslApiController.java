@@ -110,8 +110,8 @@ public class EslApiController {
         int height = 152;
         EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(items.getName(),
                 items.getName(),
+                String.valueOf(items.getPrice()+10),
                 String.valueOf(items.getPrice()),
-                String.valueOf(items.getStorageUnit()),
                 "рублей",
                 items.getCode());
         BufferedImage image = baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
