@@ -27,6 +27,10 @@ $(document).ready(function () {
         setActive('#logWorkSpace');
         displayWorkSpace('#logWorkSpace', ' ');
     });
+    $('#accessPointWorkSpace').click(function () {
+        setActive('#accessPointWorkSpace');
+        displayWorkSpace('#accessPointWorkSpace', '/api/getAccessPointsTableData');
+    });
     $('#reportWorkSpace').click(function () {
         setActive('#reportWorkSpace');
         displayWorkSpace('#reportWorkSpace', ' ');
@@ -57,6 +61,13 @@ function displayWorkSpace(menu, url) {
             itemActivateActions();
             var headers = {"size": $('#itemTableCounter').val(), "pageNum": 0, "searchValue": ""};
             displayItemData(url, headers);
+            break;
+        case "#accessPointWorkSpace":
+            $('#workSpace').html('')
+                .append(getAccessPointTemplate());
+            itemActivateActions();
+            var headers = {"size": $('#accessPointTableCounter').val(), "pageNum": 0, "searchValue": ""};
+            displayAccessPointData(url, headers);
             break;
         case "#associateWorkSpace":
             $('#workSpace').html('')
@@ -90,6 +101,10 @@ function displayWorkSpace(menu, url) {
             $('#workSpace').html('')
                 .append(getLogTemplate());
             break;
+        case "#accessPointWorkSpace":
+            $('#workSpace').html('')
+                .append(getAccessPointTemplate());
+            break;
         case "#reportWorkSpace":
             $('#workSpace').html('')
                 .append(getReportTemplate());
@@ -106,6 +121,7 @@ function setActive(nameClassToActive) {
     $('#itemsWorkSpace').removeClass("active");
     $('#associateWorkSpace').removeClass("active");
     $('#taskWorkSpace').removeClass("active");
+    $('#accessPointWorkSpace').removeClass("active");
     $('#logWorkSpace').removeClass("active");
     $('#reportWorkSpace').removeClass("active");
     $(nameClassToActive).addClass("active");

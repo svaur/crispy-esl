@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.mvp.accesspoint.ConsoleTools;
 import ru.mvp.accesspoint.entity.ESL;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 
 @RestController
 public class RestControllers {
@@ -18,7 +21,7 @@ public class RestControllers {
         this.consoleTools = consoleTools;
     }
 
-    @RequestMapping("/accessPoint/getStatus")
+    @RequestMapping("/api/getStatus")
     public String getStatus(@RequestParam(value = "eslcode") String eslcode) {
         try{
             String driverResult = consoleTools.runConsoleCommand("dir");
@@ -36,7 +39,7 @@ public class RestControllers {
             return "non ok";
         }
     }
-    @RequestMapping("/accessPoint/setEsl")
+    @RequestMapping("/api/setEsl")
     public String setEsl(@RequestParam(value = "eslcode") String eslcode) {
         try{
             String driverResult = consoleTools.runConsoleCommand("dir");
@@ -53,5 +56,19 @@ public class RestControllers {
         catch (Exception e){
             return "non ok";
         }
+    }
+    @RequestMapping("/api/getServerData")
+    public String getServerData() throws IOException {
+        HashMap<String, String> map = new HashMap<>();
+        String ramInfo = consoleTools.runConsoleCommand("cat /proc/meminfo | grep Mem");
+        String hddInfo = "Использовано<br>";
+        hddInfo += "/ : " + consoleTools.runConsoleCommand("df / | awk '{ print $5 }' | tail -1") + "<br>";
+        hddInfo += "/dev : " + consoleTools.runConsoleCommand("df /dev | awk '{ print $5 }' | tail -1") + "<br>";
+        hddInfo += "/tmp : " + consoleTools.runConsoleCommand("df /tmp | awk '{ print $5 }' | tail -1") + "<br>";
+        String cpuInfo = consoleTools.runConsoleCommand("vmstat -s | grep cpu");
+        map.put("ram", ramInfo);
+        map.put("hdd", hddInfo);
+        map.put("cpu", cpuInfo);
+        return new Gson().toJson(map);
     }
 }

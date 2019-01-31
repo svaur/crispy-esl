@@ -1,4 +1,4 @@
-﻿CREATE DATABASE eslbase OWNER postgres;
+﻿ CREATE DATABASE eslbase OWNER postgres;
 
 /*DROP TABLE item_params;
 DROP TABLE available_params_for_template;
@@ -114,4 +114,12 @@ CREATE TABLE task_updated_item_params
   task_id               INT REFERENCES tasks(id),
   item_id               INT NOT NULL REFERENCES items(id),
   status                INT NOT NULL
+);
+
+-- таблица информации о точках доступа
+CREATE TABLE access_points_info
+(
+  id                    INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  ip                    VARCHAR(255) NOT NULL,
+  port                  VARCHAR(255) NOT NULL
 );

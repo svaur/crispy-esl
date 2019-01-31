@@ -11,9 +11,9 @@ public class ConsoleTools {
     public String runConsoleCommand(String command) throws IOException {
         ProcessBuilder builder = new ProcessBuilder();
         if (isWindows) {
-            builder.command("cmd.exe", "/c", "dir");
+            builder.command("cmd.exe", "/c", command);
         } else {
-            builder.command("sh", "-c", "ls");
+            builder.command("sh", "-c", command);
         }
         builder.directory(new File(System.getProperty("user.home")));
         Process process = builder.start();
@@ -22,7 +22,7 @@ public class ConsoleTools {
         String line;
         StringBuilder output = new StringBuilder();
         while ((line = reader.readLine())!= null) {
-            output.append(line + "\n");
+            output.append(line + "<br>");
         }
         return output.toString();
     }
