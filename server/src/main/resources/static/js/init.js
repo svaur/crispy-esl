@@ -27,9 +27,9 @@ $(document).ready(function () {
         setActive('#logWorkSpace');
         displayWorkSpace('#logWorkSpace', ' ');
     });
-    $('#accessPointWorkSpace').click(function () {
-        setActive('#accessPointWorkSpace');
-        displayWorkSpace('#accessPointWorkSpace', '/api/getAccessPointsTableData');
+    $('#serversStatusWorkSpace').click(function () {
+        setActive('#serversStatusWorkSpace');
+        displayWorkSpace('#serversStatusWorkSpace', '/api/getServersStatusTableData');
     });
     $('#reportWorkSpace').click(function () {
         setActive('#reportWorkSpace');
@@ -62,12 +62,12 @@ function displayWorkSpace(menu, url) {
             var headers = {"size": $('#itemTableCounter').val(), "pageNum": 0, "searchValue": ""};
             displayItemData(url, headers);
             break;
-        case "#accessPointWorkSpace":
+        case "#serversStatusWorkSpace":
             $('#workSpace').html('')
-                .append(getAccessPointTemplate());
+                .append(getServersStatusTemplate());
             itemActivateActions();
-            var headers = {"size": $('#accessPointTableCounter').val(), "pageNum": 0, "searchValue": ""};
-            displayAccessPointData(url, headers);
+            var headers = {"size": $('#serversStatusTableCounter').val(), "pageNum": 0, "searchValue": ""};
+            displayServersStatusData(url, headers);
             break;
         case "#associateWorkSpace":
             $('#workSpace').html('')
@@ -101,9 +101,9 @@ function displayWorkSpace(menu, url) {
             $('#workSpace').html('')
                 .append(getLogTemplate());
             break;
-        case "#accessPointWorkSpace":
+        case "#serversStatusWorkSpace":
             $('#workSpace').html('')
-                .append(getAccessPointTemplate());
+                .append(getServersStatusTemplate());
             break;
         case "#reportWorkSpace":
             $('#workSpace').html('')
@@ -121,7 +121,7 @@ function setActive(nameClassToActive) {
     $('#itemsWorkSpace').removeClass("active");
     $('#associateWorkSpace').removeClass("active");
     $('#taskWorkSpace').removeClass("active");
-    $('#accessPointWorkSpace').removeClass("active");
+    $('#serversStatusWorkSpace').removeClass("active");
     $('#logWorkSpace').removeClass("active");
     $('#reportWorkSpace').removeClass("active");
     $(nameClassToActive).addClass("active");

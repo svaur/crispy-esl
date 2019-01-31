@@ -1,4 +1,4 @@
-package ru.mvp.rsreu;
+package ru.mvp.rsreu.tools;
 
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;

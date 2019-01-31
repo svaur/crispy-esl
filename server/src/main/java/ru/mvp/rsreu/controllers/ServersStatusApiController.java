@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mvp.database.entities.AccessPointsInfo;
 import ru.mvp.database.repositories.AccessPointsInfoRepository;
-import ru.mvp.database.repositories.AccessPointsInfoRepository;
-import ru.mvp.rsreu.RestClient;
+import ru.mvp.rsreu.tools.ConsoleTools;
+import ru.mvp.rsreu.tools.RestClient;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,19 +23,20 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class AccessPointsApiController {
+public class ServersStatusApiController {
 
-    private static final String EMPTY_STRING = "";
     private AccessPointsInfoRepository accessPointsInfoRepository;
     private RestClient restClient;
+    private ConsoleTools consoleTools;
 
     @Autowired
-    public AccessPointsApiController(AccessPointsInfoRepository accessPointsInfoRepository, RestClient restClient) {
+    public ServersStatusApiController(AccessPointsInfoRepository accessPointsInfoRepository, RestClient restClient, ConsoleTools consoleTools) {
         this.accessPointsInfoRepository = accessPointsInfoRepository;
         this.restClient = restClient;
+        this.consoleTools = consoleTools;
     }
 
-    @RequestMapping("/api/getAccessPointsTableData")
+    @RequestMapping("/api/getServersStatusTableData")
     public String getItemTableData(@RequestParam(value = "size") Integer size,
                                    @RequestParam(value = "pageNum") Integer pageNum,
                                    @RequestParam(value = "searchValue") String searchValue) {
@@ -74,5 +76,33 @@ public class AccessPointsApiController {
             }
             outList.add(map);});
         return outList;
+    }
+    @RequestMapping("/api/getLocalUtilizationData")
+    public String getItemTableData() throws IOException {
+        HashMap<String, String> map = new HashMap<>();
+        try {
+            String ramInfo = consoleTools.runConsoleCommand("cat /proc/meminfo | grep Mem");
+            String hddInfo = "Использовано<br>";
+            hddInfo += "/ : " + consoleTools.runConsoleCommand("df / | awk '{ print $5 }' | tail -1") + "<br>";
+            hddInfo += "/dev : " + consoleTools.runConsoleCommand("df /dev | awk '{ print $5 }' | tail -1") + "<br>";
+            hddInfo += "/tmp : " + consoleTools.runConsoleCommand("df /tmp | awk '{ print $5 }' | tail -1") + "<br>";
+            String cpuInfo = consoleTools.runConsoleCommand("vmstat -s | grep cpu");
+            map.put("ip", "сервер");
+            map.put("port", "");
+            map.put("status", "онлайн");
+            map.put("app", "онлайн");
+            map.put("ram", ramInfo);
+            map.put("hdd", hddInfo);
+            map.put("cpu", cpuInfo);
+        }catch (Exception e){
+            map.put("ip", "Сервер");
+            map.put("port", "");
+            map.put("status", "недоступно");
+            map.put("app", e.getLocalizedMessage());
+            map.put("ram", "");
+            map.put("hdd", "");
+            map.put("cpu", "");
+        }
+        return new Gson().toJson(map);
     }
 }
