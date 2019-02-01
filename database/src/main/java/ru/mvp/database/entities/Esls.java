@@ -170,6 +170,15 @@ public class Esls {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Esls{" +
+                "code='" + code + '\'' +
+                ", eslType='" + eslType + '\'' +
+                ", firmware='" + firmware + '\'' +
+                '}';
+    }
+
     @OneToOne(mappedBy = "eslsByEslId")
     public Items getItemsById() {
         return itemsById;

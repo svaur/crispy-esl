@@ -98,6 +98,16 @@ public class Items {
         return Objects.hash(id, code, name, lastUpdated, price, storageUnit, itemParamsGroupsById, eslsByEslId);
     }
 
+    @Override
+    public String toString() {
+        return "Items{" +
+                "code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", storageUnit='" + storageUnit + '\'' +
+                '}';
+    }
+
     @OneToMany(mappedBy = "itemsByItemId")
     public Collection<ItemParamsGroup> getItemParamsGroupsById() {
         return itemParamsGroupsById;

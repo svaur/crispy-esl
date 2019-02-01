@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,13 +16,16 @@ import ru.mvp.database.repositories.EslsRepository;
 import ru.mvp.database.repositories.ItemsRepository;
 import ru.mvp.rsreu.templates.BaseSaleTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
+import ru.mvp.database.LoggerDBTools;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,12 +36,14 @@ public class EslApiController {
     private EslsRepository eslsRepository;
     private ItemsRepository itemsRepository;
     private BaseSaleTemplate baseSaleTemplate;
+    private LoggerDBTools loggerDBTools;
 
     @Autowired
-    public EslApiController(EslsRepository eslsRepository, ItemsRepository itemsRepository, BaseSaleTemplate baseSaleTemplate) {
+    public EslApiController(EslsRepository eslsRepository, ItemsRepository itemsRepository, BaseSaleTemplate baseSaleTemplate, LoggerDBTools loggerDBTools) {
         this.eslsRepository = eslsRepository;
         this.itemsRepository = itemsRepository;
         this.baseSaleTemplate = baseSaleTemplate;
+        this.loggerDBTools = loggerDBTools;
     }
 
     @RequestMapping("/api/getEslTableData")
@@ -59,6 +66,7 @@ public class EslApiController {
                             @RequestParam("type") String type) {
         Esls eslElement = eslsRepository.findByCode(esl);
         Items itemElement = itemsRepository.findByCode(item);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if ("add".equalsIgnoreCase(type)) {
             try {
                 byte[] generateImage = generateImage(itemElement);
@@ -67,9 +75,11 @@ public class EslApiController {
             } catch (IOException e) {
                 return "error " + e.getMessage();
             }
+            loggerDBTools.log(new Timestamp(new Date().getTime()), "assignEsl", "assign", "привязан товар " + item + " " + itemElement.getName() + " к ценнику " + esl, user.getUsername());
         } else {
             eslElement.setNextImage(null);
             itemElement.setEslsByEslId(null);
+            loggerDBTools.log(new Timestamp(new Date().getTime()), "assignEsl", "unassign", "отвязан товар " + item + " " + itemElement.getName() +" от ценника " + esl, user.getUsername());
         }
         itemsRepository.saveAndFlush(itemElement);
         eslsRepository.saveAndFlush(eslElement);

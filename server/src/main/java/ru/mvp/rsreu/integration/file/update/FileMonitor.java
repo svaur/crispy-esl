@@ -2,7 +2,6 @@ package ru.mvp.rsreu.integration.file.update;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,6 +11,7 @@ import ru.mvp.database.repositories.EslsRepository;
 import ru.mvp.database.repositories.ItemsRepository;
 import ru.mvp.rsreu.integration.file.parsers.ParserFactory;
 import ru.mvp.rsreu.integration.file.parsers.TypeEntity;
+import ru.mvp.database.LoggerDBTools;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +19,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
@@ -39,11 +40,13 @@ public class FileMonitor {
     ItemsRepository itemsRepository;
     EslsRepository eslsRepository;
     ParserFactory factory;
+    LoggerDBTools loggerDBTools;
 
-    public FileMonitor(ItemsRepository itemsRepository, EslsRepository eslsRepository, ParserFactory factory) {
+    public FileMonitor(ItemsRepository itemsRepository, EslsRepository eslsRepository, ParserFactory factory, LoggerDBTools loggerDBTools) {
         this.itemsRepository = itemsRepository;
         this.eslsRepository = eslsRepository;
         this.factory = factory;
+        this.loggerDBTools = loggerDBTools;
     }
 
     @Scheduled(fixedDelay = CHECK_INTERVAL)
@@ -65,10 +68,12 @@ public class FileMonitor {
                                 if(findByCodeElement == null){
                                     //новый элемент. Просто вставляем
                                     itemsRepository.save(el);
+                                    loggerDBTools.log(new Timestamp(new Date().getTime()),"item", "new", "добавлен новый товар " + el.toString(), "integration");
                                 }else{
                                     //такой айдишник есть. Надо апдейтить
                                     el.setId(findByCodeElement.getId());
                                     itemsRepository.save(el);
+                                    loggerDBTools.log(new Timestamp(new Date().getTime()), "item", "edit", "обновлен товар <br>было: " + findByCodeElement.toString() + " <br>стало " + el.toString(), "integration");
                                 }
                             }
                         });
@@ -91,10 +96,12 @@ public class FileMonitor {
                                 if(findByCodeElement == null){
                                     //новый элемент. Просто вставляем
                                     eslsRepository.save(el);
+                                    loggerDBTools.log(new Timestamp(new Date().getTime()), "esl", "new", "добавлен новый ценник " + el.toString(), "integration");
                                 }else{
                                     //такой айдишник есть. Надо апдейтить
                                     el.setId(findByCodeElement.getId());
                                     eslsRepository.save(el);
+                                    loggerDBTools.log(new Timestamp(new Date().getTime()), "esl", "edit", "обновлен ценник <br>было: " + findByCodeElement.toString() + " <br>стало " + el.toString(), "integration");
                                 }
                             }
                         });

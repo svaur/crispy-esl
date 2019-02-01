@@ -3,6 +3,7 @@ package ru.mvp.accesspoint;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import ru.mvp.database.LoggerDBTools;
 import ru.mvp.database.entities.Esls;
 import ru.mvp.database.entities.Tasks;
 import ru.mvp.database.repositories.EslsRepository;
@@ -21,10 +22,12 @@ import java.util.List;
 public class DBTask {
     TasksRepository tasksRepository;
     EslsRepository eslsRepository;
+    LoggerDBTools loggerDBTools;
 
-    public DBTask(TasksRepository tasksRepository, EslsRepository eslsRepository) {
+    public DBTask(TasksRepository tasksRepository, EslsRepository eslsRepository, LoggerDBTools loggerDBTools) {
         this.tasksRepository = tasksRepository;
         this.eslsRepository = eslsRepository;
+        this.loggerDBTools = loggerDBTools;
     }
 
     @Scheduled(fixedRate = 5000)
@@ -47,8 +50,11 @@ public class DBTask {
                 //todo пока костыль
                 tasks.setStatus(1);
                 tasksRepository.saveAndFlush(tasks);
+
+                loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "успешно обновлен ценник <br>" + esl.toString() + "<br> по таске <br>" + tasks.toString(), "integration");
             }catch (Exception e){
                 System.out.println("обработать ошибку");
+                loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "ошибка обновления <br>" + esl.toString() + "<br>" + e.getLocalizedMessage(), "integration");
             }
             //а тут будет запись в результат
         });

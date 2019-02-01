@@ -123,3 +123,14 @@ CREATE TABLE access_points_info
   ip                    VARCHAR(255) NOT NULL,
   port                  VARCHAR(255) NOT NULL
 );
+
+-- таблица для хранения логов взаимодействия с сущностями
+CREATE TABLE entity_log
+(
+  id                    INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  time                  TIMESTAMP NOT NULL,
+  name                  VARCHAR(255) NOT NULL,
+  source                  VARCHAR(255) NOT NULL,
+  type                  VARCHAR(255) NOT NULL,
+  event                 VARCHAR(255) NOT NULL
+);

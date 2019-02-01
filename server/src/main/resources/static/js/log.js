@@ -1,65 +1,64 @@
 function getLogTemplate() {
-    return "<h2 class='flow-text'>Логи</h2>" +
+    return "<h2 class='flow-text'>Логи взаимодействия с товарами и ценниками</h2>" +
         "<div class=\"divider\"/>"+
-        "<div>018-12-22 21:44:28.203  INFO 8597 --- [           main] ru.mvp.rsreu.RsreuApplication            : Starting RsreuApplication on svaur-pc with PID 8597 (/home/svaur/Git/rsreu/server/target/classes started by svaur in /home/svaur/Git/rsreu/server)\n</div>" +
-        "<div>018-12-22 21:44:28.208  INFO 8597 --- [           main] ru.mvp.rsreu.RsreuApplication            : No active profile set, falling back to default profiles: default\n</div>" +
-        "<div>018-12-22 21:44:28.309  INFO 8597 --- [           main] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@7f1302d6: startup date [Sat Dec 22 21:44:28 MSK 2018]; root of context hierarchy\n</div>" +
-        "<div>018-12-22 21:44:30.668  INFO 8597 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)\n</div>" +
-        "<div>018-12-22 21:44:30.702  INFO 8597 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]\n</div>" +
-        "<div>018-12-22 21:44:30.703  INFO 8597 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.34\n</div>" +
-        "<div>018-12-22 21:44:30.709  INFO 8597 --- [ost-startStop-1] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib]\n</div>" +
-        "<div>018-12-22 21:44:30.831  INFO 8597 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext\n</div>" +
-        "<div>018-12-22 21:44:30.842  INFO 8597 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2533 ms\n</div>" +
-        "<div>018-12-22 21:44:31.068  INFO 8597 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]\n</div>" +
-        "<div>018-12-22 21:44:31.069  INFO 8597 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]\n</div>" +
-        "<div>018-12-22 21:44:31.069  INFO 8597 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]\n</div>" +
-        "<div>018-12-22 21:44:31.069  INFO 8597 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]\n</div>" +
-        "<div>018-12-22 21:44:31.070  INFO 8597 --- [ost-startStop-1] .s.DelegatingFilterProxyRegistrationBean : Mapping filter: 'springSecurityFilterChain' to: [/*]\n</div>" +
-        "<div>018-12-22 21:44:31.070  INFO 8597 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]\n</div>" +
-        "<div>018-12-22 21:44:31.739  INFO 8597 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]\n</div>" +
-        "<div>018-12-22 21:44:32.018  INFO 8597 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@7f1302d6: startup date [Sat Dec 22 21:44:28 MSK 2018]; root of context hierarchy\n</div>" +
-        "<div>018-12-22 21:44:32.084  INFO 8597 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped \"{[/api/searchEslData]}\" onto public java.lang.String ru.mvp.rsreu.controllers.EslApiController.searchEslData(java.lang.String,java.lang.String)\n</div>" +
-        "<div>018-12-22 21:44:32.085  INFO 8597 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped \"{[/api/getEslTableData]}\" onto public java.lang.String ru.mvp.rsreu.controllers.EslApiController.getEslTableData(java.lang.String)\n</div>" +
-        "<div>018-12-22 21:44:32.086  INFO 8597 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped \"{[/api/assignEsl]}\" onto public java.lang.String ru.mvp.rsreu.controllers.EslApiController.assignEsl(java.lang.String,java.lang.String,java.lang.String,java.lang.String)\n</div>" +
-        "<div>018-12-22 21:44:32.086  INFO 8597 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped \"{[/api/getImage]}\" onto public java.lang.String ru.mvp.rsreu.controllers.EslApiController.getImage(java.lang.String) throws java.io.IOException\n</div>" +
-        "<div>018-12-22 21:44:32.087  INFO 8597 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped \"{[/api/searchItemData]}\" onto public java.lang.String ru.mvp.rsreu.controllers.ItemApiController.searchItemData(java.lang.String,java.lang.String)\n</div>" +
-        "<div>018-12-22 21:44:32.088  INFO 8597 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped \"{[/api/getItemTableData]}\" onto public java.lang.String ru.mvp.rsreu.controllers.ItemApiController.getItemTableData(java.lang.String)\n</div>" +
-        "<div>018-12-22 21:44:32.089  INFO 8597 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped \"{[/api/searchTaskData]}\" onto public java.lang.String ru.mvp.rsreu.controllers.TaskApiController.searchTaskData(java.lang.String,java.lang.String)\n</div>" +
-        "<div>018-12-22 21:44:32.090  INFO 8597 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped \"{[/api/getTaskTableData]}\" onto public java.lang.String ru.mvp.rsreu.controllers.TaskApiController.getTaskTableData(java.lang.String)\n</div>" +
-        "<div>018-12-22 21:44:32.095  INFO 8597 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped \"{[/error],produces=[text/html]}\" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)\n</div>" +
-        "<div>018-12-22 21:44:32.095  INFO 8597 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped \"{[/error]}\" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)\n</div>" +
-        "<div>018-12-22 21:44:32.161  INFO 8597 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/login] onto handler of type [class org.springframework.web.servlet.mvc.ParameterizableViewController]\n</div>" +
-        "<div>018-12-22 21:44:32.161  INFO 8597 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Root mapping to handler of type [class org.springframework.web.servlet.mvc.ParameterizableViewController]\n</div>" +
-        "<div>018-12-22 21:44:32.189  INFO 8597 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]\n</div>" +
-        "<div>018-12-22 21:44:32.190  INFO 8597 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]\n</div>" +
-        "<div>018-12-22 21:44:32.327  INFO 8597 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index\n</div>" +
-        "<div>018-12-22 21:44:32.515  INFO 8597 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup\n</div>" +
-        "<div>018-12-22 21:44:32.541  INFO 8597 --- [           main] s.a.ScheduledAnnotationBeanPostProcessor : No TaskScheduler/ScheduledExecutorService bean found for scheduled processing\n</div>" +
-        "<div>018-12-22 21:44:32.568  INFO 8597 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''\n</div>" +
-        "<div>018-12-22 21:44:32.573  INFO 8597 --- [           main] ru.mvp.rsreu.RsreuApplication            : Started RsreuApplication in 5.013 seconds (JVM running for 6.014)\n</div>" +
-        "<div>018-12-22 21:44:33.534  INFO 8597 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'\n</div>" +
-        "<div>018-12-22 21:44:33.534  INFO 8597 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started\n</div>" +
-        "<div>018-12-22 21:44:33.555  INFO 8597 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 20 ms\n</div>" +
-        "<div>018-12-22 21:44:37.624  INFO 8597 --- [pool-1-thread-1] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.6.Final}\n</div>" +
-        "<div>018-12-22 21:44:37.626  INFO 8597 --- [pool-1-thread-1] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found\n</div>" +
-        "<div>018-12-22 21:44:37.712  WARN 8597 --- [pool-1-thread-1] org.hibernate.orm.deprecation            : HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.\n</div>" +
-        "<div>018-12-22 21:44:37.871  INFO 8597 --- [pool-1-thread-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}\n</div>" +
-        "<div>018-12-22 21:44:37.944  WARN 8597 --- [pool-1-thread-1] org.hibernate.orm.connections.pooling    : HHH10001002: Using Hibernate built-in connection pool (not for production use!)\n</div>" +
-        "<div>018-12-22 21:44:37.950  INFO 8597 --- [pool-1-thread-1] org.hibernate.orm.connections.pooling    : HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://127.0.0.1:5432/eslbase]\n</div>" +
-        "<div>018-12-22 21:44:37.950  INFO 8597 --- [pool-1-thread-1] org.hibernate.orm.connections.pooling    : HHH10001001: Connection properties: {user=postgres, password=****}\n</div>" +
-        "<div>018-12-22 21:44:37.950  INFO 8597 --- [pool-1-thread-1] org.hibernate.orm.connections.pooling    : HHH10001003: Autocommit mode: false\n</div>" +
-        "<div>018-12-22 21:44:37.952  INFO 8597 --- [pool-1-thread-1] .c.i.DriverManagerConnectionProviderImpl : HHH000115: Hibernate connection pool size: 20 (min=1)\n</div>" +
-        "<div>018-12-22 21:44:37.996  INFO 8597 --- [pool-1-thread-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL9Dialect\n</div>" +
-        "<div>018-12-22 21:44:38.120  INFO 8597 --- [pool-1-thread-1] o.h.e.j.e.i.LobCreatorBuilderImpl        : HHH000421: Disabling contextual LOB creation as hibernate.jdbc.lob.non_contextual_creation is true\n</div>" +
-        "<div>018-12-22 21:44:38.127  INFO 8597 --- [pool-1-thread-1] org.hibernate.type.BasicTypeRegistry     : HHH000270: Type registration [java.util.UUID] overrides previous : org.hibernate.type.UUIDBinaryType@664e0fd5\n</div>" +
-        "<div>018-12-22 21:44:38.688  INFO 8597 --- [pool-1-thread-1] org.hibernate.orm.connections.access     : HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@6b1aa3ad] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.\n</div>" +
-        "<div>018-12-22 21:44:38.836  INFO 8597 --- [pool-1-thread-1] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory\n</div>" +
-        "<div>Hibernate: select item0_.ItemCode as ItemCode1_1_, item0_.esl_ESLCode as esl_ESLC7_1_, item0_.ItemName as ItemName2_1_, item0_.LastUpdated as LastUpda3_1_, item0_.Price as Price4_1_, item0_.PromotionPrice as Promotio5_1_, item0_.StorageUnit as StorageU6_1_ from ITEMS item0_ where item0_.ItemCode=? and item0_.ItemName=? and item0_.Price=10.9 and item0_.PromotionPrice=99.1 and item0_.StorageUnit=?\n</div>" +
-        "<div>Hibernate: select item0_.ItemCode as ItemCode1_1_, item0_.esl_ESLCode as esl_ESLC7_1_, item0_.ItemName as ItemName2_1_, item0_.LastUpdated as LastUpda3_1_, item0_.Price as Price4_1_, item0_.PromotionPrice as Promotio5_1_, item0_.StorageUnit as StorageU6_1_ from ITEMS item0_ where item0_.ItemCode=? and item0_.ItemName=? and item0_.Price=99.9 and item0_.PromotionPrice=9.1 and item0_.StorageUnit=?\n</div>" +
-        "<div>Hibernate: select item0_.ItemCode as ItemCode1_1_, item0_.esl_ESLCode as esl_ESLC7_1_, item0_.ItemName as ItemName2_1_, item0_.LastUpdated as LastUpda3_1_, item0_.Price as Price4_1_, item0_.PromotionPrice as Promotio5_1_, item0_.StorageUnit as StorageU6_1_ from ITEMS item0_ where item0_.ItemCode=? and item0_.ItemName=? and item0_.Price=1099.9 and item0_.PromotionPrice=99.1 and item0_.StorageUnit=?\n</div>" +
-        "<div>Hibernate: select esl0_.ESLCode as ESLCode1_0_, esl0_.BatteryLevel as BatteryL2_0_, esl0_.Connectivity as Connecti3_0_, esl0_.ESLPattern as ESLPatte4_0_, esl0_.ESLType as ESLType5_0_, esl0_.FirmWare as FirmWare6_0_, esl0_.item_ItemCode as item_It11_0_, esl0_.LastUpdate as LastUpda7_0_, esl0_.RegistrationDate as Registra8_0_, esl0_.StartDate as StartDat9_0_, esl0_.Status as Status10_0_ from ESLS esl0_ where esl0_.ESLCode=? and esl0_.ESLType=? and esl0_.FirmWare=?\n</div>" +
-        "<div>Hibernate: select item0_.ItemCode as ItemCode1_1_0_, item0_.esl_ESLCode as esl_ESLC7_1_0_, item0_.ItemName as ItemName2_1_0_, item0_.LastUpdated as LastUpda3_1_0_, item0_.Price as Price4_1_0_, item0_.PromotionPrice as Promotio5_1_0_, item0_.StorageUnit as StorageU6_1_0_ from ITEMS item0_ where item0_.ItemCode=?\n</div>" +
-        "<div>Hibernate: select esl0_.ESLCode as ESLCode1_0_, esl0_.BatteryLevel as BatteryL2_0_, esl0_.Connectivity as Connecti3_0_, esl0_.ESLPattern as ESLPatte4_0_, esl0_.ESLType as ESLType5_0_, esl0_.FirmWare as FirmWare6_0_, esl0_.item_ItemCode as item_It11_0_, esl0_.LastUpdate as LastUpda7_0_, esl0_.RegistrationDate as Registra8_0_, esl0_.StartDate as StartDat9_0_, esl0_.Status as Status10_0_ from ESLS esl0_ where esl0_.ESLCode=? and esl0_.ESLType=? and esl0_.FirmWare=?\n</div>" +
-        "<div>Hibernate: select item0_.ItemCode as ItemCode1_1_0_, item0_.esl_ESLCode as esl_ESLC7_1_0_, item0_.ItemName as ItemName2_1_0_, item0_.LastUpdated as LastUpda3_1_0_, item0_.Price as Price4_1_0_, item0_.PromotionPrice as Promotio5_1_0_, item0_.StorageUnit as StorageU6_1_0_ from ITEMS item0_ where item0_.ItemCode=?\n</div>" +
-        "<div>Hibernate: select esl0_.ESLCode as ESLCode1_0_, esl0_.BatteryLevel as BatteryL2_0_, esl0_.Connectivity as Connecti3_0_, esl0_.ESLPattern as ESLPatte4_0_, esl0_.ESLType as ESLType5_0_, esl0_.FirmWare as FirmWare6_0_, esl0_.item_ItemCode as item_It11_0_, esl0_.LastUpdate as LastUpda7_0_, esl0_.RegistrationDate as Registra8_0_, esl0_.StartDate as StartDat9_0_, esl0_.Status as Status10_0_ from ESLS esl0_ where esl0_.ESLCode=? and esl0_.ESLType=? and esl0_.FirmWare=?\n</div>"
+        getTableTemplate('log')
+}
+function displayLogData(url, headers) {
+    var display = document.getElementById("mainProgress");
+    display.style.visibility='visible';
+    $('#logTable').html('')
+        .append("<thead>" +
+            "<tr>" +
+            "<th>время события</th>" +
+            "<th>имя</th>" +
+            "<th>источник</th>" +
+            "<th>тип</th>" +
+            "<th>событие</th>" +
+            "</tr>" +
+            "</thead>")
+        .append("<tbody id=\"logTBody\"></tbody>");
+    $.getJSON(url, headers, function (data) {
+        var mapData = $.parseJSON(JSON.stringify(data));
+        for (var i = 0; i < mapData.length; i++) {
+            $('#logTBody').append("<tr>" +
+                "<td>" + mapData[i].time + "</td>" +
+                "<td>" + mapData[i].name + "</td>" +
+                "<td>" + mapData[i].source + "</td>" +
+                "<td>" + mapData[i].type + "</td>" +
+                "<td>" + mapData[i].event + "</td>" +
+                "<td>" +
+                "</li>" +
+                "</ul>" +
+                "</td>" +
+                "</tr>");
+        }
+        display.style.visibility='hidden'
+    }).error(function(jqXHR) {
+        alert(jqXHR.responseText);
+        display.style.visibility='hidden'
+    });
+}
+function logActivateActions() {
+    $('#logTableCounter').formSelect().on('change', function () {
+        getAllLogData(pageNum);
+    });
+    $('#search').on('input', function() {
+        getAllLogData(pageNum);
+    });
+    $('.dropdown-trigger').dropdown();
+    $('#previousBtn').click(function () {
+        if (pageNum > 0) {
+            pageNum = pageNum - 1;
+            document.getElementById("firstBtn").innerHTML = pageNum + 1;
+            getAllLogData(pageNum);
+        }
+    });
+    $('#nextBtn').click(function () {
+        pageNum = pageNum + 1;
+        document.getElementById("firstBtn").innerHTML = pageNum + 1;
+        getAllLogData(pageNum);
+    });
+}function getAllLogData(pageNum) {
+    var headers = {"size": $('#logTableCounter').val(), "pageNum": pageNum, "searchValue": $('#search').val()};
+    displayLogData("/api/getLogTableData", headers);
 }

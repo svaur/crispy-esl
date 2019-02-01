@@ -96,6 +96,17 @@ public class Tasks {
         return Objects.hash(id, taskName, startDate, cronExpression, barcodes, status, taskResultsById, taskUpdatedItemParamsById);
     }
 
+    @Override
+    public String toString() {
+        return "Tasks{" +
+                "taskName='" + taskName + '\'' +
+                ", startDate=" + startDate +
+                ", cronExpression='" + cronExpression + '\'' +
+                ", barcodes='" + barcodes + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
     @OneToMany(mappedBy = "tasksByTaskId")
     public Collection<TaskResults> getTaskResultsById() {
         return taskResultsById;

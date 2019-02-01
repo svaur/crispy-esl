@@ -25,7 +25,7 @@ $(document).ready(function () {
     });
     $('#logWorkSpace').click(function () {
         setActive('#logWorkSpace');
-        displayWorkSpace('#logWorkSpace', ' ');
+        displayWorkSpace('#logWorkSpace', '/api/getLogTableData');
     });
     $('#serversStatusWorkSpace').click(function () {
         setActive('#serversStatusWorkSpace');
@@ -100,6 +100,9 @@ function displayWorkSpace(menu, url) {
         case "#logWorkSpace":
             $('#workSpace').html('')
                 .append(getLogTemplate());
+            logActivateActions();
+            var headers = {"size": $('#logTableCounter').val(), "pageNum": 0, "searchValue": ""};
+            displayLogData(url, headers);
             break;
         case "#serversStatusWorkSpace":
             $('#workSpace').html('')
