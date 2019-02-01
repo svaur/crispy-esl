@@ -96,10 +96,10 @@ function displayTaskData(url, headers) {
             .append("<thead>" +
                 "<tr>" +
                 "<th>Имя</th>" +
-                "<th>Затронутые товары</th>" +
+                "<th>Затронутые ценники</th>" +
                 "<th>Частота</th>" +
                 "<th>Статус</th>" +
-                "<th>taskResults</th>" +
+                // "<th>taskResults</th>" +
                 "<th>Действие</th>" +
                 "</tr>" +
                 "</thead>")
@@ -110,7 +110,7 @@ function displayTaskData(url, headers) {
                 "<td>" + tableData[i].updatedItemParams + "</td>" +
                 "<td>" + tableData[i].frequency + "</td>" +
                 "<td>" + tableData[i].status + "</td>" +
-                "<td>" + tableData[i].taskResults + "</td>" +
+                // "<td>" + tableData[i].taskResults + "</td>" +
                 "<td> </td>" +
                 "</tr>");
         }

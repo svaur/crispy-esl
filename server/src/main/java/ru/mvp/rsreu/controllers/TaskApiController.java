@@ -44,8 +44,8 @@ public class TaskApiController {
             map.put("taskName", element.getTaskName());
             map.put("frequency", element.getCronExpression());
             map.put("taskResults", element.getTaskResultsById().toString());
-            map.put("updatedItemParams", element.getTaskUpdatedItemParamsById().toString());
-            map.put("status", String.valueOf(element.getStatus()));
+            map.put("updatedItemParams", element.getBarcodes());
+            map.put("status", element.getStatus()==1?"неактивно":"активно");
             outList.add(map);});
         return outList;
     }

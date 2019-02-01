@@ -44,6 +44,7 @@ function displayWorkSpace(menu, url) {
         case "#welcomeWorkSpace":
             $('#workSpace').html('')
                 .append(getWelcomeTemplate());
+            displayWelcomeData();
             testChart("myChart1", 'Статистика обновления ценников', [0, 2, 5, 3]);
             testChart("myChart2", 'Статистика обновления товаров', [0, 2, 2, 0]);
             testChart("myChart3", 'Статистика привязок',[0, 2, 50, 3]);

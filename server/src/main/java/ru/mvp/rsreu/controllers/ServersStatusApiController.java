@@ -95,7 +95,7 @@ public class ServersStatusApiController {
             map.put("hdd", hddInfo);
             map.put("cpu", cpuInfo);
         }catch (Exception e){
-            map.put("ip", "Сервер");
+            map.put("ip", "сервер");
             map.put("port", "");
             map.put("status", "недоступно");
             map.put("app", e.getLocalizedMessage());
