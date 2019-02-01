@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mvp.database.entities.EntityLog;
-import ru.mvp.database.entities.Tasks;
 import ru.mvp.database.repositories.EntityLogRepository;
-import ru.mvp.database.repositories.TasksRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,10 +34,21 @@ public class LogApiController {
             output = entityLogRepository.findAll(PageRequest.of(pageNum, size, Direction.ASC, "time"));
         else
             output = entityLogRepository.findByFilter(PageRequest.of(pageNum, size, Direction.ASC, "time"), searchValue);
-        return new Gson().toJson(fillTaskData(output));
+        return new Gson().toJson(fillData(output));
+    }
+    @RequestMapping("/api/getReportTableData")
+    public String getReportTableData(@RequestParam(value = "size") Integer size,
+                                   @RequestParam(value = "pageNum") Integer pageNum,
+                                   @RequestParam(value = "searchValue") String searchValue) {
+        Page<EntityLog> output;
+        if (searchValue.isEmpty())
+            output = entityLogRepository.findAllByName(PageRequest.of(pageNum, size, Direction.ASC, "time"), "task");
+        else
+            output = entityLogRepository.findByFilterByName(PageRequest.of(pageNum, size, Direction.ASC, "time"), searchValue, "task");
+        return new Gson().toJson(fillData(output));
     }
 
-    private List<HashMap<String, String>> fillTaskData(Page<EntityLog> e) {
+    private List<HashMap<String, String>> fillData(Page<EntityLog> e) {
         List<HashMap<String, String>> outList= new ArrayList<>();
         e.forEach(element->{
             HashMap<String, String> map = new HashMap<>();

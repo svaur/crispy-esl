@@ -11,4 +11,7 @@ import ru.mvp.database.entities.EntityLog;
 public interface EntityLogRepository extends JpaRepository<EntityLog, Long> {
     @Query("SELECT entityLog FROM EntityLog entityLog WHERE LOWER(entityLog.name) LIKE LOWER(CONCAT('%',?1,'%')) OR LOWER(entityLog.source) LIKE LOWER(CONCAT('%',?1,'%')) OR LOWER(entityLog.type) LIKE LOWER(CONCAT('%',?1,'%')) OR LOWER(entityLog.event) LIKE LOWER(CONCAT('%',?1,'%'))")
     Page<EntityLog> findByFilter(Pageable pageable, String filter);
+    @Query("SELECT entityLog FROM EntityLog entityLog WHERE entityLog.name LIKE ?2 AND LOWER(entityLog.event) LIKE LOWER(CONCAT('%',?1,'%'))")
+    Page<EntityLog> findByFilterByName(Pageable pageable, String filter, String name);
+    Page<EntityLog> findAllByName(Pageable pageable, String name);
 }

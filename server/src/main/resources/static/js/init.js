@@ -27,13 +27,13 @@ $(document).ready(function () {
         setActive('#logWorkSpace');
         displayWorkSpace('#logWorkSpace', '/api/getLogTableData');
     });
+    $('#reportWorkSpace').click(function () {
+        setActive('#reportWorkSpace');
+        displayWorkSpace('#reportWorkSpace', '/api/getReportTableData');
+    });
     $('#serversStatusWorkSpace').click(function () {
         setActive('#serversStatusWorkSpace');
         displayWorkSpace('#serversStatusWorkSpace', '/api/getServersStatusTableData');
-    });
-    $('#reportWorkSpace').click(function () {
-        setActive('#reportWorkSpace');
-        displayWorkSpace('#reportWorkSpace', ' ');
     });
 });
 var pageNum=0;
@@ -103,6 +103,13 @@ function displayWorkSpace(menu, url) {
             logActivateActions();
             var headers = {"size": $('#logTableCounter').val(), "pageNum": 0, "searchValue": ""};
             displayLogData(url, headers);
+            break;
+        case "#reportWorkSpace":
+            $('#workSpace').html('')
+                .append(getReportTemplate());
+            reportActivateActions();
+            var headers = {"size": $('#reportTableCounter').val(), "pageNum": 0, "searchValue": ""};
+            displayReportData(url, headers);
             break;
         case "#serversStatusWorkSpace":
             $('#workSpace').html('')
