@@ -47,8 +47,8 @@ public class WelcomeController {
         for (AccessPointsInfo element:accessPointsInfoList) {
             String server = "http://" + element.getIp() + ":" + element.getPort();
             Type type = new TypeToken<Map<String, String>>(){}.getType();
-            String json = restClient.get(server, "/api/getServerData");
             try {
+                String json = restClient.get(server, "/api/getServerData");
                 LinkedTreeMap<String, String> serverInfo = new Gson().fromJson(json, type);
                 if (serverInfo.get("ram") != null) {
                     countOnlineAP++;

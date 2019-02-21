@@ -8,7 +8,6 @@ function displayWelcomeData() {
     display.style.visibility='visible';
     $.getJSON("/api/getWelcomeData", function (data) {
         var tableData = $.parseJSON(JSON.stringify(data));
-
         $('#welcome').html('')
             .append( "<div class=\"row\">"+
             "   <div class=\"col s6 m4 l3\">" +
@@ -68,8 +67,7 @@ function displayWelcomeData() {
             "   <div class=\"col s6 m4 l3\"><canvas id=\"myChart3\"></canvas></div>"+
             "</div>");
         $('.dropdown-trigger').dropdown();
-        display.style.visibility='hidden'
-        return returnTemplate;
+        display.style.visibility='hidden';
     }).error(function(jqXHR) {
         display.style.visibility='hidden';
         alert(jqXHR.responseText);

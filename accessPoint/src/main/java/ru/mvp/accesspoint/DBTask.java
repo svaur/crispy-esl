@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileWriter;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.List;
@@ -44,16 +45,20 @@ public class DBTask {
         Arrays.asList(barcodes.split(",")).forEach(s -> {
             Esls esl = eslsRepository.findByCode(s);
             try {
-                BufferedImage image = ImageIO.read(new ByteArrayInputStream(esl.getNextImage()));
-                ImageIO.write(image, "png", new File(s + ".png"));
+//                BufferedImage image = ImageIO.read(new ByteArrayInputStream(esl.getNextImage()));
+//                ImageIO.write(image, "bmp", new File(s + ".bmp"));
                 //тут пойдет запрос на драйвер на обновление
+                FileWriter fileWriter = new FileWriter(s + ".txt");
+                fileWriter.write(new String(esl.getNextImage()));
+                fileWriter.flush();
+                fileWriter.close();
                 //todo пока костыль
                 tasks.setStatus(1);
                 tasksRepository.saveAndFlush(tasks);
 
                 loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "успешно обновлен ценник <br>" + esl.toString() + "<br> по таске <br>" + tasks.toString(), "integration");
             }catch (Exception e){
-                System.out.println("обработать ошибку");
+                System.out.println("обработать ошибку"+e);
                 loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "ошибка обновления <br>" + esl.toString() + "<br>" + e.getLocalizedMessage(), "integration");
             }
             //а тут будет запись в результат

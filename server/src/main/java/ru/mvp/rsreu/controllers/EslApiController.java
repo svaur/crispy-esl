@@ -125,15 +125,25 @@ public class EslApiController {
                 "рублей",
                 items.getCode());
         BufferedImage image = baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.getWriterFormatNames();
-        if (ImageIO.write(image, "BMP", baos)) {
-            return baos.toByteArray();
-//            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
-//            return "data:image/bmp;base64," + data;
-        }else{
-            throw new IOException();
-        }
+        StringBuilder outTempString = new StringBuilder();
+        Integer counter=0;
+        for (int y=0 ; y < image.getHeight() ; y++)
+            for (int x=0 ; x < image.getWidth() ; x++){
+                //for (int c=0 ; c < image.getRaster().getNumBands() ; c++) {
+                    int sample = image.getRaster().getSample(x, y, 0);
+                    outTempString.append(sample == 0 ? 0 : 1);
+                }
+                    String s = outTempString.toString();
+        s=s.substring(0,s.length()-2);
+        return s.getBytes();
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        ImageIO.getWriterFormatNames();
+//        if (ImageIO.write(image, "BMP", baos)) {
+//            return baos.toByteArray();
+////            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
+////            return "data:image/bmp;base64," + data;
+//        }else{
+//            throw new IOException();
+//        }
     }
 }
