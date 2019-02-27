@@ -3,6 +3,7 @@ package ru.mvp.accesspoint.controllers;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.mvp.accesspoint.ConsoleTools;
 
@@ -32,5 +33,11 @@ public class RestControllers {
         map.put("hdd", hddInfo);
         map.put("cpu", cpuInfo);
         return new Gson().toJson(map);
+    }
+
+    @RequestMapping("/api/updateEsl")
+    public String updateEsl(@RequestParam("esl") String esl){
+        consoleTools.getByteImage(esl);
+        return "ok";
     }
 }

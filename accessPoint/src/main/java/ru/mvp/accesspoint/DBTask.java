@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.sql.Timestamp;
 import java.util.*;
@@ -37,17 +38,18 @@ public class DBTask {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        tasks.stream().filter(e-> e.getCronExpression().charAt(dayOfWeek)=='1').forEach(this::doSomeThing);
+        tasks.stream().filter(e-> e.getCronExpression().charAt(dayOfWeek)=='1').forEach(this::getBMPImage);
     }
-    private void doSomeThing(Tasks tasks){
+    private void getBMPImage(Tasks tasks){
         //todo тупо влепим поле с айдишниками ценников для обновления в сущность таски. потом доработаем
         String barcodes = tasks.getBarcodes();
         Arrays.asList(barcodes.split(",")).forEach(s -> {
             Esls esl = eslsRepository.findByCode(s);
             try {
-//                BufferedImage image = ImageIO.read(new ByteArrayInputStream(esl.getNextImage()));
-//                ImageIO.write(image, "bmp", new File(s + ".bmp"));
+                BufferedImage image = ImageIO.read(new ByteArrayInputStream(esl.getNextImage()));
+                ImageIO.write(image, "bmp", new File(s + ".bmp"));
                 //тут пойдет запрос на драйвер на обновление
+//
                 FileWriter fileWriter = new FileWriter(s + ".txt");
                 fileWriter.write(new String(esl.getNextImage()));
                 fileWriter.flush();

@@ -17,6 +17,7 @@ import ru.mvp.database.repositories.ItemsRepository;
 import ru.mvp.rsreu.templates.BaseSaleTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
 import ru.mvp.database.LoggerDBTools;
+import ru.mvp.rsreu.tools.RestClient;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
@@ -37,13 +38,15 @@ public class EslApiController {
     private ItemsRepository itemsRepository;
     private BaseSaleTemplate baseSaleTemplate;
     private LoggerDBTools loggerDBTools;
+    private RestClient restClient;
 
     @Autowired
-    public EslApiController(EslsRepository eslsRepository, ItemsRepository itemsRepository, BaseSaleTemplate baseSaleTemplate, LoggerDBTools loggerDBTools) {
+    public EslApiController(EslsRepository eslsRepository, ItemsRepository itemsRepository, BaseSaleTemplate baseSaleTemplate, LoggerDBTools loggerDBTools, RestClient restClient) {
         this.eslsRepository = eslsRepository;
         this.itemsRepository = itemsRepository;
         this.baseSaleTemplate = baseSaleTemplate;
         this.loggerDBTools = loggerDBTools;
+        this.restClient = restClient;
     }
 
     @RequestMapping("/api/getEslTableData")
@@ -98,6 +101,12 @@ public class EslApiController {
         return "ERROR";//todo сделать нормальный возврат ошибок на фронт
     }
 
+    @RequestMapping("/api/updateEsl")
+    public String updateEsl(@RequestParam("eslCode") String eslCode){
+        String server = "http://127.0.0.1:8090";
+        return restClient.get(server, "/api/updateEsl?esl="+eslCode);
+    }
+
     private List<HashMap<String, String>> fillEslData(Page<Esls> e) {
         List<HashMap<String, String>> outList= new ArrayList<>();
         e.forEach(element->{
@@ -125,17 +134,14 @@ public class EslApiController {
                 "рублей",
                 items.getCode());
         BufferedImage image = baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
-        StringBuilder outTempString = new StringBuilder();
-        Integer counter=0;
+        List<Integer> outTemp = new ArrayList<>();
         for (int y=0 ; y < image.getHeight() ; y++)
             for (int x=0 ; x < image.getWidth() ; x++){
                 //for (int c=0 ; c < image.getRaster().getNumBands() ; c++) {
                     int sample = image.getRaster().getSample(x, y, 0);
-                    outTempString.append(sample == 0 ? 0 : 1);
+                    outTemp.add(sample == 0 ? 0 : 1);
                 }
-                    String s = outTempString.toString();
-        s=s.substring(0,s.length()-2);
-        return s.getBytes();
+        return encodeToByteArray(outTemp);
 //        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 //        ImageIO.getWriterFormatNames();
 //        if (ImageIO.write(image, "BMP", baos)) {
@@ -145,5 +151,24 @@ public class EslApiController {
 //        }else{
 //            throw new IOException();
 //        }
+    }
+    private static byte[] encodeToByteArray(List<Integer> inputArray) {
+        byte[] results = new byte[(inputArray.size() + 7) / 8];
+        int byteValue = 0;
+        int index;
+        for (index = 0; index < inputArray.size(); index++) {
+
+            byteValue = (byteValue << 1) | inputArray.get(index);
+
+            if (index %8 == 7) {
+                results[index / 8] = (byte) byteValue;
+            }
+        }
+//игнор при котором у нас не влезает все в массив
+//        if (index % 8 != 0) {
+//            results[index / 8] = (byte) byteValue << (8 - (index % 8));
+//        }
+
+        return results;
     }
 }

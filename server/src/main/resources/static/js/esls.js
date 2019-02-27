@@ -47,21 +47,21 @@ function displayEslData(url, headers) {
                 "<i class=\"white-text material-icons\">photo</i>" +
                 "</a>" +
                 "</li>" +
+                // "<li>" +
+                // "<a class=\"blue-grey darken-1 waves-effect waves-light\">" +
+                // "<i class=\"white-text material-icons\">edit</i>" +
+                // "</a>" +
+                // "</li>" +
                 "<li>" +
-                "<a class=\"blue-grey darken-1 waves-effect waves-light\">" +
-                "<i class=\"white-text material-icons\">edit</i>" +
-                "</a>" +
-                "</li>" +
-                "<li>" +
-                "<a class=\"blue-grey darken-1 waves-effect waves-light\">" +
+                "<a class=\"blue-grey darken-1 waves-effect waves-light\" onclick='updateImage(" + tableData[i].eslCode + ")'>" +
                 "<i class=\"white-text material-icons Tiny\">update</i>" +
                 "</a>" +
                 "</li>" +
-                "<li>" +
-                "<a class=\"blue-grey darken-1 waves-effect waves-light\">" +
-                "<i class=\"white-text material-icons Small\">delete</i>" +
-                "</a>" +
-                "</li>" +
+                // "<li>" +
+                // "<a class=\"blue-grey darken-1 waves-effect waves-light\">" +
+                // "<i class=\"white-text material-icons Small\">delete</i>" +
+                // "</a>" +
+                // "</li>" +
                 "</ul>" +
                 "</td>" +
                 "</tr>");
@@ -98,5 +98,24 @@ function eslActivateActions() {
         pageNum = pageNum + 1;
         document.getElementById("firstBtn").innerHTML = pageNum + 1;
         getAllEslData(pageNum);
+    });
+}
+function showImage(code) {
+    var w = window.open();
+    $.getJSON("/api/getImage", {eslCode:code}, function (data) {
+        $(w.document.body).html(
+            "<style>.shadow {" +
+            "box-shadow: 0 0 10px rgba(0,0,0,0.5);" +
+            "padding: 0px;}</style>" +
+            "<img class=\"shadow\" id='esl-image' src='" + data + "'>");
+    }).error(function(jqXHR) {
+        alert(jqXHR.responseText);
+    });
+}
+function updateImage(code) {
+    $.getJSON("/api/updateEsl", {eslCode:code}, function (data) {
+        alert(data.responseText);
+    }).error(function(jqXHR) {
+        alert(jqXHR.responseText);
     });
 }
