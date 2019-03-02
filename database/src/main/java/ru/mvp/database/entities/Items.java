@@ -1,7 +1,6 @@
 package ru.mvp.database.entities;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
@@ -12,7 +11,7 @@ public class Items {
     private String code;
     private String name;
     private Timestamp lastUpdated;
-    private BigInteger price;
+    private Double price;
     private String storageUnit;
     private Collection<Esls> eslsById;
     private Collection<ItemParamsGroup> itemParamsGroupsById;
@@ -60,11 +59,11 @@ public class Items {
 
     @Basic
     @Column(name = "price")
-    public BigInteger getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigInteger price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
