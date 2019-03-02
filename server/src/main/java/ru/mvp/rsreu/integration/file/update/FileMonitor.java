@@ -169,24 +169,24 @@ public class FileMonitor {
         //обработан ли файл
         private boolean done;
 
-        public FileInfo(long lastSize, long lastUpdate) {
+        FileInfo(long lastSize, long lastUpdate) {
             this.lastSize = lastSize;
             this.lastUpdate = lastUpdate;
         }
 
-        public long getLastSize() {
+        long getLastSize() {
             return lastSize;
         }
 
-        public void setLastSize(long lastSize) {
+        void setLastSize(long lastSize) {
             this.lastSize = lastSize;
         }
 
-        public long getLastUpdate() {
+        long getLastUpdate() {
             return lastUpdate;
         }
 
-        public void setLastUpdate(long lastUpdate) {
+        void setLastUpdate(long lastUpdate) {
             this.lastUpdate = lastUpdate;
         }
 

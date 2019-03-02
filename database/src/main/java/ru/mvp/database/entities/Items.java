@@ -19,6 +19,7 @@ public class Items {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -28,7 +29,7 @@ public class Items {
     }
 
     @Basic
-    @Column(name = "code")
+    @Column(name = "code", unique = true)
     public String getCode() {
         return code;
     }

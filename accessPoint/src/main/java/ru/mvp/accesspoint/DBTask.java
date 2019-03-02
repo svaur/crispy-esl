@@ -32,14 +32,14 @@ public class DBTask {
         this.loggerDBTools = loggerDBTools;
     }
 
-//    @Scheduled(fixedRate = 5000)
-//    public void sheduledQuery() {
-//        List<Tasks> tasks = tasksRepository.findAllByStatusAndStartDateBefore(0, new Timestamp(new Date().getTime()));
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(new Date());
-//        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-//        tasks.stream().filter(e-> e.getCronExpression().charAt(dayOfWeek)=='1').forEach(this::getBMPImage);
-//    }
+    @Scheduled(fixedRate = 5000)
+    public void sheduledQuery() {
+        List<Tasks> tasks = tasksRepository.findAllByStatusAndStartDateBefore(0, new Timestamp(new Date().getTime()));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        tasks.stream().filter(e-> e.getCronExpression().charAt(dayOfWeek)=='1').forEach(this::getBMPImage);
+    }
     private void getBMPImage(Tasks tasks){
         //todo тупо влепим поле с айдишниками ценников для обновления в сущность таски. потом доработаем
         String barcodes = tasks.getBarcodes();
