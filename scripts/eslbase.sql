@@ -25,7 +25,8 @@ CREATE TABLE esls
   last_update       TIMESTAMP,
   registration_date TIMESTAMP,
   start_date        TIMESTAMP,
-  status            VARCHAR(255)
+  status            VARCHAR(255),
+  items_id        INT NULL REFERENCES items(id) 
 );
 
 -- таблица итемов
@@ -36,8 +37,7 @@ CREATE TABLE items
   name          VARCHAR(256) NOT NULL,
   last_updated  TIMESTAMP,
   price   NUMERIC NOT NULL,
-  storage_unit          VARCHAR(256) NOT NULL,
-  esl_id        INT NULL REFERENCES esls(id) 
+  storage_unit          VARCHAR(256) NOT NULL
 );
 
 -- таблица справочник параметров
