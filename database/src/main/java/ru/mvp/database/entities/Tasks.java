@@ -11,6 +11,7 @@ public class Tasks {
     private String taskName;
     private Timestamp startDate;
     private String cronExpression;
+    private String barcodes;
     private int status;
     private Collection<TaskResults> taskResultsById;
     private Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById;
@@ -56,6 +57,16 @@ public class Tasks {
     }
 
     @Basic
+    @Column(name = "barcodes")
+    public String getBarcodes() {
+        return barcodes;
+    }
+
+    public void setBarcodes(String barcodes) {
+        this.barcodes = barcodes;
+    }
+
+    @Basic
     @Column(name = "status")
     public int getStatus() {
         return status;
@@ -74,12 +85,13 @@ public class Tasks {
                 status == tasks.status &&
                 Objects.equals(taskName, tasks.taskName) &&
                 Objects.equals(startDate, tasks.startDate) &&
-                Objects.equals(cronExpression, tasks.cronExpression);
+                Objects.equals(cronExpression, tasks.cronExpression) &&
+                Objects.equals(barcodes, tasks.barcodes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, taskName, startDate, cronExpression, status);
+        return Objects.hash(id, taskName, startDate, cronExpression, barcodes, status);
     }
 
     @OneToMany(mappedBy = "tasksByTaskId")
