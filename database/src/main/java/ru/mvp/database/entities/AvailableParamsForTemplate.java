@@ -7,8 +7,6 @@ import java.util.Objects;
 @Table(name = "available_params_for_template", schema = "public", catalog = "eslbase")
 public class AvailableParamsForTemplate {
     private int id;
-    private Integer templateId;
-    private int paramId;
     private Templates templatesByTemplateId;
     private DirectoryParams directoryParamsByParamId;
 
@@ -22,39 +20,17 @@ public class AvailableParamsForTemplate {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "template_id")
-    public Integer getTemplateId() {
-        return templateId;
-    }
-
-    public void setTemplateId(Integer templateId) {
-        this.templateId = templateId;
-    }
-
-    @Basic
-    @Column(name = "param_id")
-    public int getParamId() {
-        return paramId;
-    }
-
-    public void setParamId(int paramId) {
-        this.paramId = paramId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AvailableParamsForTemplate that = (AvailableParamsForTemplate) o;
-        return id == that.id &&
-                paramId == that.paramId &&
-                Objects.equals(templateId, that.templateId);
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, templateId, paramId);
+        return Objects.hash(id);
     }
 
     @ManyToOne

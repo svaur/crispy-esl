@@ -8,7 +8,6 @@ import java.util.Objects;
 @Table(name = "task_results", schema = "public", catalog = "eslbase")
 public class TaskResults {
     private int id;
-    private Integer taskId;
     private Timestamp startDate;
     private Timestamp endDate;
     private int status;
@@ -23,16 +22,6 @@ public class TaskResults {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "task_id")
-    public Integer getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(Integer taskId) {
-        this.taskId = taskId;
     }
 
     @Basic
@@ -82,7 +71,6 @@ public class TaskResults {
         TaskResults that = (TaskResults) o;
         return id == that.id &&
                 status == that.status &&
-                Objects.equals(taskId, that.taskId) &&
                 Objects.equals(startDate, that.startDate) &&
                 Objects.equals(endDate, that.endDate) &&
                 Objects.equals(result, that.result);
@@ -90,7 +78,7 @@ public class TaskResults {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, taskId, startDate, endDate, status, result);
+        return Objects.hash(id, startDate, endDate, status, result);
     }
 
     @ManyToOne

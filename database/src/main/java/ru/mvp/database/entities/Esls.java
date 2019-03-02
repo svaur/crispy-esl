@@ -19,7 +19,6 @@ public class Esls {
     private Timestamp registrationDate;
     private Timestamp startDate;
     private String status;
-    private Integer itemsId;
     private Items itemsByItemsId;
 
     @Id
@@ -142,16 +141,6 @@ public class Esls {
         this.status = status;
     }
 
-    @Basic
-    @Column(name = "items_id")
-    public Integer getItemsId() {
-        return itemsId;
-    }
-
-    public void setItemsId(Integer itemsId) {
-        this.itemsId = itemsId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -168,13 +157,12 @@ public class Esls {
                 Objects.equals(lastUpdate, esls.lastUpdate) &&
                 Objects.equals(registrationDate, esls.registrationDate) &&
                 Objects.equals(startDate, esls.startDate) &&
-                Objects.equals(status, esls.status) &&
-                Objects.equals(itemsId, esls.itemsId);
+                Objects.equals(status, esls.status);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status, itemsId);
+        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status);
         result = 31 * result + Arrays.hashCode(currentImage);
         result = 31 * result + Arrays.hashCode(nextImage);
         return result;

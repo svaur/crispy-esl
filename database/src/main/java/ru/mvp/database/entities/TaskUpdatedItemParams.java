@@ -7,8 +7,6 @@ import java.util.Objects;
 @Table(name = "task_updated_item_params", schema = "public", catalog = "eslbase")
 public class TaskUpdatedItemParams {
     private int id;
-    private Integer taskId;
-    private int itemId;
     private int status;
     private Tasks tasksByTaskId;
     private Items itemsByItemId;
@@ -21,26 +19,6 @@ public class TaskUpdatedItemParams {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "task_id")
-    public Integer getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(Integer taskId) {
-        this.taskId = taskId;
-    }
-
-    @Basic
-    @Column(name = "item_id")
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
     }
 
     @Basic
@@ -59,14 +37,12 @@ public class TaskUpdatedItemParams {
         if (o == null || getClass() != o.getClass()) return false;
         TaskUpdatedItemParams that = (TaskUpdatedItemParams) o;
         return id == that.id &&
-                itemId == that.itemId &&
-                status == that.status &&
-                Objects.equals(taskId, that.taskId);
+                status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, taskId, itemId, status);
+        return Objects.hash(id, status);
     }
 
     @ManyToOne

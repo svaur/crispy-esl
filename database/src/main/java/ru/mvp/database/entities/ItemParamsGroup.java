@@ -9,8 +9,6 @@ import java.util.Objects;
 @Table(name = "item_params_group", schema = "public", catalog = "eslbase")
 public class ItemParamsGroup {
     private int id;
-    private int itemId;
-    private Integer templateId;
     private Timestamp dateAdded;
     private Collection<ItemParams> itemParamsById;
     private Items itemsByItemId;
@@ -24,26 +22,6 @@ public class ItemParamsGroup {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "item_id")
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
-
-    @Basic
-    @Column(name = "template_id")
-    public Integer getTemplateId() {
-        return templateId;
-    }
-
-    public void setTemplateId(Integer templateId) {
-        this.templateId = templateId;
     }
 
     @Basic
@@ -62,14 +40,12 @@ public class ItemParamsGroup {
         if (o == null || getClass() != o.getClass()) return false;
         ItemParamsGroup that = (ItemParamsGroup) o;
         return id == that.id &&
-                itemId == that.itemId &&
-                Objects.equals(templateId, that.templateId) &&
                 Objects.equals(dateAdded, that.dateAdded);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, itemId, templateId, dateAdded);
+        return Objects.hash(id, dateAdded);
     }
 
     @OneToMany(mappedBy = "itemParamsGroupByItemParamsGroupId")
