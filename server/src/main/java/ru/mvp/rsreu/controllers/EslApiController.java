@@ -74,14 +74,14 @@ public class EslApiController {
             try {
                 byte[] generateImage = generateImage(itemElement);
                 eslElement.setNextImage(generateImage);
-                itemElement.setEslsByEslId(eslElement);
+                eslElement.setItemsByItemsId(itemElement);
             } catch (IOException e) {
                 return "error " + e.getMessage();
             }
             loggerDBTools.log(new Timestamp(new Date().getTime()), "assignEsl", "assign", "привязан товар " + item + " " + itemElement.getName() + " к ценнику " + esl, user.getUsername());
         } else {
             eslElement.setNextImage(null);
-            itemElement.setEslsByEslId(null);
+            eslElement.setItemsByItemsId(null);
             loggerDBTools.log(new Timestamp(new Date().getTime()), "assignEsl", "unassign", "отвязан товар " + item + " " + itemElement.getName() +" от ценника " + esl, user.getUsername());
         }
         itemsRepository.saveAndFlush(itemElement);
@@ -114,9 +114,9 @@ public class EslApiController {
             map.put("eslCode", element.getCode());
             map.put("eslType", element.getEslType());
             map.put("eslFirmWare", element.getFirmware());
-            map.put("itemCode", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getCode());
-            map.put("itemName", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getName());
-            map.put("price", element.getItemsById() == null ? EMPTY_STRING : element.getItemsById().getPrice().toString());
+            map.put("itemCode", element.getItemsByItemsId() == null ? EMPTY_STRING : element.getItemsByItemsId().getCode());
+            map.put("itemName", element.getItemsByItemsId() == null ? EMPTY_STRING : element.getItemsByItemsId().getName());
+            map.put("price", element.getItemsByItemsId() == null ? EMPTY_STRING : element.getItemsByItemsId().getPrice().toString());
             map.put("lastUpdate", element.getLastUpdate() == null ? EMPTY_STRING : element.getLastUpdate().toString());
             map.put("connectivity", element.getConnectivity());
             map.put("batteryLevel", element.getBatteryLevel());
