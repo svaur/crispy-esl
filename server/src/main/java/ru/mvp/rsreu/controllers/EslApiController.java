@@ -139,7 +139,7 @@ public class EslApiController {
             for (int x=0 ; x < image.getWidth() ; x++){
                 //for (int c=0 ; c < image.getRaster().getNumBands() ; c++) {
                     int sample = image.getRaster().getSample(x, y, 0);
-                    outTemp.add(sample == 0 ? 0 : 1);
+                    outTemp.add(sample == 0 ? 1 : 0);
                 }
         return encodeToByteArray(outTemp);
 //        ByteArrayOutputStream baos = new ByteArrayOutputStream();
