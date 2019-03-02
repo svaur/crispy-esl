@@ -89,6 +89,7 @@ CREATE TABLE tasks
   task_name        VARCHAR(255) UNIQUE,
   start_date TIMESTAMP,
   cron_expression VARCHAR(255),
+  barcodes VARCHAR(255),
   status          INT NOT NULL
 );
 
