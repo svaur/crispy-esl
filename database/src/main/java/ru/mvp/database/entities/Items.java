@@ -14,9 +14,8 @@ public class Items {
     private Timestamp lastUpdated;
     private BigInteger price;
     private String storageUnit;
-    private Integer eslId;
+    private Collection<Esls> eslsById;
     private Collection<ItemParamsGroup> itemParamsGroupsById;
-    private Esls eslsByEslId;
     private Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById;
 
     @Id
@@ -79,16 +78,6 @@ public class Items {
         this.storageUnit = storageUnit;
     }
 
-    @Basic
-    @Column(name = "esl_id")
-    public Integer getEslId() {
-        return eslId;
-    }
-
-    public void setEslId(Integer eslId) {
-        this.eslId = eslId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,13 +88,21 @@ public class Items {
                 Objects.equals(name, items.name) &&
                 Objects.equals(lastUpdated, items.lastUpdated) &&
                 Objects.equals(price, items.price) &&
-                Objects.equals(storageUnit, items.storageUnit) &&
-                Objects.equals(eslId, items.eslId);
+                Objects.equals(storageUnit, items.storageUnit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, name, lastUpdated, price, storageUnit, eslId);
+        return Objects.hash(id, code, name, lastUpdated, price, storageUnit);
+    }
+
+    @OneToMany(mappedBy = "itemsByItemsId")
+    public Collection<Esls> getEslsById() {
+        return eslsById;
+    }
+
+    public void setEslsById(Collection<Esls> eslsById) {
+        this.eslsById = eslsById;
     }
 
     @OneToMany(mappedBy = "itemsByItemId")
@@ -115,16 +112,6 @@ public class Items {
 
     public void setItemParamsGroupsById(Collection<ItemParamsGroup> itemParamsGroupsById) {
         this.itemParamsGroupsById = itemParamsGroupsById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "esl_id", referencedColumnName = "id")
-    public Esls getEslsByEslId() {
-        return eslsByEslId;
-    }
-
-    public void setEslsByEslId(Esls eslsByEslId) {
-        this.eslsByEslId = eslsByEslId;
     }
 
     @OneToMany(mappedBy = "itemsByItemId")

@@ -3,7 +3,6 @@ package ru.mvp.database.entities;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -20,7 +19,8 @@ public class Esls {
     private Timestamp registrationDate;
     private Timestamp startDate;
     private String status;
-    private Collection<Items> itemsById;
+    private Integer itemsId;
+    private Items itemsByItemsId;
 
     @Id
     @Column(name = "id")
@@ -142,6 +142,16 @@ public class Esls {
         this.status = status;
     }
 
+    @Basic
+    @Column(name = "items_id")
+    public Integer getItemsId() {
+        return itemsId;
+    }
+
+    public void setItemsId(Integer itemsId) {
+        this.itemsId = itemsId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -158,23 +168,25 @@ public class Esls {
                 Objects.equals(lastUpdate, esls.lastUpdate) &&
                 Objects.equals(registrationDate, esls.registrationDate) &&
                 Objects.equals(startDate, esls.startDate) &&
-                Objects.equals(status, esls.status);
+                Objects.equals(status, esls.status) &&
+                Objects.equals(itemsId, esls.itemsId);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status);
+        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status, itemsId);
         result = 31 * result + Arrays.hashCode(currentImage);
         result = 31 * result + Arrays.hashCode(nextImage);
         return result;
     }
 
-    @OneToMany(mappedBy = "eslsByEslId")
-    public Collection<Items> getItemsById() {
-        return itemsById;
+    @ManyToOne
+    @JoinColumn(name = "items_id", referencedColumnName = "id")
+    public Items getItemsByItemsId() {
+        return itemsByItemsId;
     }
 
-    public void setItemsById(Collection<Items> itemsById) {
-        this.itemsById = itemsById;
+    public void setItemsByItemsId(Items itemsByItemsId) {
+        this.itemsByItemsId = itemsByItemsId;
     }
 }
