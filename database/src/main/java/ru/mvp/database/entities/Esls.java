@@ -1,11 +1,9 @@
 package ru.mvp.database.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +20,7 @@ public class Esls {
     private Timestamp registrationDate;
     private Timestamp startDate;
     private String status;
+    private Collection<Items> itemsById;
 
     @Id
     @Column(name = "id")
@@ -168,5 +167,14 @@ public class Esls {
         result = 31 * result + Arrays.hashCode(currentImage);
         result = 31 * result + Arrays.hashCode(nextImage);
         return result;
+    }
+
+    @OneToMany(mappedBy = "eslsByEslId")
+    public Collection<Items> getItemsById() {
+        return itemsById;
+    }
+
+    public void setItemsById(Collection<Items> itemsById) {
+        this.itemsById = itemsById;
     }
 }

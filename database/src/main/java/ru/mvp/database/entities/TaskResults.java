@@ -13,6 +13,7 @@ public class TaskResults {
     private Timestamp endDate;
     private int status;
     private String result;
+    private Tasks tasksByTaskId;
 
     @Id
     @Column(name = "id")
@@ -90,5 +91,15 @@ public class TaskResults {
     @Override
     public int hashCode() {
         return Objects.hash(id, taskId, startDate, endDate, status, result);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "task_id", referencedColumnName = "id")
+    public Tasks getTasksByTaskId() {
+        return tasksByTaskId;
+    }
+
+    public void setTasksByTaskId(Tasks tasksByTaskId) {
+        this.tasksByTaskId = tasksByTaskId;
     }
 }

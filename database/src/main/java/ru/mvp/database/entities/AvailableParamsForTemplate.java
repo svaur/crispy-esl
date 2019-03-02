@@ -9,6 +9,8 @@ public class AvailableParamsForTemplate {
     private int id;
     private Integer templateId;
     private int paramId;
+    private Templates templatesByTemplateId;
+    private DirectoryParams directoryParamsByParamId;
 
     @Id
     @Column(name = "id")
@@ -53,5 +55,25 @@ public class AvailableParamsForTemplate {
     @Override
     public int hashCode() {
         return Objects.hash(id, templateId, paramId);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "template_id", referencedColumnName = "id")
+    public Templates getTemplatesByTemplateId() {
+        return templatesByTemplateId;
+    }
+
+    public void setTemplatesByTemplateId(Templates templatesByTemplateId) {
+        this.templatesByTemplateId = templatesByTemplateId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "param_id", referencedColumnName = "id", nullable = false)
+    public DirectoryParams getDirectoryParamsByParamId() {
+        return directoryParamsByParamId;
+    }
+
+    public void setDirectoryParamsByParamId(DirectoryParams directoryParamsByParamId) {
+        this.directoryParamsByParamId = directoryParamsByParamId;
     }
 }

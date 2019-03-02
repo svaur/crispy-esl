@@ -10,6 +10,8 @@ public class ItemParams {
     private Integer itemParamsGroupId;
     private int paramId;
     private String paramValue;
+    private ItemParamsGroup itemParamsGroupByItemParamsGroupId;
+    private DirectoryParams directoryParamsByParamId;
 
     @Id
     @Column(name = "id")
@@ -65,5 +67,25 @@ public class ItemParams {
     @Override
     public int hashCode() {
         return Objects.hash(id, itemParamsGroupId, paramId, paramValue);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "item_params_group_id", referencedColumnName = "id")
+    public ItemParamsGroup getItemParamsGroupByItemParamsGroupId() {
+        return itemParamsGroupByItemParamsGroupId;
+    }
+
+    public void setItemParamsGroupByItemParamsGroupId(ItemParamsGroup itemParamsGroupByItemParamsGroupId) {
+        this.itemParamsGroupByItemParamsGroupId = itemParamsGroupByItemParamsGroupId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "param_id", referencedColumnName = "id", nullable = false)
+    public DirectoryParams getDirectoryParamsByParamId() {
+        return directoryParamsByParamId;
+    }
+
+    public void setDirectoryParamsByParamId(DirectoryParams directoryParamsByParamId) {
+        this.directoryParamsByParamId = directoryParamsByParamId;
     }
 }

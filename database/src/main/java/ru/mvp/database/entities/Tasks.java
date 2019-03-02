@@ -1,10 +1,8 @@
 package ru.mvp.database.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +12,8 @@ public class Tasks {
     private Timestamp startDate;
     private String cronExpression;
     private int status;
+    private Collection<TaskResults> taskResultsById;
+    private Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById;
 
     @Id
     @Column(name = "id")
@@ -80,5 +80,23 @@ public class Tasks {
     @Override
     public int hashCode() {
         return Objects.hash(id, taskName, startDate, cronExpression, status);
+    }
+
+    @OneToMany(mappedBy = "tasksByTaskId")
+    public Collection<TaskResults> getTaskResultsById() {
+        return taskResultsById;
+    }
+
+    public void setTaskResultsById(Collection<TaskResults> taskResultsById) {
+        this.taskResultsById = taskResultsById;
+    }
+
+    @OneToMany(mappedBy = "tasksByTaskId")
+    public Collection<TaskUpdatedItemParams> getTaskUpdatedItemParamsById() {
+        return taskUpdatedItemParamsById;
+    }
+
+    public void setTaskUpdatedItemParamsById(Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById) {
+        this.taskUpdatedItemParamsById = taskUpdatedItemParamsById;
     }
 }

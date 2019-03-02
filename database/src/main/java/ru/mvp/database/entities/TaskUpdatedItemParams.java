@@ -10,6 +10,8 @@ public class TaskUpdatedItemParams {
     private Integer taskId;
     private int itemId;
     private int status;
+    private Tasks tasksByTaskId;
+    private Items itemsByItemId;
 
     @Id
     @Column(name = "id")
@@ -65,5 +67,25 @@ public class TaskUpdatedItemParams {
     @Override
     public int hashCode() {
         return Objects.hash(id, taskId, itemId, status);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "task_id", referencedColumnName = "id")
+    public Tasks getTasksByTaskId() {
+        return tasksByTaskId;
+    }
+
+    public void setTasksByTaskId(Tasks tasksByTaskId) {
+        this.tasksByTaskId = tasksByTaskId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
+    public Items getItemsByItemId() {
+        return itemsByItemId;
+    }
+
+    public void setItemsByItemId(Items itemsByItemId) {
+        this.itemsByItemId = itemsByItemId;
     }
 }

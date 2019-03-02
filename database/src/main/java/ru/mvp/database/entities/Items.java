@@ -1,11 +1,9 @@
 package ru.mvp.database.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +15,9 @@ public class Items {
     private BigInteger price;
     private String storageUnit;
     private Integer eslId;
+    private Collection<ItemParamsGroup> itemParamsGroupsById;
+    private Esls eslsByEslId;
+    private Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById;
 
     @Id
     @Column(name = "id")
@@ -105,5 +106,33 @@ public class Items {
     @Override
     public int hashCode() {
         return Objects.hash(id, code, name, lastUpdated, price, storageUnit, eslId);
+    }
+
+    @OneToMany(mappedBy = "itemsByItemId")
+    public Collection<ItemParamsGroup> getItemParamsGroupsById() {
+        return itemParamsGroupsById;
+    }
+
+    public void setItemParamsGroupsById(Collection<ItemParamsGroup> itemParamsGroupsById) {
+        this.itemParamsGroupsById = itemParamsGroupsById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "esl_id", referencedColumnName = "id")
+    public Esls getEslsByEslId() {
+        return eslsByEslId;
+    }
+
+    public void setEslsByEslId(Esls eslsByEslId) {
+        this.eslsByEslId = eslsByEslId;
+    }
+
+    @OneToMany(mappedBy = "itemsByItemId")
+    public Collection<TaskUpdatedItemParams> getTaskUpdatedItemParamsById() {
+        return taskUpdatedItemParamsById;
+    }
+
+    public void setTaskUpdatedItemParamsById(Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById) {
+        this.taskUpdatedItemParamsById = taskUpdatedItemParamsById;
     }
 }

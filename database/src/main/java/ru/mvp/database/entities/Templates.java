@@ -1,9 +1,7 @@
 package ru.mvp.database.entities;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -11,6 +9,8 @@ public class Templates {
     private int id;
     private String name;
     private String template;
+    private Collection<AvailableParamsForTemplate> availableParamsForTemplatesById;
+    private Collection<ItemParamsGroup> itemParamsGroupsById;
 
     @Id
     @Column(name = "id")
@@ -55,5 +55,23 @@ public class Templates {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, template);
+    }
+
+    @OneToMany(mappedBy = "templatesByTemplateId")
+    public Collection<AvailableParamsForTemplate> getAvailableParamsForTemplatesById() {
+        return availableParamsForTemplatesById;
+    }
+
+    public void setAvailableParamsForTemplatesById(Collection<AvailableParamsForTemplate> availableParamsForTemplatesById) {
+        this.availableParamsForTemplatesById = availableParamsForTemplatesById;
+    }
+
+    @OneToMany(mappedBy = "templatesByTemplateId")
+    public Collection<ItemParamsGroup> getItemParamsGroupsById() {
+        return itemParamsGroupsById;
+    }
+
+    public void setItemParamsGroupsById(Collection<ItemParamsGroup> itemParamsGroupsById) {
+        this.itemParamsGroupsById = itemParamsGroupsById;
     }
 }
