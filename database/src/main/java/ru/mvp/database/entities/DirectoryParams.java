@@ -1,7 +1,6 @@
 package ru.mvp.database.entities;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -10,12 +9,9 @@ public class DirectoryParams {
     private int id;
     private String name;
     private int typeParam;
-    private Collection<AvailableParamsForTemplate> availableParamsForTemplatesById;
-    private Collection<ItemParams> itemParamsById;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -51,31 +47,11 @@ public class DirectoryParams {
         DirectoryParams that = (DirectoryParams) o;
         return id == that.id &&
                 typeParam == that.typeParam &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(availableParamsForTemplatesById, that.availableParamsForTemplatesById) &&
-                Objects.equals(itemParamsById, that.itemParamsById);
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, typeParam, availableParamsForTemplatesById, itemParamsById);
-    }
-
-    @OneToMany(mappedBy = "directoryParamsByParamId")
-    public Collection<AvailableParamsForTemplate> getAvailableParamsForTemplatesById() {
-        return availableParamsForTemplatesById;
-    }
-
-    public void setAvailableParamsForTemplatesById(Collection<AvailableParamsForTemplate> availableParamsForTemplatesById) {
-        this.availableParamsForTemplatesById = availableParamsForTemplatesById;
-    }
-
-    @OneToMany(mappedBy = "directoryParamsByParamId")
-    public Collection<ItemParams> getItemParamsById() {
-        return itemParamsById;
-    }
-
-    public void setItemParamsById(Collection<ItemParams> itemParamsById) {
-        this.itemParamsById = itemParamsById;
+        return Objects.hash(id, name, typeParam);
     }
 }

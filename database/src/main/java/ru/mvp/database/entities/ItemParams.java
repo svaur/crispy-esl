@@ -7,19 +7,38 @@ import java.util.Objects;
 @Table(name = "item_params", schema = "public", catalog = "eslbase")
 public class ItemParams {
     private int id;
+    private Integer itemParamsGroupId;
+    private int paramId;
     private String paramValue;
-    private ItemParamsGroup itemsByItemId;
-    private DirectoryParams directoryParamsByParamId;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "item_params_group_id")
+    public Integer getItemParamsGroupId() {
+        return itemParamsGroupId;
+    }
+
+    public void setItemParamsGroupId(Integer itemParamsGroupId) {
+        this.itemParamsGroupId = itemParamsGroupId;
+    }
+
+    @Basic
+    @Column(name = "param_id")
+    public int getParamId() {
+        return paramId;
+    }
+
+    public void setParamId(int paramId) {
+        this.paramId = paramId;
     }
 
     @Basic
@@ -38,33 +57,13 @@ public class ItemParams {
         if (o == null || getClass() != o.getClass()) return false;
         ItemParams that = (ItemParams) o;
         return id == that.id &&
-                Objects.equals(paramValue, that.paramValue) &&
-                Objects.equals(itemsByItemId, that.itemsByItemId) &&
-                Objects.equals(directoryParamsByParamId, that.directoryParamsByParamId);
+                paramId == that.paramId &&
+                Objects.equals(itemParamsGroupId, that.itemParamsGroupId) &&
+                Objects.equals(paramValue, that.paramValue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, paramValue, itemsByItemId, directoryParamsByParamId);
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "item_params_group_id", referencedColumnName = "id")
-    public ItemParamsGroup getitemsByItemId() {
-        return itemsByItemId;
-    }
-
-    public void setitemsByItemId(ItemParamsGroup itemsByItemId) {
-        this.itemsByItemId = itemsByItemId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "param_id", referencedColumnName = "id", nullable = false)
-    public DirectoryParams getDirectoryParamsByParamId() {
-        return directoryParamsByParamId;
-    }
-
-    public void setDirectoryParamsByParamId(DirectoryParams directoryParamsByParamId) {
-        this.directoryParamsByParamId = directoryParamsByParamId;
+        return Objects.hash(id, itemParamsGroupId, paramId, paramValue);
     }
 }

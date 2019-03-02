@@ -1,7 +1,9 @@
 package ru.mvp.database.entities;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
@@ -9,12 +11,9 @@ public class Templates {
     private int id;
     private String name;
     private String template;
-    private Collection<AvailableParamsForTemplate> availableParamsForTemplatesById;
-    private Collection<ItemParamsGroup> itemParamsGroupsById;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -50,31 +49,11 @@ public class Templates {
         Templates templates = (Templates) o;
         return id == templates.id &&
                 Objects.equals(name, templates.name) &&
-                Objects.equals(template, templates.template) &&
-                Objects.equals(availableParamsForTemplatesById, templates.availableParamsForTemplatesById) &&
-                Objects.equals(itemParamsGroupsById, templates.itemParamsGroupsById);
+                Objects.equals(template, templates.template);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, template, availableParamsForTemplatesById, itemParamsGroupsById);
-    }
-
-    @OneToMany(mappedBy = "templatesByTemplateId")
-    public Collection<AvailableParamsForTemplate> getAvailableParamsForTemplatesById() {
-        return availableParamsForTemplatesById;
-    }
-
-    public void setAvailableParamsForTemplatesById(Collection<AvailableParamsForTemplate> availableParamsForTemplatesById) {
-        this.availableParamsForTemplatesById = availableParamsForTemplatesById;
-    }
-
-    @OneToMany(mappedBy = "templatesByTemplateId")
-    public Collection<ItemParamsGroup> getItemParamsGroupsById() {
-        return itemParamsGroupsById;
-    }
-
-    public void setItemParamsGroupsById(Collection<ItemParamsGroup> itemParamsGroupsById) {
-        this.itemParamsGroupsById = itemParamsGroupsById;
+        return Objects.hash(id, name, template);
     }
 }

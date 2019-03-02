@@ -2,28 +2,44 @@ package ru.mvp.database.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Table(name = "item_params_group", schema = "public", catalog = "eslbase")
 public class ItemParamsGroup {
     private int id;
+    private int itemId;
+    private Integer templateId;
     private Timestamp dateAdded;
-    private Collection<ItemParams> itemParamsById;
-    private Items itemsByItemId;
-    private Templates templatesByTemplateId;
-    private Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "item_id")
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+    @Basic
+    @Column(name = "template_id")
+    public Integer getTemplateId() {
+        return templateId;
+    }
+
+    public void setTemplateId(Integer templateId) {
+        this.templateId = templateId;
     }
 
     @Basic
@@ -42,53 +58,13 @@ public class ItemParamsGroup {
         if (o == null || getClass() != o.getClass()) return false;
         ItemParamsGroup that = (ItemParamsGroup) o;
         return id == that.id &&
-                Objects.equals(dateAdded, that.dateAdded) &&
-                Objects.equals(itemParamsById, that.itemParamsById) &&
-                Objects.equals(itemsByItemId, that.itemsByItemId) &&
-                Objects.equals(templatesByTemplateId, that.templatesByTemplateId) &&
-                Objects.equals(taskUpdatedItemParamsById, that.taskUpdatedItemParamsById);
+                itemId == that.itemId &&
+                Objects.equals(templateId, that.templateId) &&
+                Objects.equals(dateAdded, that.dateAdded);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateAdded, itemParamsById, itemsByItemId, templatesByTemplateId, taskUpdatedItemParamsById);
-    }
-
-    @OneToMany(mappedBy = "itemsByItemId")
-    public Collection<ItemParams> getItemParamsById() {
-        return itemParamsById;
-    }
-
-    public void setItemParamsById(Collection<ItemParams> itemParamsById) {
-        this.itemParamsById = itemParamsById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
-    public Items getItemsByItemId() {
-        return itemsByItemId;
-    }
-
-    public void setItemsByItemId(Items itemsByItemId) {
-        this.itemsByItemId = itemsByItemId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "template_id", referencedColumnName = "id")
-    public Templates getTemplatesByTemplateId() {
-        return templatesByTemplateId;
-    }
-
-    public void setTemplatesByTemplateId(Templates templatesByTemplateId) {
-        this.templatesByTemplateId = templatesByTemplateId;
-    }
-
-    @OneToMany(mappedBy = "itemsByItemId")
-    public Collection<TaskUpdatedItemParams> getTaskUpdatedItemParamsById() {
-        return taskUpdatedItemParamsById;
-    }
-
-    public void setTaskUpdatedItemParamsById(Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById) {
-        this.taskUpdatedItemParamsById = taskUpdatedItemParamsById;
+        return Objects.hash(id, itemId, templateId, dateAdded);
     }
 }

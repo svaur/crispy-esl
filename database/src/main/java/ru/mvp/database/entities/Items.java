@@ -1,8 +1,11 @@
 package ru.mvp.database.entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.math.BigInteger;
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -11,15 +14,12 @@ public class Items {
     private String code;
     private String name;
     private Timestamp lastUpdated;
-    //todo будут ли операции расчитаны тут. Если да, то надо будет тип BigInteger
-    private Double price;
+    private BigInteger price;
     private String storageUnit;
-    private Collection<ItemParamsGroup> itemParamsGroupsById;
-    private Esls eslsByEslId;
+    private Integer eslId;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -29,7 +29,7 @@ public class Items {
     }
 
     @Basic
-    @Column(name = "code", unique=true)
+    @Column(name = "code")
     public String getCode() {
         return code;
     }
@@ -60,11 +60,11 @@ public class Items {
 
     @Basic
     @Column(name = "price")
-    public Double getPrice() {
+    public BigInteger getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigInteger price) {
         this.price = price;
     }
 
@@ -78,6 +78,16 @@ public class Items {
         this.storageUnit = storageUnit;
     }
 
+    @Basic
+    @Column(name = "esl_id")
+    public Integer getEslId() {
+        return eslId;
+    }
+
+    public void setEslId(Integer eslId) {
+        this.eslId = eslId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,41 +99,11 @@ public class Items {
                 Objects.equals(lastUpdated, items.lastUpdated) &&
                 Objects.equals(price, items.price) &&
                 Objects.equals(storageUnit, items.storageUnit) &&
-                Objects.equals(itemParamsGroupsById, items.itemParamsGroupsById) &&
-                Objects.equals(eslsByEslId, items.eslsByEslId);
+                Objects.equals(eslId, items.eslId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, name, lastUpdated, price, storageUnit, itemParamsGroupsById, eslsByEslId);
-    }
-
-    @Override
-    public String toString() {
-        return "Items{" +
-                "code='" + code + '\'' +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", storageUnit='" + storageUnit + '\'' +
-                '}';
-    }
-
-    @OneToMany(mappedBy = "itemsByItemId")
-    public Collection<ItemParamsGroup> getItemParamsGroupsById() {
-        return itemParamsGroupsById;
-    }
-
-    public void setItemParamsGroupsById(Collection<ItemParamsGroup> itemParamsGroupsById) {
-        this.itemParamsGroupsById = itemParamsGroupsById;
-    }
-
-    @OneToOne
-    @JoinColumn(name = "esl_id", referencedColumnName = "id")
-    public Esls getEslsByEslId() {
-        return eslsByEslId;
-    }
-
-    public void setEslsByEslId(Esls eslsByEslId) {
-        this.eslsByEslId = eslsByEslId;
+        return Objects.hash(id, code, name, lastUpdated, price, storageUnit, eslId);
     }
 }

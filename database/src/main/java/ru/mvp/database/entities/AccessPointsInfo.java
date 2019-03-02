@@ -1,8 +1,6 @@
 package ru.mvp.database.entities;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -14,7 +12,6 @@ public class AccessPointsInfo {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -25,11 +22,11 @@ public class AccessPointsInfo {
 
     @Basic
     @Column(name = "ip")
-    public String  getIp() {
+    public String getIp() {
         return ip;
     }
 
-    public void setIp(String  ip) {
+    public void setIp(String ip) {
         this.ip = ip;
     }
 

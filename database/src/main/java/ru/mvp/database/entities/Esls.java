@@ -1,6 +1,9 @@
 package ru.mvp.database.entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Objects;
@@ -19,11 +22,9 @@ public class Esls {
     private Timestamp registrationDate;
     private Timestamp startDate;
     private String status;
-    private Items itemsById;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -33,7 +34,7 @@ public class Esls {
     }
 
     @Basic
-    @Column(name = "code", unique=true)
+    @Column(name = "code")
     public String getCode() {
         return code;
     }
@@ -158,33 +159,14 @@ public class Esls {
                 Objects.equals(lastUpdate, esls.lastUpdate) &&
                 Objects.equals(registrationDate, esls.registrationDate) &&
                 Objects.equals(startDate, esls.startDate) &&
-                Objects.equals(status, esls.status) &&
-                Objects.equals(itemsById, esls.itemsById);
+                Objects.equals(status, esls.status);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status, itemsById);
+        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status);
         result = 31 * result + Arrays.hashCode(currentImage);
         result = 31 * result + Arrays.hashCode(nextImage);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Esls{" +
-                "code='" + code + '\'' +
-                ", eslType='" + eslType + '\'' +
-                ", firmware='" + firmware + '\'' +
-                '}';
-    }
-
-    @OneToOne(mappedBy = "eslsByEslId")
-    public Items getItemsById() {
-        return itemsById;
-    }
-
-    public void setItemsById(Items itemsById) {
-        this.itemsById = itemsById;
     }
 }
