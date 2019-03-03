@@ -73,7 +73,9 @@ public class EslApiController {
         if ("add".equalsIgnoreCase(type)) {
             try {
                 byte[] generateImage = generateImage(itemElement);
-                eslElement.setNextImage(generateImage);
+                byte[] generateByteImage = generateByteImage(itemElement);
+                eslElement.setNextImage(generateByteImage);
+                eslElement.setCurrentImage(generateImage);
                 eslElement.setItemsByItemsId(itemElement);
             } catch (IOException e) {
                 return "error " + e.getMessage();
@@ -93,7 +95,7 @@ public class EslApiController {
     public String getImage(@RequestParam("eslCode") String eslCode){
         Esls code = eslsRepository.findByCode(eslCode);
         //todo для проверки.
-        byte[] currentImage = code.getNextImage();
+        byte[] currentImage = code.getCurrentImage();
         if (currentImage !=null) {
             String data = "data:image/bmp;base64," + DatatypeConverter.printBase64Binary(currentImage);
             return new Gson().toJson(data);
@@ -130,33 +132,41 @@ public class EslApiController {
         return outList;
     }
     private byte[] generateImage(Items items) throws IOException{
+        BufferedImage image = getBufferedImage(items);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.getWriterFormatNames();
+        if (ImageIO.write(image, "BMP", baos)) {
+            return baos.toByteArray();
+//            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
+//            return "data:image/bmp;base64," + data;
+        }else{
+            throw new IOException();
+        }
+    }
+    private byte[] generateByteImage(Items items) throws IOException{
+        BufferedImage image = getBufferedImage(items);
+        List<Integer> outTemp = new ArrayList<>();
+        for (int y=0 ; y < image.getHeight() ; y++)
+            for (int x=0 ; x < image.getWidth() ; x++){
+                int sample = image.getRaster().getSample(x, y, 0);
+                outTemp.add(sample == 0 ? 1 : 0);
+            }
+        return encodeToByteArray(outTemp);
+    }
+
+    private BufferedImage getBufferedImage(Items items) {
         int width = 152;
         int height = 152;
         EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(items.getName(),
                 items.getName(),
-                String.valueOf(items.getPrice()+10),
+                String.valueOf(items.getPrice() + 10),
                 String.valueOf(items.getPrice()),
                 "рублей",
                 items.getCode());
-        BufferedImage image = baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
-        List<Integer> outTemp = new ArrayList<>();
-        for (int y=0 ; y < image.getHeight() ; y++)
-            for (int x=0 ; x < image.getWidth() ; x++){
-                //for (int c=0 ; c < image.getRaster().getNumBands() ; c++) {
-                    int sample = image.getRaster().getSample(x, y, 0);
-                    outTemp.add(sample == 0 ? 1 : 0);
-                }
-        return encodeToByteArray(outTemp);
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        ImageIO.getWriterFormatNames();
-//        if (ImageIO.write(image, "BMP", baos)) {
-//            return baos.toByteArray();
-////            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
-////            return "data:image/bmp;base64," + data;
-//        }else{
-//            throw new IOException();
-//        }
+        return baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
     }
+
     private static byte[] encodeToByteArray(List<Integer> inputArray) {
         byte[] results = new byte[(inputArray.size() + 7) / 8];
         int byteValue = 0;
