@@ -3,6 +3,8 @@ package ru.mvp.accesspoint;
 import org.springframework.stereotype.Component;
 import ru.mvp.database.LoggerDBTools;
 import ru.mvp.database.entities.Esls;
+import ru.mvp.database.entities.Items;
+import ru.mvp.database.entities.Tasks;
 import ru.mvp.database.repositories.EslsRepository;
 
 import java.io.*;
@@ -10,23 +12,48 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Stream;
 
 import jssc.SerialPort;
 import jssc.SerialPortException;
+import ru.mvp.database.repositories.ItemsRepository;
+import ru.mvp.database.repositories.TasksRepository;
 
 import static com.sun.javafx.font.PrismFontFactory.isWindows;
 
 @Component
 public class ConsoleTools {
-    EslsRepository eslsRepository;
-    LoggerDBTools loggerDBTools;
-
-    public ConsoleTools(EslsRepository eslsRepository, LoggerDBTools loggerDBTools) {
+    private EslsRepository eslsRepository;
+    private ItemsRepository itemsRepository;
+    private TasksRepository tasksRepository;
+    private LoggerDBTools loggerDBTools;
+    private byte[][] eslsNumsArray=new byte[10][2];
+    public ConsoleTools(EslsRepository eslsRepository, LoggerDBTools loggerDBTools,TasksRepository tasksRepository,ItemsRepository itemsRepository) {
         this.eslsRepository = eslsRepository;
+        this.itemsRepository = itemsRepository;
+        this.tasksRepository = tasksRepository;
         this.loggerDBTools = loggerDBTools;
+        eslsNumsArray[0][0]=(byte)0xb4;
+        eslsNumsArray[0][1]=(byte)0x01;
+        eslsNumsArray[1][0]=(byte)0xb4;
+        eslsNumsArray[1][1]=(byte)0x02;
+        eslsNumsArray[2][0]=(byte)0xb4;
+        eslsNumsArray[2][1]=(byte)0x04;
+        eslsNumsArray[3][0]=(byte)0xb4;
+        eslsNumsArray[3][1]=(byte)0x08;
+        eslsNumsArray[4][0]=(byte)0xb4;
+        eslsNumsArray[4][1]=(byte)0x10;
+        eslsNumsArray[5][0]=(byte)0xb4;
+        eslsNumsArray[5][1]=(byte)0x20;
+        eslsNumsArray[6][0]=(byte)0xb4;
+        eslsNumsArray[6][1]=(byte)0x40;
+        eslsNumsArray[7][0]=(byte)0xb4;
+        eslsNumsArray[7][1]=(byte)0x80;
+        eslsNumsArray[8][0]=(byte)0xb5;
+        eslsNumsArray[8][1]=(byte)0x00;
+        eslsNumsArray[9][0]=(byte)0xb6;
+        eslsNumsArray[9][1]=(byte)0x00;
     }
 
     public String runConsoleCommand(String command) throws IOException {
@@ -53,27 +80,7 @@ public class ConsoleTools {
         Esls esl = eslsRepository.findByCode(eslStr);
         try {
             //а насрать. Это временно
-            byte[][] eslsNumsArray=new byte[10][2];
-            eslsNumsArray[0][0]=(byte)0xb4;
-            eslsNumsArray[0][1]=(byte)0x01;
-            eslsNumsArray[1][0]=(byte)0xb4;
-            eslsNumsArray[1][1]=(byte)0x02;
-            eslsNumsArray[2][0]=(byte)0xb4;
-            eslsNumsArray[2][1]=(byte)0x04;
-            eslsNumsArray[3][0]=(byte)0xb4;
-            eslsNumsArray[3][1]=(byte)0x08;
-            eslsNumsArray[4][0]=(byte)0xb4;
-            eslsNumsArray[4][1]=(byte)0x10;
-            eslsNumsArray[5][0]=(byte)0xb4;
-            eslsNumsArray[5][1]=(byte)0x20;
-            eslsNumsArray[6][0]=(byte)0xb4;
-            eslsNumsArray[6][1]=(byte)0x40;
-            eslsNumsArray[7][0]=(byte)0xb4;
-            eslsNumsArray[7][1]=(byte)0x80;
-            eslsNumsArray[8][0]=(byte)0xb5;
-            eslsNumsArray[8][1]=(byte)0x00;
-            eslsNumsArray[9][0]=(byte)0xb6;
-            eslsNumsArray[9][1]=(byte)0x00;
+
             sendDataToCOMMport(eslsNumsArray[Integer.valueOf(eslStr)-1], esl.getNextImage());
 //            FileOutputStream fos = new FileOutputStream(eslStr+".exe");
 //            fos.write(data, 0, data.length);
@@ -84,6 +91,22 @@ public class ConsoleTools {
             System.out.println("обработать ошибку"+e);
             loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "ошибка обновления <br>" + esl.toString() + "<br>" + e.getLocalizedMessage(), "integration");
         }
+    }
+    public void updateTask(String taskId){
+        Tasks tasks = tasksRepository.findById(Integer.valueOf(taskId));
+        String[] barcodes = tasks.getBarcodes().split(",");
+        for (String barcode : barcodes) {
+            byte[] outByte = new byte[2];
+            Collection<Esls> eslsById = itemsRepository.findByCode(barcode).getEslsById();
+            for (Esls esls : eslsById) {
+                outByte[0]= (byte)(eslsNumsArray[Integer.valueOf(esls.getCode())][0] | outByte[0]);
+                outByte[1]=(byte)(eslsNumsArray[Integer.valueOf(esls.getCode())][1] | outByte[1]);
+            }
+            System.out.println("групповое обновление "+bytesToHex(outByte)+"  "+barcode);
+            Esls o = (Esls)eslsById.toArray()[0];
+            sendDataToCOMMport(outByte, o.getNextImage());
+        }
+
     }
     private void sendDataToCOMMport(byte[] eslNum, byte[] fileBytes){
         byte[] okArr = new byte[2];

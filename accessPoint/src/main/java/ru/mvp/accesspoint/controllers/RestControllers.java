@@ -40,4 +40,9 @@ public class RestControllers {
         consoleTools.getByteImage(esl);
         return "ok";
     }
+    @RequestMapping("/api/updateEslGroup")
+    public String updateEslGroup(@RequestParam("taskId") String taskId){
+        consoleTools.updateTask(taskId);
+        return "ok";
+    }
 }

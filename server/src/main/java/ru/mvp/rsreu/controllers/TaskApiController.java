@@ -41,6 +41,7 @@ public class TaskApiController {
         List<HashMap<String, String>> outList= new ArrayList<>();
         e.forEach(element->{
             HashMap<String, String> map = new HashMap<>();
+            map.put("id", String.valueOf(element.getId()));
             map.put("taskName", element.getTaskName());
             map.put("frequency", element.getCronExpression());
             map.put("taskResults", element.getTaskResultsById().toString());

@@ -106,6 +106,11 @@ public class EslApiController {
         String server = "http://127.0.0.1:8090";
         return restClient.get(server, "/api/updateEsl?esl="+eslCode);
     }
+    @RequestMapping("/api/updateEslGroup")
+    public String updateEslGroup(@RequestParam("taskId") String taskId){
+        String server = "http://127.0.0.1:8090";
+        return restClient.get(server, "/api/updateEslGroup?taskId="+taskId);
+    }
 
     private List<HashMap<String, String>> fillEslData(Page<Esls> e) {
         List<HashMap<String, String>> outList= new ArrayList<>();

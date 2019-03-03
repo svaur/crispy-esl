@@ -96,7 +96,7 @@ function displayTaskData(url, headers) {
             .append("<thead>" +
                 "<tr>" +
                 "<th>Имя</th>" +
-                "<th>Затронутые ценники</th>" +
+                "<th>Затронутые товары</th>" +
                 "<th>Частота</th>" +
                 "<th>Статус</th>" +
                 // "<th>taskResults</th>" +
@@ -111,7 +111,11 @@ function displayTaskData(url, headers) {
                 "<td>" + tableData[i].frequency + "</td>" +
                 "<td>" + tableData[i].status + "</td>" +
                 // "<td>" + tableData[i].taskResults + "</td>" +
-                "<td> </td>" +
+                "<td> " +
+                    "<a class=\"blue-grey darken-1 waves-effect waves-light\" onclick='updateImageTask(" + tableData[i].id + ")'>" +
+                    "<i class=\"white-text material-icons small\">update</i>" +
+                    "</a>" +
+                "</td>" +
                 "</tr>");
         }
         $('.dropdown-trigger').dropdown();
@@ -172,4 +176,12 @@ function hideDiv(elem) {
 }
 function saveTaskData() {
     alert("нет обработчика");
+}
+
+function updateImageTask(taskId) {
+    $.getJSON("/api/updateEslGroup", {taskId:taskId}, function (data) {
+        alert(data.responseText);
+    }).error(function(jqXHR) {
+        alert(jqXHR.responseText);
+    });
 }
