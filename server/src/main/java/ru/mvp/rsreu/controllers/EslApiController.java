@@ -17,6 +17,7 @@ import ru.mvp.database.repositories.ItemsRepository;
 import ru.mvp.rsreu.templates.BaseSaleTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
 import ru.mvp.database.LoggerDBTools;
+import ru.mvp.rsreu.templates.SaleTemplate;
 import ru.mvp.rsreu.tools.RestClient;
 
 import javax.imageio.ImageIO;
@@ -36,15 +37,15 @@ public class EslApiController {
     private static final String EMPTY_STRING = "";
     private EslsRepository eslsRepository;
     private ItemsRepository itemsRepository;
-    private BaseSaleTemplate baseSaleTemplate;
+    private List<SaleTemplate> saleTemplateList;
     private LoggerDBTools loggerDBTools;
     private RestClient restClient;
 
     @Autowired
-    public EslApiController(EslsRepository eslsRepository, ItemsRepository itemsRepository, BaseSaleTemplate baseSaleTemplate, LoggerDBTools loggerDBTools, RestClient restClient) {
+    public EslApiController(EslsRepository eslsRepository, ItemsRepository itemsRepository, List<SaleTemplate> saleTemplateList, LoggerDBTools loggerDBTools, RestClient restClient) {
         this.eslsRepository = eslsRepository;
         this.itemsRepository = itemsRepository;
-        this.baseSaleTemplate = baseSaleTemplate;
+        this.saleTemplateList = saleTemplateList;
         this.loggerDBTools = loggerDBTools;
         this.restClient = restClient;
     }
@@ -72,8 +73,9 @@ public class EslApiController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if ("add".equalsIgnoreCase(type)) {
             try {
-                byte[] generateImage = generateImage(itemElement);
-                byte[] generateByteImage = generateByteImage(itemElement);
+                SaleTemplate saleTemplate = saleTemplateList.get(Integer.valueOf(template));
+                byte[] generateImage = generateImage(itemElement, saleTemplate);
+                byte[] generateByteImage = generateByteImage(itemElement, saleTemplate);
                 eslElement.setNextImage(generateByteImage);
                 eslElement.setCurrentImage(generateImage);
                 eslElement.setItemsByItemsId(itemElement);
@@ -131,8 +133,8 @@ public class EslApiController {
             outList.add(map);});
         return outList;
     }
-    private byte[] generateImage(Items items) throws IOException{
-        BufferedImage image = getBufferedImage(items);
+    private byte[] generateImage(Items items, SaleTemplate saleTemplate) throws IOException{
+        BufferedImage image = getBufferedImage(items, saleTemplate);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.getWriterFormatNames();
@@ -144,8 +146,8 @@ public class EslApiController {
             throw new IOException();
         }
     }
-    private byte[] generateByteImage(Items items) throws IOException{
-        BufferedImage image = getBufferedImage(items);
+    private byte[] generateByteImage(Items items, SaleTemplate saleTemplate) throws IOException{
+        BufferedImage image = getBufferedImage(items, saleTemplate);
         List<Integer> outTemp = new ArrayList<>();
         for (int y=0 ; y < image.getHeight() ; y++)
             for (int x=0 ; x < image.getWidth() ; x++){
@@ -155,7 +157,7 @@ public class EslApiController {
         return encodeToByteArray(outTemp);
     }
 
-    private BufferedImage getBufferedImage(Items items) {
+    private BufferedImage getBufferedImage(Items items, SaleTemplate saleTemplate) {
         int width = 152;
         int height = 152;
         EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(items.getName(),
@@ -164,7 +166,7 @@ public class EslApiController {
                 String.valueOf(items.getPrice()),
                 "рублей",
                 items.getCode());
-        return baseSaleTemplate.drawEsl(eslInfoTemplate, width, height);
+        return saleTemplate.drawEsl(eslInfoTemplate, width, height);
     }
 
     private static byte[] encodeToByteArray(List<Integer> inputArray) {
