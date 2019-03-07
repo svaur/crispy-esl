@@ -18,6 +18,7 @@ import ru.mvp.rsreu.templates.BaseSaleTemplate;
 import ru.mvp.rsreu.templates.EslInfoTemplate;
 import ru.mvp.database.LoggerDBTools;
 import ru.mvp.rsreu.templates.SaleTemplate;
+import ru.mvp.rsreu.templates.SecondSaleTemplate;
 import ru.mvp.rsreu.tools.RestClient;
 
 import javax.imageio.ImageIO;
@@ -37,16 +38,26 @@ public class EslApiController {
     private static final String EMPTY_STRING = "";
     private EslsRepository eslsRepository;
     private ItemsRepository itemsRepository;
-    private List<SaleTemplate> saleTemplateList;
+//    private List<SaleTemplate> saleTemplateList;
+    private BaseSaleTemplate bsaleTemplateList;
+    private SecondSaleTemplate ssaleTemplateList;
     private LoggerDBTools loggerDBTools;
     private RestClient restClient;
 
     @Autowired
-    public EslApiController(EslsRepository eslsRepository, ItemsRepository itemsRepository, List<SaleTemplate> saleTemplateList, LoggerDBTools loggerDBTools, RestClient restClient) {
+    public EslApiController(EslsRepository eslsRepository,
+                            ItemsRepository itemsRepository,
+                            //List<SaleTemplate> saleTemplateList,
+                            BaseSaleTemplate bsaleTemplateList,
+                            SecondSaleTemplate ssaleTemplateList,
+                            LoggerDBTools loggerDBTools,
+                            RestClient restClient) {
         this.eslsRepository = eslsRepository;
         this.itemsRepository = itemsRepository;
-        this.saleTemplateList = saleTemplateList;
+//        this.saleTemplateList = saleTemplateList;
         this.loggerDBTools = loggerDBTools;
+        this.bsaleTemplateList = bsaleTemplateList;
+        this.ssaleTemplateList = ssaleTemplateList;
         this.restClient = restClient;
     }
 
@@ -73,7 +84,8 @@ public class EslApiController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if ("add".equalsIgnoreCase(type)) {
             try {
-                SaleTemplate saleTemplate = saleTemplateList.get(Integer.valueOf(template));
+//                SaleTemplate saleTemplate = saleTemplateList.get(Integer.valueOf(template));
+                SaleTemplate saleTemplate = "0".equals(template)?bsaleTemplateList:ssaleTemplateList;
                 byte[] generateImage = generateImage(itemElement, saleTemplate);
                 byte[] generateByteImage = generateByteImage(itemElement, saleTemplate);
                 eslElement.setNextImage(generateByteImage);

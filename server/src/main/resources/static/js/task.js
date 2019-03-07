@@ -180,7 +180,7 @@ function saveTaskData() {
 
 function updateImageTask(taskId) {
     $.getJSON("/api/updateEslGroup", {taskId:taskId}, function (data) {
-        alert(data.responseText);
+        Console.log(data);
     }).error(function(jqXHR) {
         alert(jqXHR.responseText);
     });

@@ -53,10 +53,10 @@ function saveData() {
             "item": document.getElementById("itemInput").value
         };
         $.getJSON("/api/assignEsl", dataToSave, function (data) {
-            alert(data);
-        }).error(function(jqXHR) {
-           alert(jqXHR.responseText);
-        });
+            if (!data==="ok"){
+                alert(data);
+            }
+        })
     }
 }
 function cancelBtn() {

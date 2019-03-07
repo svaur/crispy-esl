@@ -114,8 +114,8 @@ function showImage(code) {
 }
 function updateImage(code) {
     $.getJSON("/api/updateEsl", {eslCode:code}, function (data) {
-        alert(data.responseText);
-    }).error(function(jqXHR) {
-        alert(jqXHR.responseText);
-    });
+        if (!data==="ok"){
+            alert(data);
+        }
+    })
 }

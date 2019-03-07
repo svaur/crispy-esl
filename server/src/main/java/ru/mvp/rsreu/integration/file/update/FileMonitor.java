@@ -1,10 +1,13 @@
 package ru.mvp.rsreu.integration.file.update;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.mvp.database.entities.Esls;
 import ru.mvp.database.entities.Items;
 import ru.mvp.database.repositories.EslsRepository;
@@ -12,7 +15,11 @@ import ru.mvp.database.repositories.ItemsRepository;
 import ru.mvp.rsreu.integration.file.parsers.ParserFactory;
 import ru.mvp.rsreu.integration.file.parsers.TypeEntity;
 import ru.mvp.database.LoggerDBTools;
+import ru.mvp.rsreu.templates.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -29,6 +36,12 @@ import java.util.stream.StreamSupport;
 @Component
 @EnableScheduling
 public class FileMonitor {
+    @Autowired
+    EmptySaleTemplate emptySaleTemplate;
+    @Autowired
+    BaseSaleTemplate baseSaleTemplate;
+    @Autowired
+    SecondSaleTemplate secondSaleTemplate;
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FileMonitor.class);
     //разумное время для перезапуска полера
@@ -50,6 +63,7 @@ public class FileMonitor {
     }
 
     @Scheduled(fixedDelay = CHECK_INTERVAL)
+    @Transactional
     public void task() {
         LOGGER.debug("Start FileMonitor task. FileInfoMap: {}", fileInfoMap);
         Set<String> currentFileSet = new HashSet<>();
@@ -72,11 +86,26 @@ public class FileMonitor {
                                 }else{
                                     //такой айдишник есть. Надо апдейтить
                                     el.setId(findByCodeElement.getId());
+                                    Collection<Esls> eslsById = findByCodeElement.getEslsById();
+                                    if (eslsById!=null) {
+                                        for (Esls eslById : eslsById) {
+                                            try {
+                                                eslById.setCurrentImage(generateImage(el, baseSaleTemplate));
+                                                eslById.setNextImage(generateByteImage(el, baseSaleTemplate));
+                                                eslsRepository.save(eslById);
+                                            } catch (Exception e1) {
+                                                System.out.println(e1);
+                                                loggerDBTools.log(new Timestamp(new Date().getTime()), "item", "error", "ошибка обновления товара "+e1, "integration");
+                                            }
+                                        }
+                                    }
                                     itemsRepository.save(el);
                                     loggerDBTools.log(new Timestamp(new Date().getTime()), "item", "edit", "обновлен товар <br>было: " + findByCodeElement.toString() + " <br>стало " + el.toString(), "integration");
+
                                 }
                             }
                         });
+                        eslsRepository.flush();
                         itemsRepository.flush();
                     });
         } catch (IOException e) {
@@ -95,6 +124,12 @@ public class FileMonitor {
                                 Esls findByCodeElement = eslsRepository.findByCode(el.getCode());
                                 if(findByCodeElement == null){
                                     //новый элемент. Просто вставляем
+                                    try {
+                                        el.setCurrentImage(generateEmptyImage());
+                                        el.setNextImage(generateEmptyByteImage());
+                                    }catch (Exception e1){
+                                        System.out.println(e1);
+                                    }
                                     eslsRepository.save(el);
                                     loggerDBTools.log(new Timestamp(new Date().getTime()), "esl", "new", "добавлен новый ценник " + el.toString(), "integration");
                                 }else{
@@ -206,5 +241,95 @@ public class FileMonitor {
                     ", done=" + done +
                     '}';
         }
+    }
+
+
+
+
+
+    //дубликат УБРАТЬ
+
+    private byte[] generateImage(Items items, SaleTemplate saleTemplate) throws IOException{
+        BufferedImage image = getBufferedImage(items, saleTemplate);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.getWriterFormatNames();
+        if (ImageIO.write(image, "BMP", baos)) {
+            return baos.toByteArray();
+//            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
+//            return "data:image/bmp;base64," + data;
+        }else{
+            throw new IOException();
+        }
+    }
+    private byte[] generateEmptyImage() throws IOException{
+        BufferedImage image = getBufferedImage();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.getWriterFormatNames();
+        if (ImageIO.write(image, "BMP", baos)) {
+            return baos.toByteArray();
+//            String data = DatatypeConverter.printBase64Binary(baos.toByteArray());
+//            return "data:image/bmp;base64," + data;
+        }else{
+            throw new IOException();
+        }
+    }
+    private byte[] generateByteImage(Items items, SaleTemplate saleTemplate) throws IOException{
+        BufferedImage image = getBufferedImage(items, saleTemplate);
+        List<Integer> outTemp = new ArrayList<>();
+        for (int y=0 ; y < image.getHeight() ; y++)
+            for (int x=0 ; x < image.getWidth() ; x++){
+                int sample = image.getRaster().getSample(x, y, 0);
+                outTemp.add(sample == 0 ? 1 : 0);
+            }
+        return encodeToByteArray(outTemp);
+    }
+    private byte[] generateEmptyByteImage() throws IOException{
+        BufferedImage image = getBufferedImage();
+        List<Integer> outTemp = new ArrayList<>();
+        for (int y=0 ; y < image.getHeight() ; y++)
+            for (int x=0 ; x < image.getWidth() ; x++){
+                int sample = image.getRaster().getSample(x, y, 0);
+                outTemp.add(sample == 0 ? 1 : 0);
+            }
+        return encodeToByteArray(outTemp);
+    }
+
+    private BufferedImage getBufferedImage(Items items, SaleTemplate saleTemplate) {
+        int width = 152;
+        int height = 152;
+        EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(items.getName(),
+                items.getName(),
+                String.valueOf(items.getPrice() + 10),
+                String.valueOf(items.getPrice()),
+                "рублей",
+                items.getCode());
+        return saleTemplate.drawEsl(eslInfoTemplate, width, height);
+    }
+    private BufferedImage getBufferedImage() {
+        int width = 152;
+        int height = 152;
+        return emptySaleTemplate.drawEsl(null, width, height);
+    }
+
+    private static byte[] encodeToByteArray(List<Integer> inputArray) {
+        byte[] results = new byte[(inputArray.size() + 7) / 8];
+        int byteValue = 0;
+        int index;
+        for (index = 0; index < inputArray.size(); index++) {
+
+            byteValue = (byteValue << 1) | inputArray.get(index);
+
+            if (index %8 == 7) {
+                results[index / 8] = (byte) byteValue;
+            }
+        }
+//игнор при котором у нас не влезает все в массив
+//        if (index % 8 != 0) {
+//            results[index / 8] = (byte) byteValue << (8 - (index % 8));
+//        }
+
+        return results;
     }
 }

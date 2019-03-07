@@ -2,7 +2,7 @@ package ru.mvp.rsreu.templates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.mvp.rsreu.fontedit.FontEditor;
+import ru.mvp.rsreu.templates.fontedit.FontEditor;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
