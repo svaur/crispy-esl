@@ -26,7 +26,7 @@ public class DataBaseConfiguration {
         //TODO: вынести в конфиг
         dataSource.setUrl("jdbc:postgresql://127.0.0.1:5432/eslbase");
         dataSource.setUsername("postgres");
-        dataSource.setPassword("Ieatcxz123");
+        dataSource.setPassword("postgres");
 
         return dataSource;
     }
