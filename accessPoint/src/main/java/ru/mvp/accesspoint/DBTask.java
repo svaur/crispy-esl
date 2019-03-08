@@ -58,10 +58,10 @@ public class DBTask {
                 tasks.setStatus(1);
                 tasksRepository.saveAndFlush(tasks);
 
-                loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "успешно обновлен ценник <br>" + esl.toString() + "<br> по таске <br>" + tasks.toString(), "integration");
+                loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "успешно обновлен ценник <br>" + esl.getCode() + "<br> по таске <br>" + tasks.toString(), "integration");
             }catch (Exception e){
                 System.out.println("обработать ошибку"+e);
-                loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "ошибка обновления <br>" + esl.toString() + "<br>" + e.getLocalizedMessage(), "integration");
+                loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "ошибка обновления <br>" + esl.getCode() + "<br>" + e.getLocalizedMessage(), "integration");
             }
             //а тут будет запись в результат
         });

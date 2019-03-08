@@ -1,6 +1,6 @@
 ﻿ CREATE DATABASE eslbase OWNER postgres;
 
-/*DROP TABLE item_params;
+DROP TABLE item_params;
 DROP TABLE available_params_for_template;
 DROP TABLE templates;
 DROP TABLE task_results;
@@ -9,7 +9,20 @@ DROP TABLE tasks;
 DROP TABLE directory_params;
 DROP TABLE item_params_group;
 DROP TABLE items;
-DROP TABLE esls;*/
+DROP TABLE esls;
+
+-- таблица итемов
+CREATE TABLE items
+(
+  id            INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  code          VARCHAR(255) NOT NULL UNIQUE,
+  name          VARCHAR(256) NOT NULL,
+  last_updated  TIMESTAMP,
+  price   NUMERIC NOT NULL,
+  second_price   NUMERIC NOT NULL,
+  action   VARCHAR(256) NOT NULL,
+  storage_unit          VARCHAR(256) NOT NULL
+);
 
 --таблица ценников
 CREATE TABLE esls
@@ -27,17 +40,6 @@ CREATE TABLE esls
   start_date        TIMESTAMP,
   status            VARCHAR(255),
   items_id        INT NULL REFERENCES items(id) 
-);
-
--- таблица итемов
-CREATE TABLE items
-(
-  id            INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  code          VARCHAR(255) NOT NULL UNIQUE,
-  name          VARCHAR(256) NOT NULL,
-  last_updated  TIMESTAMP,
-  price   NUMERIC NOT NULL,
-  storage_unit          VARCHAR(256) NOT NULL
 );
 
 -- таблица справочник параметров

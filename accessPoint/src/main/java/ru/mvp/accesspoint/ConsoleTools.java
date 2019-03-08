@@ -88,15 +88,15 @@ public class ConsoleTools {
             esl.setLastUpdate(new Timestamp(new Date().getTime()));
             esl.setStatus("online");
             eslsRepository.saveAndFlush(esl);
-            sendDataToCOMMport(eslsNumsArray[Integer.valueOf(eslStr)-1], esl.getNextImage());
+            sendDataToCOMMport(eslsNumsArray[Integer.valueOf(eslStr)], esl.getNextImage());
 //            FileOutputStream fos = new FileOutputStream(eslStr+".exe");
 //            fos.write(data, 0, data.length);
 //            fos.flush();
 //            fos.close();
-            loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "успешно обновлен ценник <br>" + esl.toString() + "<br> ручное обновление <br>" , "integration");
+            loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "успешно обновлен ценник <br>" + esl.getCode() + "<br> ручное обновление <br>" , "integration");
         }catch (Exception e){
             System.out.println("обработать ошибку"+e);
-            loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "ошибка обновления <br>" + esl.toString() + "<br>" + e.getLocalizedMessage(), "integration");
+            loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "ошибка обновления <br>" + esl.getCode() + "<br>" + e.getLocalizedMessage(), "integration");
         }
     }
     //дикий говнокод из двух шаблонов. Показ завтра, поэтому выбирать не приходистя
@@ -106,7 +106,7 @@ public class ConsoleTools {
         for (String barcode : barcodes) {
             byte[] outByte = new byte[2];
             Collection<Esls> eslsById = itemsRepository.findByCode(barcode).getEslsById();
-            if (eslsById!=null) {
+            if (eslsById.size()!=0) {
                 Esls o = (Esls) eslsById.toArray()[0];
                 for (Esls esls : eslsById) {
                     System.out.println("ценники " + esls.getCode());

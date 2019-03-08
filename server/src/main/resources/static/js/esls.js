@@ -79,12 +79,10 @@ function getAllEslData(pageNum) {
 }
 function eslActivateActions() {
     $('#eslTableCounter').formSelect().on('change', function () {
-        var headers = {"size": $('#eslTableCounter').val()};
-        displayEslData("/api/getEslTableData", headers);
+        getAllEslData(1)
     });
     $('#search').on('input', function() {
-        var headers = {"size": $('#eslTableCounter').val(), "searchValue": $('#search').val()};
-        displayEslData("/api/searchEslData", headers);
+        getAllEslData(1)
     });
     $('.dropdown-trigger').dropdown();
     $('#previousBtn').click(function () {
