@@ -82,20 +82,25 @@ public class ConsoleTools {
         Esls esl = eslsRepository.findByCode(eslStr);
         try {
             //а насрать. Это временно
+            sendDataToCOMMport(eslsNumsArray[Integer.valueOf(eslStr)], esl.getNextImage());
+//            FileOutputStream fos = new FileOutputStream(eslStr+".exe");
+//            fos.write(data, 0, data.length);
+//            fos.flush();
+//            fos.close();
             //костыль дозаписи информации о ценники. Нельзя доделать пока ценники ничего не возвращают
             esl.setBatteryLevel("100");
             esl.setConnectivity("connected");
             esl.setLastUpdate(new Timestamp(new Date().getTime()));
             esl.setStatus("online");
             eslsRepository.saveAndFlush(esl);
-            sendDataToCOMMport(eslsNumsArray[Integer.valueOf(eslStr)], esl.getNextImage());
-//            FileOutputStream fos = new FileOutputStream(eslStr+".exe");
-//            fos.write(data, 0, data.length);
-//            fos.flush();
-//            fos.close();
             loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "успешно обновлен ценник <br>" + esl.getCode() + "<br> ручное обновление <br>" , "integration");
         }catch (Exception e){
             System.out.println("обработать ошибку"+e);
+            esl.setBatteryLevel("?");
+            esl.setConnectivity("disconnected");
+            esl.setLastUpdate(new Timestamp(new Date().getTime()));
+            esl.setStatus("offline");
+            eslsRepository.saveAndFlush(esl);
             loggerDBTools.log(new Timestamp(new Date().getTime()),"task", "run", "ошибка обновления <br>" + esl.getCode() + "<br>" + e.getLocalizedMessage(), "integration");
         }
     }
@@ -121,56 +126,62 @@ public class ConsoleTools {
                 }
                 eslsRepository.flush();
                 System.out.println("групповое обновление " + bytesToHex(outByte) + "  " + barcode);
-                sendDataToCOMMport(outByte, o.getNextImage());
+                try {
+                    sendDataToCOMMport(outByte, o.getNextImage());
+                }catch (Exception e){
+                    for (Esls esls : eslsById) {
+                        //костыль дозаписи информации о ценники. Нельзя доделать пока ценники ничего не возвращают
+                        esls.setBatteryLevel("?");
+                        esls.setConnectivity("disconnected");
+                        esls.setStatus("offline");
+                        eslsRepository.save(esls);
+                    }
+                    eslsRepository.flush();
+                }
             }
         }
 
     }
-    private void sendDataToCOMMport(byte[] eslNum, byte[] fileBytes){
+    private void sendDataToCOMMport(byte[] eslNum, byte[] fileBytes) throws Exception{
         byte[] okArr = new byte[2];
         okArr[0]=(byte)0xF0;
         okArr[1]=(byte)0x0F;
-        try {
-            SerialPort serialPort = new SerialPort("COM6");
-            serialPort.openPort();
-            serialPort.setParams(SerialPort.BAUDRATE_115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            byte [] outData = new byte[157];
-            outData[0]=(byte)0x9C;
-            outData[1]=eslNum[0];
-            outData[2]=eslNum[1];
-            byte[] b = new byte[1];
-            new Random().nextBytes(b);
-            outData[3]=b[0];
-            int index = 0;
-            int errCount = 5;
-            for (int k = 1;k<20;k++) {
-                outData[4] = (byte) k;
-                for (int i = 0; i < 152; i++) {
-                    outData[i + 5] = fileBytes[i+index];
-                }
-                serialPort.writeBytes(outData);
-                byte[] buffer = serialPort.readBytes(2);
-                if(Arrays.equals(buffer,okArr)){
-                    System.out.println("ОТПРАВЛЕНО "+k);
-                    index+=152;
-                    errCount=5;
-                }else {
-                    System.out.println(bytesToHex(outData));
-                    System.out.println(bytesToHex(buffer));
-                    System.out.println("ERROR");
-                    k--;
-                    errCount--;
-                    if (errCount<0){
-                        throw new IOException();
-                    }
-                }
-                Thread.sleep(50);
+        SerialPort serialPort = new SerialPort("COM6");
+        serialPort.openPort();
+        serialPort.setParams(SerialPort.BAUDRATE_115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+        byte [] outData = new byte[157];
+        outData[0]=(byte)0x9C;
+        outData[1]=eslNum[0];
+        outData[2]=eslNum[1];
+        byte[] b = new byte[1];
+        new Random().nextBytes(b);
+        outData[3]=b[0];
+        int index = 0;
+        int errCount = 5;
+        for (int k = 1;k<20;k++) {
+            outData[4] = (byte) k;
+            for (int i = 0; i < 152; i++) {
+                outData[i + 5] = fileBytes[i+index];
             }
-            serialPort.closePort();
+            serialPort.writeBytes(outData);
+            byte[] buffer = serialPort.readBytes(2);
+            if(Arrays.equals(buffer,okArr)){
+                System.out.println("ОТПРАВЛЕНО "+k);
+                index+=152;
+                errCount=5;
+            }else {
+                System.out.println(bytesToHex(outData));
+                System.out.println(bytesToHex(buffer));
+                System.out.println("ERROR");
+                k--;
+                errCount--;
+                if (errCount<0){
+                    throw new IOException();
+                }
+            }
+            Thread.sleep(50);
         }
-        catch (SerialPortException|IOException|InterruptedException ex) {
-            System.out.println(ex);
-        }
+        serialPort.closePort();
     }
 
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
