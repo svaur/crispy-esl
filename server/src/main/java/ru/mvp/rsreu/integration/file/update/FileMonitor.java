@@ -77,12 +77,13 @@ public class FileMonitor {
                         List<Items> parse = (List<Items>) factory.getParser(e, TypeEntity.ITEM).parse(e);
                         //todo подумать как сделать поиск дубликатов элегантнее. ща топорно.
                         parse.forEach(el->{
-                            if (itemsRepository.findDuplicate(el.getCode(), el.getName(), el.getPrice(), el.getStorageUnit())==null) {
+                            if (itemsRepository.findDuplicate(el.getCode(), el.getName(), el.getPrice(),el.getSecondPrice(), el.getStorageUnit(), el.getAction())==null) {
                                 Items findByCodeElement = itemsRepository.findByCode(el.getCode());
+                                el.setLastUpdated(new Timestamp(new Date().getTime()));
                                 if(findByCodeElement == null){
                                     //новый элемент. Просто вставляем
                                     itemsRepository.save(el);
-                                    loggerDBTools.log(new Timestamp(new Date().getTime()),"item", "new", "добавлен новый товар " + el.toString(), "integration");
+                                    loggerDBTools.log(new Timestamp(new Date().getTime()),"item", "new", "добавлен новый товар " + el.getCode(), "integration");
                                 }else{
                                     //такой айдишник есть. Надо апдейтить
                                     el.setId(findByCodeElement.getId());
@@ -90,8 +91,8 @@ public class FileMonitor {
                                     if (eslsById!=null) {
                                         for (Esls eslById : eslsById) {
                                             try {
-                                                eslById.setCurrentImage(generateImage(el, baseSaleTemplate));
-                                                eslById.setNextImage(generateByteImage(el, baseSaleTemplate));
+                                                eslById.setCurrentImage(generateImage(el));
+                                                eslById.setNextImage(generateByteImage(el));
                                                 eslsRepository.save(eslById);
                                             } catch (Exception e1) {
                                                 System.out.println(e1);
@@ -100,7 +101,7 @@ public class FileMonitor {
                                         }
                                     }
                                     itemsRepository.save(el);
-                                    loggerDBTools.log(new Timestamp(new Date().getTime()), "item", "edit", "обновлен товар <br>было: " + findByCodeElement.toString() + " <br>стало " + el.toString(), "integration");
+                                    loggerDBTools.log(new Timestamp(new Date().getTime()), "item", "edit", "обновлен товар <br>было: " + findByCodeElement.getCode() + " <br>стало " + el.getCode(), "integration");
 
                                 }
                             }
@@ -131,12 +132,12 @@ public class FileMonitor {
                                         System.out.println(e1);
                                     }
                                     eslsRepository.save(el);
-                                    loggerDBTools.log(new Timestamp(new Date().getTime()), "esl", "new", "добавлен новый ценник " + el.toString(), "integration");
+                                    loggerDBTools.log(new Timestamp(new Date().getTime()), "esl", "new", "добавлен новый ценник " + el.getCode(), "integration");
                                 }else{
                                     //такой айдишник есть. Надо апдейтить
                                     el.setId(findByCodeElement.getId());
                                     eslsRepository.save(el);
-                                    loggerDBTools.log(new Timestamp(new Date().getTime()), "esl", "edit", "обновлен ценник <br>было: " + findByCodeElement.toString() + " <br>стало " + el.toString(), "integration");
+                                    loggerDBTools.log(new Timestamp(new Date().getTime()), "esl", "edit", "обновлен ценник <br>было: " + findByCodeElement.getCode() + " <br>стало " + el.getCode(), "integration");
                                 }
                             }
                         });
@@ -249,9 +250,8 @@ public class FileMonitor {
 
     //дубликат УБРАТЬ
 
-    private byte[] generateImage(Items items, SaleTemplate saleTemplate) throws IOException{
-        BufferedImage image = getBufferedImage(items, saleTemplate);
-
+    private byte[] generateImage(Items items) throws IOException{
+        BufferedImage image = getBufferedImage(items);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.getWriterFormatNames();
         if (ImageIO.write(image, "BMP", baos)) {
@@ -275,8 +275,8 @@ public class FileMonitor {
             throw new IOException();
         }
     }
-    private byte[] generateByteImage(Items items, SaleTemplate saleTemplate) throws IOException{
-        BufferedImage image = getBufferedImage(items, saleTemplate);
+    private byte[] generateByteImage(Items items) throws IOException{
+        BufferedImage image = getBufferedImage(items);
         List<Integer> outTemp = new ArrayList<>();
         for (int y=0 ; y < image.getHeight() ; y++)
             for (int x=0 ; x < image.getWidth() ; x++){
@@ -296,13 +296,14 @@ public class FileMonitor {
         return encodeToByteArray(outTemp);
     }
 
-    private BufferedImage getBufferedImage(Items items, SaleTemplate saleTemplate) {
+    private BufferedImage getBufferedImage(Items items) {
         int width = 152;
         int height = 152;
+        SaleTemplate saleTemplate = items.getAction().equals("1")?baseSaleTemplate:secondSaleTemplate;
         EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(items.getName(),
-                items.getName(),
-                String.valueOf(items.getPrice() + 10),
+                "",
                 String.valueOf(items.getPrice()),
+                String.valueOf(items.getSecondPrice()),
                 "рублей",
                 items.getCode());
         return saleTemplate.drawEsl(eslInfoTemplate, width, height);

@@ -14,6 +14,8 @@ function displayItemData(url, headers) {
                 "<th>Код товара</th>" +
                 "<th>Имя товара</th>" +
                 "<th>Цена</th>" +
+                "<th>акционная цена</th>" +
+                "<th>акция</th>" +
                 "<th>Время последнего обновления</th>" +
                 "<th>Привязка</th>" +
                 "<th>Действие</th>" +
@@ -26,6 +28,8 @@ function displayItemData(url, headers) {
                     "<td>" + tableData[i].itemCode + "</td>" +
                     "<td>" + tableData[i].itemName + "</td>" +
                     "<td>" + tableData[i].price + "</td>" +
+                    "<td>" + tableData[i].secondPrice + "</td>" +
+                    "<td>" + tableData[i].action + "</td>" +
                     "<td>" + tableData[i].lastUpdate + "</td>" +
                     "<td>" + tableData[i].associate + "</td>" +
                     "<td> </td>" +

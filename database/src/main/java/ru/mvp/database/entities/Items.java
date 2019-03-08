@@ -1,7 +1,6 @@
 package ru.mvp.database.entities;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
@@ -12,8 +11,8 @@ public class Items {
     private String code;
     private String name;
     private Timestamp lastUpdated;
-    private BigInteger price;
-    private BigInteger secondPrice;
+    private Double price;
+    private Double secondPrice;
     private String action;
     private String storageUnit;
     private Collection<Esls> eslsById;
@@ -22,6 +21,7 @@ public class Items {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -62,21 +62,21 @@ public class Items {
 
     @Basic
     @Column(name = "price")
-    public BigInteger getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigInteger price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
     @Basic
     @Column(name = "second_price")
-    public BigInteger getSecondPrice() {
+    public Double getSecondPrice() {
         return secondPrice;
     }
 
-    public void setSecondPrice(BigInteger secondPrice) {
+    public void setSecondPrice(Double secondPrice) {
         this.secondPrice = secondPrice;
     }
 

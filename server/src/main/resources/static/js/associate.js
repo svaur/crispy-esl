@@ -23,8 +23,7 @@ function getAssociateTemplate() {
         "          </div>" +
         "          <div class=\"col s12 input-field\">" +
         "             <select id=\"templateInput\" class=\"validate\">" +
-        "                 <option value=\"0\">акция</option>" +
-        "                 <option value=\"1\">обычный</option>" +
+        "                 <option value=\"0\">по умолчанию</option>" +
         "             </select>" +
         "              <label for=\"templateInput\">Шаблон</label>" +
         "          </div>" +

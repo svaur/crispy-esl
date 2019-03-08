@@ -51,6 +51,8 @@ public class ItemApiController {
             map.put("itemName", element.getName());
             map.put("itemCode", element.getCode());
             map.put("price", element.getPrice().toString());
+            map.put("secondPrice", element.getSecondPrice().toString());
+            map.put("action", element.getAction());
             map.put("lastUpdate", element.getLastUpdated()==null?EMPTY_STRING:element.getLastUpdated().toString());
             String value = element.getEslsById().size()==0?"нет":String.valueOf(getIdEslsById(element));
             map.put("associate", value);

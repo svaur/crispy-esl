@@ -84,10 +84,8 @@ public class EslApiController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if ("add".equalsIgnoreCase(type)) {
             try {
-//                SaleTemplate saleTemplate = saleTemplateList.get(Integer.valueOf(template));
-                SaleTemplate saleTemplate = "0".equals(template)?bsaleTemplateList:ssaleTemplateList;
-                byte[] generateImage = generateImage(itemElement, saleTemplate);
-                byte[] generateByteImage = generateByteImage(itemElement, saleTemplate);
+                byte[] generateImage = generateImage(itemElement);
+                byte[] generateByteImage = generateByteImage(itemElement);
                 eslElement.setNextImage(generateByteImage);
                 eslElement.setCurrentImage(generateImage);
                 eslElement.setItemsByItemsId(itemElement);
@@ -137,7 +135,7 @@ public class EslApiController {
             map.put("eslFirmWare", element.getFirmware());
             map.put("itemCode", element.getItemsByItemsId() == null ? EMPTY_STRING : element.getItemsByItemsId().getCode());
             map.put("itemName", element.getItemsByItemsId() == null ? EMPTY_STRING : element.getItemsByItemsId().getName());
-            map.put("price", element.getItemsByItemsId() == null ? EMPTY_STRING : element.getItemsByItemsId().getPrice().toString());
+            map.put("price", element.getItemsByItemsId() == null ? EMPTY_STRING : element.getItemsByItemsId().getSecondPrice().toString());
             map.put("lastUpdate", element.getLastUpdate() == null ? EMPTY_STRING : element.getLastUpdate().toString());
             map.put("connectivity", element.getConnectivity());
             map.put("batteryLevel", element.getBatteryLevel());
@@ -145,8 +143,8 @@ public class EslApiController {
             outList.add(map);});
         return outList;
     }
-    private byte[] generateImage(Items items, SaleTemplate saleTemplate) throws IOException{
-        BufferedImage image = getBufferedImage(items, saleTemplate);
+    private byte[] generateImage(Items items) throws IOException{
+        BufferedImage image = getBufferedImage(items);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.getWriterFormatNames();
@@ -158,8 +156,8 @@ public class EslApiController {
             throw new IOException();
         }
     }
-    private byte[] generateByteImage(Items items, SaleTemplate saleTemplate) throws IOException{
-        BufferedImage image = getBufferedImage(items, saleTemplate);
+    private byte[] generateByteImage(Items items) throws IOException{
+        BufferedImage image = getBufferedImage(items);
         List<Integer> outTemp = new ArrayList<>();
         for (int y=0 ; y < image.getHeight() ; y++)
             for (int x=0 ; x < image.getWidth() ; x++){
@@ -169,13 +167,14 @@ public class EslApiController {
         return encodeToByteArray(outTemp);
     }
 
-    private BufferedImage getBufferedImage(Items items, SaleTemplate saleTemplate) {
+    private BufferedImage getBufferedImage(Items items) {
         int width = 152;
         int height = 152;
+        SaleTemplate saleTemplate = items.getAction().equals("1")?bsaleTemplateList:ssaleTemplateList;
         EslInfoTemplate eslInfoTemplate = new EslInfoTemplate(items.getName(),
-                items.getName(),
-                String.valueOf(items.getPrice() + 10),
+                "",
                 String.valueOf(items.getPrice()),
+                String.valueOf(items.getSecondPrice()),
                 "рублей",
                 items.getCode());
         return saleTemplate.drawEsl(eslInfoTemplate, width, height);
