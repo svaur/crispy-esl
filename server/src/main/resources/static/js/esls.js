@@ -79,10 +79,10 @@ function getAllEslData(pageNum) {
 }
 function eslActivateActions() {
     $('#eslTableCounter').formSelect().on('change', function () {
-        getAllEslData(1)
+        getAllEslData(0)
     });
     $('#search').on('input', function() {
-        getAllEslData(1)
+        getAllEslData(0)
     });
     $('.dropdown-trigger').dropdown();
     $('#previousBtn').click(function () {
