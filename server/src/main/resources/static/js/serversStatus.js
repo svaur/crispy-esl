@@ -36,7 +36,7 @@ function displayServersStatusData(url, headers) {
             "</td>" +
             "</tr>");
     }).error(function(jqXHR) {
-        alert(jqXHR.responseText);
+        //alert(jqXHR.responseText);
         display.style.visibility='hidden'
     });
     $.getJSON(url, headers, function (data) {
@@ -58,7 +58,7 @@ function displayServersStatusData(url, headers) {
         }
         display.style.visibility='hidden'
     }).error(function(jqXHR) {
-        alert(jqXHR.responseText);
+        //alert(jqXHR.responseText);
         display.style.visibility='hidden'
     });
 }

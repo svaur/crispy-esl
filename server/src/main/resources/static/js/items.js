@@ -39,7 +39,7 @@ function displayItemData(url, headers) {
         display.style.visibility='hidden'
     }).error(function(jqXHR) {
         display.style.visibility='hidden';
-        alert(jqXHR.responseText);
+        //alert(jqXHR.responseText);
     });
 }
 function itemActivateActions() {

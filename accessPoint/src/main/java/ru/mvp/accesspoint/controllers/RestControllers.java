@@ -45,4 +45,9 @@ public class RestControllers {
         consoleTools.updateTask(taskId);
         return "ok";
     }
+    @RequestMapping("/api/sendFunPic")
+    public String sendFunPic() throws Exception{
+        consoleTools.sendFinePic();
+        return "ok";
+    }
 }

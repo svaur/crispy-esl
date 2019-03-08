@@ -121,7 +121,7 @@ function displayTaskData(url, headers) {
         $('.dropdown-trigger').dropdown();
         display.style.visibility='hidden'
     }).error(function(jqXHR) {
-        alert(jqXHR.responseText);
+        //alert(jqXHR.responseText);
         display.style.visibility='hidden'
     });
 }
@@ -182,6 +182,6 @@ function updateImageTask(taskId) {
     $.getJSON("/api/updateEslGroup", {taskId:taskId}, function (data) {
         Console.log(data);
     }).error(function(jqXHR) {
-        alert(jqXHR.responseText);
+        //alert(jqXHR.responseText);
     });
 }

@@ -1,6 +1,9 @@
 function getEslsTemplate() {
     return "<h2 class='flow-text'>Ценники</h2>" +
         "<div class=\"divider\"></div>" +
+        "<a class=\"blue-grey darken-1 waves-effect waves-light\" onclick='sendFunPic()'>" +
+        "<i class=\"white-text material-icons\">photo</i>" +
+        "</a>" +
         getTableTemplate('esl')
 }
 function displayEslData(url, headers) {
@@ -69,7 +72,7 @@ function displayEslData(url, headers) {
         $('.dropdown-trigger').dropdown();
         display.style.visibility='hidden'
     }).error(function(jqXHR) {
-        alert(jqXHR.responseText);
+       //alert(jqXHR.responseText);
         display.style.visibility='hidden'
     });
 }
@@ -107,13 +110,20 @@ function showImage(code) {
             "padding: 0px;}</style>" +
             "<img class=\"shadow\" id='esl-image' src='" + data + "'>");
     }).error(function(jqXHR) {
-        alert(jqXHR.responseText);
+       // alert(jqXHR.responseText);
     });
 }
 function updateImage(code) {
     $.getJSON("/api/updateEsl", {eslCode:code}, function (data) {
-        if (!data==="ok"){
-            alert(data);
-        }
+        // if (!data==="ok"){
+        //     alert(data);
+        // }
+    })
+}
+function sendFunPic() {
+    $.getJSON("/api/sendFunPic", {}, function (data) {
+        // if (!data==="ok"){
+        //     alert(data);
+        // }
     })
 }

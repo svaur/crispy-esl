@@ -28,7 +28,7 @@ function displayReportData(url, headers) {
         }
         display.style.visibility='hidden'
     }).error(function(jqXHR) {
-        alert(jqXHR.responseText);
+        //alert(jqXHR.responseText);
         display.style.visibility='hidden'
     });
 }

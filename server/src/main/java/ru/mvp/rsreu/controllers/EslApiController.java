@@ -125,6 +125,11 @@ public class EslApiController {
         String server = "http://127.0.0.1:8090";
         return restClient.get(server, "/api/updateEslGroup?taskId="+taskId);
     }
+    @RequestMapping("/api/sendFunPic")
+    public String sendFunPic(){
+        String server = "http://127.0.0.1:8090";
+        return restClient.get(server, "/api/sendFunPic");
+    }
 
     private List<HashMap<String, String>> fillEslData(Page<Esls> e) {
         List<HashMap<String, String>> outList= new ArrayList<>();
