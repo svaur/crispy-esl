@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>test design</title>
+    <title>ruESL</title>
 
     <!-- CSS  -->
     <link th:href="@{/css/materialIcon.css}" rel="stylesheet">
@@ -22,6 +22,7 @@
     <script th:src="@{/js/task.js}"></script>
     <script th:src="@{/js/log.js}"></script>
     <script th:src="@{/js/report.js}"></script>
+    <script th:src="@{/js/serversStatus.js}"></script>
 </head>
 <body>
 <!--<header>-->
@@ -78,6 +79,11 @@
     <li id="taskWorkSpace" class="bold active">
         <i class="card-image material-icons md-light">receipt</i>
             <span class="white-text">Задачи</span>
+        <div class="divider"></div>
+    </li>
+    <li id="serversStatusWorkSpace" class="bold active">
+        <i class="card-image material-icons md-light">computer</i>
+            <span class="white-text">Состояние</span>
         <div class="divider"></div>
     </li>
     <li id="logWorkSpace" class="bold active">

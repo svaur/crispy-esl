@@ -32,12 +32,16 @@ public class ItemCsvParser implements IParser {
                         String itemCode = e.get(0);
                         String itemName = e.get(1);
                         double price = Double.parseDouble(e.get(2));
-                        String storageUnit = e.get(3);
+                        double secondPrice = Double.parseDouble(e.get(3));
+                        String action = e.get(4);
+                        String storageUnit = e.get(5);
 
                         Items item = new Items();
                         item.setCode(itemCode);
                         item.setName(itemName);
                         item.setPrice(price);
+                        item.setSecondPrice(secondPrice);
+                        item.setAction(action);
                         item.setStorageUnit(storageUnit);
 
                         items.add(item);

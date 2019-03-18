@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  * информация о стандартном шаблоне
  */
 @Component
-public class BaseSaleTemplate implements SaleTemplate{
+public class SecondSaleTemplate implements SaleTemplate{
     @Autowired
     FontEditor fontEditor;
     /**
@@ -27,7 +27,6 @@ public class BaseSaleTemplate implements SaleTemplate{
         g2d.setColor(Color.WHITE);
         g2d.fillRect(0, 0, width, height);
         g2d.setColor(Color.BLACK);
-        g2d.fillRect(0, 0, width, 12);
         fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 14),
                 eslInfoTemplate.getGoodName(),
                 g2d,
@@ -40,13 +39,7 @@ public class BaseSaleTemplate implements SaleTemplate{
                 width,
                 38,
                 false);
-        fontEditor.drawString(new Font("TimesRoman", Font.PLAIN, 22),
-                eslInfoTemplate.getOldCost(),
-                g2d,
-                width,
-                65,
-                true);
-        fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 34),
+        fontEditor.drawString(new Font("TimesRoman", Font.BOLD, 28),
                 eslInfoTemplate.getNewCost(),
                 g2d,
                 width,

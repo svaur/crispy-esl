@@ -1,6 +1,6 @@
-﻿CREATE DATABASE eslbase OWNER postgres;
+﻿ CREATE DATABASE eslbase OWNER postgres;
 
-/*DROP TABLE item_params;
+DROP TABLE item_params;
 DROP TABLE available_params_for_template;
 DROP TABLE templates;
 DROP TABLE task_results;
@@ -9,7 +9,20 @@ DROP TABLE tasks;
 DROP TABLE directory_params;
 DROP TABLE item_params_group;
 DROP TABLE items;
-DROP TABLE esls;*/
+DROP TABLE esls;
+
+-- таблица итемов
+CREATE TABLE items
+(
+  id            INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  code          VARCHAR(255) NOT NULL UNIQUE,
+  name          VARCHAR(256) NOT NULL,
+  last_updated  TIMESTAMP,
+  price   NUMERIC NOT NULL,
+  second_price   NUMERIC NOT NULL,
+  action   VARCHAR(256) NOT NULL,
+  storage_unit          VARCHAR(256) NOT NULL
+);
 
 --таблица ценников
 CREATE TABLE esls
@@ -25,24 +38,9 @@ CREATE TABLE esls
   last_update       TIMESTAMP,
   registration_date TIMESTAMP,
   start_date        TIMESTAMP,
-  status            VARCHAR(255)
+  status            VARCHAR(255),
+  items_id        INT NULL REFERENCES items(id) 
 );
-
--- таблица итемов
-CREATE TABLE items
-(
-  id            INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  code          VARCHAR(255) NOT NULL UNIQUE,
-  name          VARCHAR(256) NOT NULL,
-  last_updated  TIMESTAMP,
-  price   NUMERIC NOT NULL,
-  storage_unit          VARCHAR(256) NOT NULL,
-  esl_id        INT NULL REFERENCES esls(id) 
-);
-
---индекс для обозначения связи 1к1
-CREATE UNIQUE INDEX index_items_esl_id
-ON public.items (esl_id ASC);
 
 -- таблица справочник параметров
 CREATE TABLE directory_params
@@ -91,7 +89,9 @@ CREATE TABLE tasks
 (
   id              INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   task_name        VARCHAR(255) UNIQUE,
+  start_date TIMESTAMP,
   cron_expression VARCHAR(255),
+  barcodes VARCHAR(255),
   status          INT NOT NULL
 );
 
@@ -111,6 +111,25 @@ CREATE TABLE task_updated_item_params
 (
   id                    INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   task_id               INT REFERENCES tasks(id),
-  item_params_group_id  INT REFERENCES item_params_group(id),
+  item_id               INT NOT NULL REFERENCES items(id),
   status                INT NOT NULL
+);
+
+-- таблица информации о точках доступа
+CREATE TABLE access_points_info
+(
+  id                    INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  ip                    VARCHAR(255) NOT NULL,
+  port                  VARCHAR(255) NOT NULL
+);
+
+-- таблица для хранения логов взаимодействия с сущностями
+CREATE TABLE entity_log
+(
+  id                    INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  time                  TIMESTAMP NOT NULL,
+  name                  VARCHAR(255) NOT NULL,
+  source                  VARCHAR(255) NOT NULL,
+  type                  VARCHAR(255) NOT NULL,
+  event                 VARCHAR(255) NOT NULL
 );

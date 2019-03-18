@@ -23,7 +23,7 @@ function getAssociateTemplate() {
         "          </div>" +
         "          <div class=\"col s12 input-field\">" +
         "             <select id=\"templateInput\" class=\"validate\">" +
-        "                 <option value=\"default\">по умолчанию</option>" +
+        "                 <option value=\"0\">по умолчанию</option>" +
         "             </select>" +
         "              <label for=\"templateInput\">Шаблон</label>" +
         "          </div>" +
@@ -52,10 +52,10 @@ function saveData() {
             "item": document.getElementById("itemInput").value
         };
         $.getJSON("/api/assignEsl", dataToSave, function (data) {
-            alert(data);
-        }).error(function(jqXHR) {
-           alert(jqXHR.responseText);
-        });
+            // if (!data==="ok"){
+            //     alert(data);
+            // }
+        })
     }
 }
 function cancelBtn() {

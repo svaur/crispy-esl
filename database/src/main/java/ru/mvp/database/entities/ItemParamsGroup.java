@@ -13,7 +13,6 @@ public class ItemParamsGroup {
     private Collection<ItemParams> itemParamsById;
     private Items itemsByItemId;
     private Templates templatesByTemplateId;
-    private Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById;
 
     @Id
     @Column(name = "id")
@@ -42,16 +41,12 @@ public class ItemParamsGroup {
         if (o == null || getClass() != o.getClass()) return false;
         ItemParamsGroup that = (ItemParamsGroup) o;
         return id == that.id &&
-                Objects.equals(dateAdded, that.dateAdded) &&
-                Objects.equals(itemParamsById, that.itemParamsById) &&
-                Objects.equals(itemsByItemId, that.itemsByItemId) &&
-                Objects.equals(templatesByTemplateId, that.templatesByTemplateId) &&
-                Objects.equals(taskUpdatedItemParamsById, that.taskUpdatedItemParamsById);
+                Objects.equals(dateAdded, that.dateAdded);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateAdded, itemParamsById, itemsByItemId, templatesByTemplateId, taskUpdatedItemParamsById);
+        return Objects.hash(id, dateAdded);
     }
 
     @OneToMany(mappedBy = "itemParamsGroupByItemParamsGroupId")
@@ -81,14 +76,5 @@ public class ItemParamsGroup {
 
     public void setTemplatesByTemplateId(Templates templatesByTemplateId) {
         this.templatesByTemplateId = templatesByTemplateId;
-    }
-
-    @OneToMany(mappedBy = "itemParamsGroupByItemParamsGroupId")
-    public Collection<TaskUpdatedItemParams> getTaskUpdatedItemParamsById() {
-        return taskUpdatedItemParamsById;
-    }
-
-    public void setTaskUpdatedItemParamsById(Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById) {
-        this.taskUpdatedItemParamsById = taskUpdatedItemParamsById;
     }
 }

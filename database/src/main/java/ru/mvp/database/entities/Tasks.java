@@ -1,6 +1,7 @@
 package ru.mvp.database.entities;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -8,7 +9,9 @@ import java.util.Objects;
 public class Tasks {
     private int id;
     private String taskName;
+    private Timestamp startDate;
     private String cronExpression;
+    private String barcodes;
     private int status;
     private Collection<TaskResults> taskResultsById;
     private Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById;
@@ -35,6 +38,16 @@ public class Tasks {
     }
 
     @Basic
+    @Column(name = "start_date")
+    public Timestamp getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Timestamp startDate) {
+        this.startDate = startDate;
+    }
+
+    @Basic
     @Column(name = "cron_expression")
     public String getCronExpression() {
         return cronExpression;
@@ -42,6 +55,16 @@ public class Tasks {
 
     public void setCronExpression(String cronExpression) {
         this.cronExpression = cronExpression;
+    }
+
+    @Basic
+    @Column(name = "barcodes")
+    public String getBarcodes() {
+        return barcodes;
+    }
+
+    public void setBarcodes(String barcodes) {
+        this.barcodes = barcodes;
     }
 
     @Basic
@@ -62,14 +85,14 @@ public class Tasks {
         return id == tasks.id &&
                 status == tasks.status &&
                 Objects.equals(taskName, tasks.taskName) &&
+                Objects.equals(startDate, tasks.startDate) &&
                 Objects.equals(cronExpression, tasks.cronExpression) &&
-                Objects.equals(taskResultsById, tasks.taskResultsById) &&
-                Objects.equals(taskUpdatedItemParamsById, tasks.taskUpdatedItemParamsById);
+                Objects.equals(barcodes, tasks.barcodes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, taskName, cronExpression, status, taskResultsById, taskUpdatedItemParamsById);
+        return Objects.hash(id, taskName, startDate, cronExpression, barcodes, status);
     }
 
     @OneToMany(mappedBy = "tasksByTaskId")

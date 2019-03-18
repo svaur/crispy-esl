@@ -74,13 +74,12 @@ public class TaskResults {
                 status == that.status &&
                 Objects.equals(startDate, that.startDate) &&
                 Objects.equals(endDate, that.endDate) &&
-                Objects.equals(result, that.result) &&
-                Objects.equals(tasksByTaskId, that.tasksByTaskId);
+                Objects.equals(result, that.result);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, startDate, endDate, status, result, tasksByTaskId);
+        return Objects.hash(id, startDate, endDate, status, result);
     }
 
     @ManyToOne

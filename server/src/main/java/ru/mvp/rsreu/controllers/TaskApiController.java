@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 public class TaskApiController {
 
-    @Autowired
     TasksRepository tasksRepository;
 
     @Autowired
@@ -42,11 +41,12 @@ public class TaskApiController {
         List<HashMap<String, String>> outList= new ArrayList<>();
         e.forEach(element->{
             HashMap<String, String> map = new HashMap<>();
+            map.put("id", String.valueOf(element.getId()));
             map.put("taskName", element.getTaskName());
             map.put("frequency", element.getCronExpression());
             map.put("taskResults", element.getTaskResultsById().toString());
-            map.put("updatedItemParams", element.getTaskUpdatedItemParamsById().toString());
-            map.put("status", String.valueOf(element.getStatus()));
+            map.put("updatedItemParams", element.getBarcodes());
+            map.put("status", element.getStatus()==1?"неактивно":"активно");
             outList.add(map);});
         return outList;
     }

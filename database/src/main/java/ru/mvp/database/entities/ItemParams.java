@@ -38,14 +38,12 @@ public class ItemParams {
         if (o == null || getClass() != o.getClass()) return false;
         ItemParams that = (ItemParams) o;
         return id == that.id &&
-                Objects.equals(paramValue, that.paramValue) &&
-                Objects.equals(itemParamsGroupByItemParamsGroupId, that.itemParamsGroupByItemParamsGroupId) &&
-                Objects.equals(directoryParamsByParamId, that.directoryParamsByParamId);
+                Objects.equals(paramValue, that.paramValue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, paramValue, itemParamsGroupByItemParamsGroupId, directoryParamsByParamId);
+        return Objects.hash(id, paramValue);
     }
 
     @ManyToOne

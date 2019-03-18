@@ -50,14 +50,12 @@ public class Templates {
         Templates templates = (Templates) o;
         return id == templates.id &&
                 Objects.equals(name, templates.name) &&
-                Objects.equals(template, templates.template) &&
-                Objects.equals(availableParamsForTemplatesById, templates.availableParamsForTemplatesById) &&
-                Objects.equals(itemParamsGroupsById, templates.itemParamsGroupsById);
+                Objects.equals(template, templates.template);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, template, availableParamsForTemplatesById, itemParamsGroupsById);
+        return Objects.hash(id, name, template);
     }
 
     @OneToMany(mappedBy = "templatesByTemplateId")

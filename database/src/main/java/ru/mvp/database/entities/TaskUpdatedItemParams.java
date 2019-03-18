@@ -9,7 +9,7 @@ public class TaskUpdatedItemParams {
     private int id;
     private int status;
     private Tasks tasksByTaskId;
-    private ItemParamsGroup itemParamsGroupByItemParamsGroupId;
+    private Items itemsByItemId;
 
     @Id
     @Column(name = "id")
@@ -38,14 +38,12 @@ public class TaskUpdatedItemParams {
         if (o == null || getClass() != o.getClass()) return false;
         TaskUpdatedItemParams that = (TaskUpdatedItemParams) o;
         return id == that.id &&
-                status == that.status &&
-                Objects.equals(tasksByTaskId, that.tasksByTaskId) &&
-                Objects.equals(itemParamsGroupByItemParamsGroupId, that.itemParamsGroupByItemParamsGroupId);
+                status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, status, tasksByTaskId, itemParamsGroupByItemParamsGroupId);
+        return Objects.hash(id, status);
     }
 
     @ManyToOne
@@ -59,12 +57,12 @@ public class TaskUpdatedItemParams {
     }
 
     @ManyToOne
-    @JoinColumn(name = "item_params_group_id", referencedColumnName = "id")
-    public ItemParamsGroup getItemParamsGroupByItemParamsGroupId() {
-        return itemParamsGroupByItemParamsGroupId;
+    @JoinColumn(name = "item_id", referencedColumnName = "id", nullable = false)
+    public Items getItemsByItemId() {
+        return itemsByItemId;
     }
 
-    public void setItemParamsGroupByItemParamsGroupId(ItemParamsGroup itemParamsGroupByItemParamsGroupId) {
-        this.itemParamsGroupByItemParamsGroupId = itemParamsGroupByItemParamsGroupId;
+    public void setItemsByItemId(Items itemsByItemId) {
+        this.itemsByItemId = itemsByItemId;
     }
 }

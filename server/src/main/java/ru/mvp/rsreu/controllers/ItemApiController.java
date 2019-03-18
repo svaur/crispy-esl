@@ -8,12 +8,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.mvp.database.entities.Esls;
 import ru.mvp.database.entities.Items;
 import ru.mvp.database.repositories.ItemsRepository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.joining;
 
 @RestController
 public class ItemApiController {
@@ -46,10 +51,18 @@ public class ItemApiController {
             map.put("itemName", element.getName());
             map.put("itemCode", element.getCode());
             map.put("price", element.getPrice().toString());
+            map.put("secondPrice", element.getSecondPrice().toString());
+            map.put("action", element.getAction());
             map.put("lastUpdate", element.getLastUpdated()==null?EMPTY_STRING:element.getLastUpdated().toString());
-            String value = element.getEslsByEslId()==null?"нет":String.valueOf(element.getEslsByEslId().getId());
+            String value = element.getEslsById().size()==0?"нет":String.valueOf(getIdEslsById(element));
             map.put("associate", value);
             outList.add(map);});
         return outList;
+    }
+
+    private String getIdEslsById(Items element) {
+        Collection<Esls> eslsById = element.getEslsById();
+        //todo логика сборки должна быть на стороне клиента
+        return eslsById.stream().map(Esls::getCode).collect(joining(", "));
     }
 }

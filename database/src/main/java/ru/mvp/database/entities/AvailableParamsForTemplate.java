@@ -26,14 +26,12 @@ public class AvailableParamsForTemplate {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AvailableParamsForTemplate that = (AvailableParamsForTemplate) o;
-        return id == that.id &&
-                Objects.equals(templatesByTemplateId, that.templatesByTemplateId) &&
-                Objects.equals(directoryParamsByParamId, that.directoryParamsByParamId);
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, templatesByTemplateId, directoryParamsByParamId);
+        return Objects.hash(id);
     }
 
     @ManyToOne

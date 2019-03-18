@@ -11,11 +11,13 @@ public class Items {
     private String code;
     private String name;
     private Timestamp lastUpdated;
-    //todo будут ли операции расчитаны тут. Если да, то надо будет тип BigInteger
     private Double price;
+    private Double secondPrice;
+    private String action;
     private String storageUnit;
+    private Collection<Esls> eslsById;
     private Collection<ItemParamsGroup> itemParamsGroupsById;
-    private Esls eslsByEslId;
+    private Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById;
 
     @Id
     @Column(name = "id")
@@ -29,7 +31,7 @@ public class Items {
     }
 
     @Basic
-    @Column(name = "code", unique=true)
+    @Column(name = "code")
     public String getCode() {
         return code;
     }
@@ -69,6 +71,26 @@ public class Items {
     }
 
     @Basic
+    @Column(name = "second_price")
+    public Double getSecondPrice() {
+        return secondPrice;
+    }
+
+    public void setSecondPrice(Double secondPrice) {
+        this.secondPrice = secondPrice;
+    }
+
+    @Basic
+    @Column(name = "action")
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    @Basic
     @Column(name = "storage_unit")
     public String getStorageUnit() {
         return storageUnit;
@@ -88,14 +110,23 @@ public class Items {
                 Objects.equals(name, items.name) &&
                 Objects.equals(lastUpdated, items.lastUpdated) &&
                 Objects.equals(price, items.price) &&
-                Objects.equals(storageUnit, items.storageUnit) &&
-                Objects.equals(itemParamsGroupsById, items.itemParamsGroupsById) &&
-                Objects.equals(eslsByEslId, items.eslsByEslId);
+                Objects.equals(secondPrice, items.secondPrice) &&
+                Objects.equals(action, items.action) &&
+                Objects.equals(storageUnit, items.storageUnit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, name, lastUpdated, price, storageUnit, itemParamsGroupsById, eslsByEslId);
+        return Objects.hash(id, code, name, lastUpdated, price, secondPrice, action, storageUnit);
+    }
+
+    @OneToMany(mappedBy = "itemsByItemsId")
+    public Collection<Esls> getEslsById() {
+        return eslsById;
+    }
+
+    public void setEslsById(Collection<Esls> eslsById) {
+        this.eslsById = eslsById;
     }
 
     @OneToMany(mappedBy = "itemsByItemId")
@@ -107,13 +138,12 @@ public class Items {
         this.itemParamsGroupsById = itemParamsGroupsById;
     }
 
-    @OneToOne
-    @JoinColumn(name = "esl_id", referencedColumnName = "id")
-    public Esls getEslsByEslId() {
-        return eslsByEslId;
+    @OneToMany(mappedBy = "itemsByItemId")
+    public Collection<TaskUpdatedItemParams> getTaskUpdatedItemParamsById() {
+        return taskUpdatedItemParamsById;
     }
 
-    public void setEslsByEslId(Esls eslsByEslId) {
-        this.eslsByEslId = eslsByEslId;
+    public void setTaskUpdatedItemParamsById(Collection<TaskUpdatedItemParams> taskUpdatedItemParamsById) {
+        this.taskUpdatedItemParamsById = taskUpdatedItemParamsById;
     }
 }

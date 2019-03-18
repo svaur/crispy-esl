@@ -25,11 +25,15 @@ $(document).ready(function () {
     });
     $('#logWorkSpace').click(function () {
         setActive('#logWorkSpace');
-        displayWorkSpace('#logWorkSpace', ' ');
+        displayWorkSpace('#logWorkSpace', '/api/getLogTableData');
     });
     $('#reportWorkSpace').click(function () {
         setActive('#reportWorkSpace');
-        displayWorkSpace('#reportWorkSpace', ' ');
+        displayWorkSpace('#reportWorkSpace', '/api/getReportTableData');
+    });
+    $('#serversStatusWorkSpace').click(function () {
+        setActive('#serversStatusWorkSpace');
+        displayWorkSpace('#serversStatusWorkSpace', '/api/getServersStatusTableData');
     });
 });
 var pageNum=0;
@@ -40,9 +44,10 @@ function displayWorkSpace(menu, url) {
         case "#welcomeWorkSpace":
             $('#workSpace').html('')
                 .append(getWelcomeTemplate());
-            testChart("myChart1", 'Статистика обновления ценников', [0, 2, 5, 3]);
-            testChart("myChart2", 'Статистика обновления товаров', [0, 2, 2, 0]);
-            testChart("myChart3", 'Статистика привязок',[0, 2, 50, 3]);
+            displayWelcomeData();
+            // testChart("myChart1", 'Статистика обновления ценников', [0, 2, 5, 3]);
+            // testChart("myChart2", 'Статистика обновления товаров', [0, 2, 2, 0]);
+            // testChart("myChart3", 'Статистика привязок',[0, 2, 50, 3]);
             break;
         case "#eslsWorkSpace":
             $('#workSpace').html('')
@@ -57,6 +62,13 @@ function displayWorkSpace(menu, url) {
             itemActivateActions();
             var headers = {"size": $('#itemTableCounter').val(), "pageNum": 0, "searchValue": ""};
             displayItemData(url, headers);
+            break;
+        case "#serversStatusWorkSpace":
+            $('#workSpace').html('')
+                .append(getServersStatusTemplate());
+            itemActivateActions();
+            var headers = {"size": $('#serversStatusTableCounter').val(), "pageNum": 0, "searchValue": ""};
+            displayServersStatusData(url, headers);
             break;
         case "#associateWorkSpace":
             $('#workSpace').html('')
@@ -89,6 +101,20 @@ function displayWorkSpace(menu, url) {
         case "#logWorkSpace":
             $('#workSpace').html('')
                 .append(getLogTemplate());
+            logActivateActions();
+            var headers = {"size": $('#logTableCounter').val(), "pageNum": 0, "searchValue": ""};
+            displayLogData(url, headers);
+            break;
+        case "#reportWorkSpace":
+            $('#workSpace').html('')
+                .append(getReportTemplate());
+            reportActivateActions();
+            var headers = {"size": $('#reportTableCounter').val(), "pageNum": 0, "searchValue": ""};
+            displayReportData(url, headers);
+            break;
+        case "#serversStatusWorkSpace":
+            $('#workSpace').html('')
+                .append(getServersStatusTemplate());
             break;
         case "#reportWorkSpace":
             $('#workSpace').html('')
@@ -106,19 +132,8 @@ function setActive(nameClassToActive) {
     $('#itemsWorkSpace').removeClass("active");
     $('#associateWorkSpace').removeClass("active");
     $('#taskWorkSpace').removeClass("active");
+    $('#serversStatusWorkSpace').removeClass("active");
     $('#logWorkSpace').removeClass("active");
     $('#reportWorkSpace').removeClass("active");
     $(nameClassToActive).addClass("active");
-}
-function showImage(code) {
-    var w = window.open();
-    $.getJSON("/api/getImage", {eslCode:code}, function (data) {
-        $(w.document.body).html(
-            "<style>.shadow {" +
-            "box-shadow: 0 0 10px rgba(0,0,0,0.5);" +
-            "padding: 0px;}</style>" +
-            "<img class=\"shadow\" id='esl-image' src='" + data + "'>");
-    }).error(function(jqXHR) {
-        alert(jqXHR.responseText);
-    });
 }

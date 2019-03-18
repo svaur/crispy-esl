@@ -1,6 +1,9 @@
 function getEslsTemplate() {
     return "<h2 class='flow-text'>Ценники</h2>" +
         "<div class=\"divider\"></div>" +
+        "<a class=\"blue-grey darken-1 waves-effect waves-light\" onclick='sendFunPic()'>" +
+        "<i class=\"white-text material-icons\">photo</i>" +
+        "</a>" +
         getTableTemplate('esl')
 }
 function displayEslData(url, headers) {
@@ -47,21 +50,21 @@ function displayEslData(url, headers) {
                 "<i class=\"white-text material-icons\">photo</i>" +
                 "</a>" +
                 "</li>" +
+                // "<li>" +
+                // "<a class=\"blue-grey darken-1 waves-effect waves-light\">" +
+                // "<i class=\"white-text material-icons\">edit</i>" +
+                // "</a>" +
+                // "</li>" +
                 "<li>" +
-                "<a class=\"blue-grey darken-1 waves-effect waves-light\">" +
-                "<i class=\"white-text material-icons\">edit</i>" +
-                "</a>" +
-                "</li>" +
-                "<li>" +
-                "<a class=\"blue-grey darken-1 waves-effect waves-light\">" +
+                "<a class=\"blue-grey darken-1 waves-effect waves-light\" onclick='updateImage(" + tableData[i].eslCode + ")'>" +
                 "<i class=\"white-text material-icons Tiny\">update</i>" +
                 "</a>" +
                 "</li>" +
-                "<li>" +
-                "<a class=\"blue-grey darken-1 waves-effect waves-light\">" +
-                "<i class=\"white-text material-icons Small\">delete</i>" +
-                "</a>" +
-                "</li>" +
+                // "<li>" +
+                // "<a class=\"blue-grey darken-1 waves-effect waves-light\">" +
+                // "<i class=\"white-text material-icons Small\">delete</i>" +
+                // "</a>" +
+                // "</li>" +
                 "</ul>" +
                 "</td>" +
                 "</tr>");
@@ -69,7 +72,7 @@ function displayEslData(url, headers) {
         $('.dropdown-trigger').dropdown();
         display.style.visibility='hidden'
     }).error(function(jqXHR) {
-        alert(jqXHR.responseText);
+       //alert(jqXHR.responseText);
         display.style.visibility='hidden'
     });
 }
@@ -79,12 +82,10 @@ function getAllEslData(pageNum) {
 }
 function eslActivateActions() {
     $('#eslTableCounter').formSelect().on('change', function () {
-        var headers = {"size": $('#eslTableCounter').val()};
-        displayEslData("/api/getEslTableData", headers);
+        getAllEslData(0)
     });
     $('#search').on('input', function() {
-        var headers = {"size": $('#eslTableCounter').val(), "searchValue": $('#search').val()};
-        displayEslData("/api/searchEslData", headers);
+        getAllEslData(0)
     });
     $('.dropdown-trigger').dropdown();
     $('#previousBtn').click(function () {
@@ -99,4 +100,30 @@ function eslActivateActions() {
         document.getElementById("firstBtn").innerHTML = pageNum + 1;
         getAllEslData(pageNum);
     });
+}
+function showImage(code) {
+    var w = window.open();
+    $.getJSON("/api/getImage", {eslCode:code}, function (data) {
+        $(w.document.body).html(
+            "<style>.shadow {" +
+            "box-shadow: 0 0 10px rgba(0,0,0,0.5);" +
+            "padding: 0px;}</style>" +
+            "<img class=\"shadow\" id='esl-image' src='" + data + "'>");
+    }).error(function(jqXHR) {
+       // alert(jqXHR.responseText);
+    });
+}
+function updateImage(code) {
+    $.getJSON("/api/updateEsl", {eslCode:code}, function (data) {
+        // if (!data==="ok"){
+        //     alert(data);
+        // }
+    })
+}
+function sendFunPic() {
+    $.getJSON("/api/sendFunPic", {}, function (data) {
+        // if (!data==="ok"){
+        //     alert(data);
+        // }
+    })
 }

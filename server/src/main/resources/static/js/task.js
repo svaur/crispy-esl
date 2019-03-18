@@ -99,7 +99,7 @@ function displayTaskData(url, headers) {
                 "<th>Затронутые товары</th>" +
                 "<th>Частота</th>" +
                 "<th>Статус</th>" +
-                "<th>taskResults</th>" +
+                // "<th>taskResults</th>" +
                 "<th>Действие</th>" +
                 "</tr>" +
                 "</thead>")
@@ -110,14 +110,18 @@ function displayTaskData(url, headers) {
                 "<td>" + tableData[i].updatedItemParams + "</td>" +
                 "<td>" + tableData[i].frequency + "</td>" +
                 "<td>" + tableData[i].status + "</td>" +
-                "<td>" + tableData[i].taskResults + "</td>" +
-                "<td> </td>" +
+                // "<td>" + tableData[i].taskResults + "</td>" +
+                "<td> " +
+                    "<a class=\"blue-grey darken-1 waves-effect waves-light\" onclick='updateImageTask(" + tableData[i].id + ")'>" +
+                    "<i class=\"white-text material-icons small\">update</i>" +
+                    "</a>" +
+                "</td>" +
                 "</tr>");
         }
         $('.dropdown-trigger').dropdown();
         display.style.visibility='hidden'
     }).error(function(jqXHR) {
-        alert(jqXHR.responseText);
+        //alert(jqXHR.responseText);
         display.style.visibility='hidden'
     });
 }
@@ -172,4 +176,12 @@ function hideDiv(elem) {
 }
 function saveTaskData() {
     alert("нет обработчика");
+}
+
+function updateImageTask(taskId) {
+    $.getJSON("/api/updateEslGroup", {taskId:taskId}, function (data) {
+        Console.log(data);
+    }).error(function(jqXHR) {
+        //alert(jqXHR.responseText);
+    });
 }

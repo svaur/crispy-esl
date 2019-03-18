@@ -19,7 +19,7 @@ public class Esls {
     private Timestamp registrationDate;
     private Timestamp startDate;
     private String status;
-    private Items itemsById;
+    private Items itemsByItemsId;
 
     @Id
     @Column(name = "id")
@@ -33,7 +33,7 @@ public class Esls {
     }
 
     @Basic
-    @Column(name = "code", unique=true)
+    @Column(name = "code")
     public String getCode() {
         return code;
     }
@@ -158,24 +158,24 @@ public class Esls {
                 Objects.equals(lastUpdate, esls.lastUpdate) &&
                 Objects.equals(registrationDate, esls.registrationDate) &&
                 Objects.equals(startDate, esls.startDate) &&
-                Objects.equals(status, esls.status) &&
-                Objects.equals(itemsById, esls.itemsById);
+                Objects.equals(status, esls.status);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status, itemsById);
+        int result = Objects.hash(id, code, batteryLevel, connectivity, eslType, firmware, lastUpdate, registrationDate, startDate, status);
         result = 31 * result + Arrays.hashCode(currentImage);
         result = 31 * result + Arrays.hashCode(nextImage);
         return result;
     }
 
-    @OneToOne(mappedBy = "eslsByEslId")
-    public Items getItemsById() {
-        return itemsById;
+    @ManyToOne
+    @JoinColumn(name = "items_id", referencedColumnName = "id")
+    public Items getItemsByItemsId() {
+        return itemsByItemsId;
     }
 
-    public void setItemsById(Items itemsById) {
-        this.itemsById = itemsById;
+    public void setItemsByItemsId(Items itemsByItemsId) {
+        this.itemsByItemsId = itemsByItemsId;
     }
 }

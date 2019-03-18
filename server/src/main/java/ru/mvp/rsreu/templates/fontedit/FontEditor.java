@@ -1,4 +1,4 @@
-package ru.mvp.rsreu.fontedit;
+package ru.mvp.rsreu.templates.fontedit;
 
 import org.springframework.stereotype.Component;
 

@@ -51,14 +51,12 @@ public class DirectoryParams {
         DirectoryParams that = (DirectoryParams) o;
         return id == that.id &&
                 typeParam == that.typeParam &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(availableParamsForTemplatesById, that.availableParamsForTemplatesById) &&
-                Objects.equals(itemParamsById, that.itemParamsById);
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, typeParam, availableParamsForTemplatesById, itemParamsById);
+        return Objects.hash(id, name, typeParam);
     }
 
     @OneToMany(mappedBy = "directoryParamsByParamId")
